@@ -1,0 +1,37 @@
+<svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="pentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#3b82f6"/>
+<stop offset="100%" style="stop-color:#a855f7"/>
+</linearGradient>
+</defs>
+
+<!-- Pentagon with white rounded border -->
+<path d="M 150 45 L 248 120 Q 255 127 252 135 L 213 235 Q 210 242 203 242 L 97 242 Q 90 242 87 235 L 48 135 Q 45 127 52 120 L 150 45 Z"
+      fill="url(#pentGrad)" stroke="#fff" stroke-width="6" stroke-linejoin="round"/>
+
+<!-- Inner chain - 5 nodes forming smaller pentagon -->
+<circle cx="150" cy="95" r="6" fill="#fff"/>
+<circle cx="200" cy="132" r="5.5" fill="#fff"/>
+<circle cx="181" cy="193" r="5" fill="#fff"/>
+<circle cx="119" cy="193" r="5" fill="#fff"/>
+<circle cx="100" cy="132" r="5.5" fill="#fff"/>
+
+<!-- Inner pentagon connections -->
+<line x1="150" y1="95" x2="200" y2="132" stroke="#fff" stroke-width="2.5" opacity="0.8"/>
+<line x1="200" y1="132" x2="181" y2="193" stroke="#fff" stroke-width="2" opacity="0.7"/>
+<line x1="181" y1="193" x2="119" y2="193" stroke="#fff" stroke-width="2" opacity="0.7"/>
+<line x1="119" y1="193" x2="100" y2="132" stroke="#fff" stroke-width="2" opacity="0.7"/>
+<line x1="100" y1="132" x2="150" y2="95" stroke="#fff" stroke-width="2.5" opacity="0.8"/>
+
+<!-- GrandHubAi text -->
+<text x="320" y="170" font-family="Segoe UI,Arial,sans-serif" font-size="64" font-weight="700">
+<tspan fill="url(#pentGrad)">Grand</tspan><tspan fill="#000">Hub</tspan><tspan fill="#a855f7">Ai</tspan>
+</text>
+
+<!-- Subtitle -->
+<text x="320" y="215" font-family="Segoe UI,Arial,sans-serif" font-size="24" fill="#64748b" letter-spacing="2">Multi-Agent AI Platform</text>
+
+<!-- Gradient line under text -->
+<line x1="320" y1="240" x2="840" y2="240" stroke="url(#pentGrad)" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+</svg>

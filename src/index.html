@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GrandHubAi">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="GrandHubAi — мульти-агентная ИИ-платформа на 240+ профессиональных промптов. Работает на любом устройстве. Provider-agnostic.">
+<meta name="author" content="Кагиров Абдул-Хаким Ахмадович">
+
+<!-- ⚠️ Content Security Policy — защита от XSS и инъекций -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: blob:;
+  font-src 'self' data:;
+  connect-src 'self' https://api.groq.com https://openrouter.ai https://api.anthropic.com http://localhost:* https://localhost:* http://127.0.0.1:* https://127.0.0.1:*;
+  manifest-src 'self';
+  worker-src 'self';
+  base-uri 'self';
+  form-action 'none';
+  object-src 'none';
+">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+<title>GrandHubAi · Multi-Agent AI Platform</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🧠%3C/text%3E%3C/svg%3E">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#3b82f6;--primary-dark:#2563eb;--accent:#a855f7;
+  --success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+  --gold:#fbbf24;
+}
+/* ═══════════════ ТЕМЫ (7 вариантов) ═══════════════ */
+body.dark{
+  --bg:#020617;--bg-card:#0f172a;--bg-card-hover:#1a1f35;
+  --bg-input:#1e293b;--border:#1e293b;--border-strong:#334155;
+  --text:#eef2ff;--text-muted:#94a3b8;--text-subtle:#cbd5e1;
+  --msg-agent:#1e293b;--msg-user:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+body.light{
+  --bg:#f0f4f8;--bg-card:#ffffff;--bg-card-hover:#f8fafc;
+  --bg-input:#f1f5f9;--border:#e2e8f0;--border-strong:#cbd5e1;
+  --text:#1e293b;--text-muted:#64748b;--text-subtle:#475569;
+  --msg-agent:#f1f5f9;--msg-user:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+/* Sepia — тёплая бумажная для долгого чтения */
+body.sepia{
+  --bg:#f4ecd8;--bg-card:#fbf3df;--bg-card-hover:#f0e7c8;
+  --bg-input:#ede2c2;--border:#d8cba8;--border-strong:#bfa97e;
+  --text:#3a2f1d;--text-muted:#7a6850;--text-subtle:#5a4a32;
+  --msg-agent:#f0e7c8;--msg-user:linear-gradient(135deg,#8b6f45,#6b5638);
+  --primary:#8b6f45;--gold:#a0522d;
+}
+/* High Contrast — для слабовидящих, AAA по WCAG */
+body.contrast{
+  --bg:#000;--bg-card:#000;--bg-card-hover:#1a1a1a;
+  --bg-input:#1a1a1a;--border:#fff;--border-strong:#fff;
+  --text:#fff;--text-muted:#ffd700;--text-subtle:#fff;
+  --msg-agent:#1a1a1a;--msg-user:linear-gradient(135deg,#ffd700,#ffaa00);
+  --primary:#ffd700;--success:#00ff00;--danger:#ff0000;--gold:#ffd700;
+}
+body.contrast .message.agent{border-left-width:4px}
+body.contrast .badge{border-width:2px}
+/* Solarized Dark — мягкая разработческая палитра Этана Шонновера */
+body.solarized{
+  --bg:#002b36;--bg-card:#073642;--bg-card-hover:#0a4351;
+  --bg-input:#0a4351;--border:#586e75;--border-strong:#657b83;
+  --text:#93a1a1;--text-muted:#586e75;--text-subtle:#839496;
+  --msg-agent:#073642;--msg-user:linear-gradient(135deg,#268bd2,#1c6cae);
+  --primary:#268bd2;--accent:#d33682;--gold:#b58900;
+}
+/* Nord — арктическая палитра */
+body.nord{
+  --bg:#2e3440;--bg-card:#3b4252;--bg-card-hover:#434c5e;
+  --bg-input:#434c5e;--border:#4c566a;--border-strong:#5e6779;
+  --text:#eceff4;--text-muted:#81a1c1;--text-subtle:#d8dee9;
+  --msg-agent:#3b4252;--msg-user:linear-gradient(135deg,#88c0d0,#5e81ac);
+  --primary:#88c0d0;--accent:#b48ead;--gold:#ebcb8b;
+}
+/* Dracula — для ночных сов */
+body.dracula{
+  --bg:#282a36;--bg-card:#343746;--bg-card-hover:#44475a;
+  --bg-input:#44475a;--border:#44475a;--border-strong:#6272a4;
+  --text:#f8f8f2;--text-muted:#bd93f9;--text-subtle:#f8f8f2;
+  --msg-agent:#44475a;--msg-user:linear-gradient(135deg,#bd93f9,#ff79c6);
+  --primary:#bd93f9;--accent:#ff79c6;--gold:#f1fa8c;--success:#50fa7b;--danger:#ff5555;
+}
+
+/* ═══════════════ РАЗМЕР ШРИФТА ═══════════════ */
+body{font-size:16px}
+body.fs-s{font-size:14px}
+body.fs-m{font-size:16px}
+body.fs-l{font-size:18px}
+body.fs-xl{font-size:20px}
+
+/* Отдельная регулировка размера шрифта в диалоговых окнах
+   (чат, поле ввода, Activity Log) — не зависит от глобального */
+:root{--chat-fs:0.88rem;--chat-line:1.55;--chat-input-fs:0.95rem;--chat-strong-fs:0.78rem;--chat-log-fs:0.78rem}
+body.cf-s{--chat-fs:0.78rem;--chat-line:1.5;--chat-input-fs:0.85rem;--chat-strong-fs:0.7rem;--chat-log-fs:0.72rem}
+body.cf-m{--chat-fs:0.88rem;--chat-line:1.55;--chat-input-fs:0.95rem;--chat-strong-fs:0.78rem;--chat-log-fs:0.78rem}
+body.cf-l{--chat-fs:1.05rem;--chat-line:1.6;--chat-input-fs:1.05rem;--chat-strong-fs:0.85rem;--chat-log-fs:0.85rem}
+body.cf-xl{--chat-fs:1.2rem;--chat-line:1.65;--chat-input-fs:1.15rem;--chat-strong-fs:0.92rem;--chat-log-fs:0.92rem}
+body.cf-xxl{--chat-fs:1.4rem;--chat-line:1.7;--chat-input-fs:1.3rem;--chat-strong-fs:1rem;--chat-log-fs:1rem}
+.message{font-size:var(--chat-fs)!important;line-height:var(--chat-line)!important}
+.message strong{font-size:var(--chat-strong-fs)!important}
+#taskInput{font-size:var(--chat-input-fs)!important}
+.activity-item .msg,.activity-item .ts{font-size:var(--chat-log-fs)!important}
+*,*::before,*::after{
+  transition:background-color .25s ease,color .2s ease,border-color .2s ease;
+}
+body{
+  font-family:'Segoe UI','Roboto',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;
+}
+body.dark{background:radial-gradient(circle at 20% 30%,#0a0a1a,#020408)}
+body.solarized{background:radial-gradient(circle at 20% 30%,#003543,#001a22)}
+body.nord{background:radial-gradient(circle at 20% 30%,#3b4252,#252a35)}
+body.dracula{background:radial-gradient(circle at 20% 30%,#343746,#21222c)}
+body.contrast{background:#000}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0}
+body.dark .bg-glow::before,
+body.solarized .bg-glow::before,
+body.nord .bg-glow::before,
+body.dracula .bg-glow::before{
+  content:'';position:absolute;width:60%;height:60%;
+  background:radial-gradient(circle,rgba(59,130,246,.15) 0%,transparent 70%);
+  top:-30%;left:-20%;animation:float 20s infinite;
+}
+body.dark .bg-glow::after,
+body.solarized .bg-glow::after,
+body.nord .bg-glow::after,
+body.dracula .bg-glow::after{
+  content:'';position:absolute;width:50%;height:50%;
+  background:radial-gradient(circle,rgba(168,85,247,.1) 0%,transparent 70%);
+  bottom:-20%;right:-10%;animation:float 25s infinite reverse;
+}
+@keyframes float{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(3%,3%) rotate(2deg)}}
+@media (prefers-reduced-motion:reduce){.bg-glow::before,.bg-glow::after{animation:none!important}}
+body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after{
+  animation-duration:.001s!important;animation-iteration-count:1!important;
+  transition-duration:.001s!important;
+}
+
+.container{position:relative;z-index:1;max-width:1800px;margin:0 auto;padding:16px}
+
+/* HERO */
+.hero{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:24px;padding:24px 28px;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.hero-brand{display:flex;align-items:center;gap:14px}
+.hero-icon{font-size:2.4rem}
+.hero h1{
+  font-size:1.8rem;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#60a5fa,#c084fc,#f472b6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{font-size:.78rem;color:var(--text-muted);font-weight:500;margin-top:2px}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap}
+.badge{
+  padding:6px 14px;border-radius:30px;font-size:.72rem;font-weight:600;
+  background:var(--bg-input);border:1px solid var(--border-strong);color:var(--text-subtle);
+}
+.badge.gold{background:rgba(251,191,36,.12);border-color:#f59e0b;color:var(--gold)}
+.badge.live{background:rgba(16,185,129,.12);border-color:var(--success);color:var(--success)}
+.led{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);
+  margin-right:6px;box-shadow:0 0 8px var(--success);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* CONTROL BAR */
+.control-bar{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:14px 18px;margin-bottom:18px;
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+}
+.cb-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{
+  padding:8px 18px;border-radius:30px;border:none;cursor:pointer;font-weight:600;
+  font-size:.85rem;font-family:inherit;
+  transition:transform .12s,filter .12s;
+}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+.btn-secondary{background:var(--bg-input);color:var(--text);border:1px solid var(--border-strong)}
+.btn-accent{background:#7c3aed;color:#fff}
+.btn-ghost{background:transparent;color:var(--text-subtle);border:1px solid var(--border-strong)}
+.btn-icon{padding:8px 12px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+select.input,input.input,textarea.input{
+  background:var(--bg-input);color:var(--text);
+  border:1px solid var(--border-strong);border-radius:24px;
+  padding:8px 14px;font-family:inherit;font-size:.85rem;
+}
+select.input{cursor:pointer;padding-right:30px}
+input.input,textarea.input{width:100%}
+textarea.input{resize:none;border-radius:18px;padding:10px 14px;line-height:1.5}
+
+/* DASHBOARD */
+.dashboard{display:flex;gap:18px;flex-wrap:wrap}
+.agents-panel{
+  flex:1;min-width:280px;max-width:380px;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:24px;
+  padding:18px;max-height:75vh;overflow-y:auto;
+}
+.work-panel{flex:2;min-width:320px;display:flex;flex-direction:column;gap:14px}
+
+.panel-h{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;font-weight:700;font-size:.95rem;
+}
+.search-input{
+  width:100%;padding:8px 14px;border-radius:24px;
+  background:var(--bg-input);color:var(--text);
+  border:1px solid var(--border-strong);font-size:.85rem;font-family:inherit;
+  margin-bottom:12px;
+}
+details.cat{margin-bottom:6px;border-radius:10px;overflow:hidden}
+details.cat summary{
+  padding:8px 12px;cursor:pointer;font-size:.85rem;font-weight:700;
+  background:var(--bg-input);border-radius:10px;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;user-select:none;
+}
+details.cat summary::-webkit-details-marker{display:none}
+details.cat summary:hover{background:var(--bg-card-hover)}
+.cat-list{padding:6px 0 6px 14px;font-size:.78rem;line-height:1.7}
+.agent-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:4px 8px;border-radius:6px;cursor:pointer;
+}
+.agent-item:hover{background:var(--bg-input)}
+.agent-name{color:var(--text)}
+.agent-desc{color:var(--text-muted);font-size:.72rem}
+
+/* CARDS */
+.chat-card,.monitor-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:24px;overflow:hidden;
+}
+.card-header{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  background:var(--bg-card-hover);
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:700;font-size:.9rem;
+}
+.card-header .badge{font-size:.68rem;padding:4px 10px}
+
+/* CHAT */
+.chat-messages{
+  height:50vh;min-height:200px;overflow-y:auto;
+  padding:14px;display:flex;flex-direction:column;gap:8px;
+}
+.message{
+  max-width:88%;padding:8px 14px;border-radius:16px;
+  animation:fadeSlide .25s ease;font-size:.85rem;line-height:1.5;
+  word-wrap:break-word;overflow-wrap:break-word;
+}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.message.user{align-self:flex-end;background:var(--msg-user);color:#fff}
+.message.agent{align-self:flex-start;background:var(--msg-agent);
+  border-left:3px solid var(--primary);color:var(--text)}
+.message.system{align-self:center;background:transparent;
+  color:var(--text-muted);font-size:.78rem;font-style:italic;border-left:none}
+.message strong{color:var(--gold);font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:4px}
+.message.user strong{color:#fef3c7}
+.message pre{
+  background:rgba(0,0,0,.25);padding:8px 12px;border-radius:8px;
+  margin:6px 0;overflow-x:auto;font-size:.8rem;font-family:'Cascadia Code','Fira Code',monospace;
+}
+.message code{background:rgba(0,0,0,.2);padding:1px 6px;border-radius:4px;font-family:'Cascadia Code','Fira Code',monospace;font-size:.85em}
+
+.chat-input-area{
+  padding:14px 16px;border-top:1px solid var(--border);
+  display:flex;gap:10px;align-items:flex-end;
+}
+#taskInput{flex:1;min-height:42px;max-height:160px}
+.send-btn{padding:10px 18px}
+
+/* ATTACHMENTS */
+.attachments-bar{
+  padding:10px 16px;border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  background:var(--bg-card-hover);
+}
+.attachment-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--bg-input);border:1px solid var(--border-strong);
+  border-radius:18px;padding:5px 10px 5px 12px;font-size:.75rem;color:var(--text-subtle);
+  max-width:240px;
+}
+.attachment-chip .att-name{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.attachment-chip .att-size{color:var(--text-muted);font-size:.68rem;flex-shrink:0}
+.attachment-chip .att-icon{flex-shrink:0;font-size:.9rem}
+.attachment-chip .att-remove{
+  background:none;border:none;cursor:pointer;color:var(--text-muted);
+  padding:0 4px;font-size:.95rem;line-height:1;border-radius:50%;
+}
+.attachment-chip .att-remove:hover{color:var(--danger);background:rgba(239,68,68,.15)}
+
+/* Зелёный badge на агентах которые использовались в текущей сессии */
+.agent-used-badge{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--success);box-shadow:0 0 5px var(--success);
+  margin-left:6px;vertical-align:middle;
+  animation:agentUsedPulse 2s infinite;
+}
+@keyframes agentUsedPulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.55;transform:scale(.85)}
+}
+body.reduced-motion .agent-used-badge{animation:none}
+
+/* ACTIVITY */
+.agent-activity{
+  max-height:200px;overflow-y:auto;padding:12px 18px;font-size:.78rem;
+}
+.activity-item{
+  padding:6px 8px;border-bottom:1px dashed var(--border);
+  display:flex;gap:8px;align-items:flex-start;
+  word-wrap:break-word;line-height:1.5;
+}
+.activity-item:last-child{border-bottom:none}
+.activity-item .ts{color:var(--text-muted);flex-shrink:0;font-family:'Cascadia Code',monospace;font-size:.72rem}
+.activity-item .msg{color:var(--text-subtle)}
+.activity-item.system .msg{color:var(--accent)}
+.activity-item.error .msg{color:var(--danger)}
+.activity-item.success .msg{color:var(--success)}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;z-index:100;padding:20px;
+  animation:fadeIn .15s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-overlay.active{display:flex}
+.modal{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  width:100%;max-width:600px;max-height:90vh;overflow-y:auto;
+  animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{
+  padding:18px 22px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:700;font-size:1rem;
+}
+.modal-body{padding:18px 22px}
+.modal-footer{
+  padding:14px 22px;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;gap:10px;
+}
+.close-x{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-muted);padding:0 6px}
+
+.form-row{margin-bottom:14px}
+.form-row label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text-subtle)}
+.form-row input,.form-row select,.form-row textarea{width:100%}
+.form-hint{font-size:.72rem;color:var(--text-muted);margin-top:4px;line-height:1.4}
+.form-hint a{color:var(--primary)}
+.section-title{
+  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+  color:var(--text-muted);margin:16px 0 10px;border-top:1px solid var(--border);padding-top:14px;
+}
+.section-title:first-child{border-top:none;margin-top:0;padding-top:0}
+
+/* FOOTER */
+.footer{
+  margin-top:28px;padding:18px;text-align:center;font-size:.75rem;
+  color:var(--text-muted);line-height:1.6;
+}
+.footer a{color:var(--primary)}
+
+/* ═══════════════ RESPONSIVE (TABLET / MOBILE) ═══════════════ */
+/* Безопасные области для iPhone notch / home indicator */
+.container{
+  padding-left:max(16px,env(safe-area-inset-left));
+  padding-right:max(16px,env(safe-area-inset-right));
+  padding-bottom:max(16px,env(safe-area-inset-bottom));
+}
+
+/* PWA standalone-режим — убираем верхний padding */
+@media (display-mode:standalone){
+  .container{padding-top:max(16px,env(safe-area-inset-top))}
+}
+
+/* Планшеты: 768-1024px */
+@media (max-width:1024px) and (min-width:769px){
+  .container{padding:14px;max-width:100%}
+  .agents-panel{max-width:320px}
+  .hero h1{font-size:1.6rem}
+}
+
+/* Мобильные: до 900px */
+@media (max-width:900px){
+  .container{padding:10px}
+  .dashboard{flex-direction:column}
+  .agents-panel{max-width:100%;max-height:38vh;order:2}
+  .work-panel{order:1;min-width:auto}
+  .hero{padding:14px 18px;flex-direction:column;align-items:flex-start;gap:10px}
+  .hero h1{font-size:1.4rem}
+  .control-bar{padding:10px 12px;gap:8px;flex-direction:column;align-items:stretch}
+  .control-bar .cb-group{justify-content:space-between;width:100%}
+  .chat-messages{height:50vh;min-height:240px}
+  .modal{max-height:96vh;border-radius:14px 14px 0 0;margin-top:auto}
+  .modal-overlay.active{align-items:flex-end}
+  .modal-body{padding:14px 16px}
+  .modal-header{padding:14px 16px}
+  .modal-footer{padding:12px 16px}
+  /* Touch-friendly: минимальный размер 44×44 (Apple HIG) */
+  .btn,.btn-icon{min-height:44px}
+  select.input,input.input{min-height:44px}
+  .agent-item{padding:10px 8px;min-height:44px}
+  details.cat summary{padding:12px;min-height:44px}
+}
+
+/* Маленькие смартфоны */
+@media (max-width:480px){
+  .hero h1{font-size:1.2rem}
+  .hero-icon{font-size:1.6rem}
+  .hero-sub{font-size:.7rem}
+  .btn{padding:8px 14px;font-size:.78rem}
+  .badge{font-size:.62rem;padding:4px 9px}
+  .message{max-width:94%;font-size:.85rem}
+  .chat-messages{padding:14px;height:48vh}
+  .agent-activity{padding:10px 14px}
+  .card-header{padding:12px 14px;font-size:.82rem}
+  .modal{max-width:100%}
+  .footer{font-size:.7rem;padding:14px 8px}
+  /* iOS prevent zoom on input focus — нужен min font-size 16px */
+  textarea.input,input[type="text"].input,input[type="password"].input,select.input{font-size:16px}
+  /* Кнопка лога-очистки на мобильных скрыта */
+  #clearLogsBtn{font-size:.65rem}
+  /* file:// баннер компактнее */
+  #fileProtocolBanner{font-size:.75rem;padding:10px 14px}
+  #fileProtocolBanner button{font-size:.7rem}
+}
+
+/* Очень узкие телефоны (<360px) */
+@media (max-width:360px){
+  .hero-badges{font-size:.6rem}
+  .badge{padding:3px 7px}
+  .container{padding:6px}
+}
+
+/* Альбомная ориентация на смартфонах — компактнее */
+@media (max-width:900px) and (orientation:landscape){
+  .hero{padding:8px 14px}
+  .hero h1{font-size:1.1rem}
+  .agents-panel{max-height:30vh}
+  .chat-messages{height:40vh;min-height:180px}
+}
+
+/* Touch-устройства: убираем hover-эффекты которые залипают */
+@media (hover:none){
+  .btn:hover{transform:none;filter:none}
+  .agent-item:hover{background:transparent}
+  .agent-item:active{background:var(--bg-input)}
+}
+
+/* PRINT */
+@media print{
+  body{background:#fff!important;color:#000!important}
+  .bg-glow,.hero-badges,.control-bar,.agents-panel,.chat-input-area,.modal-overlay,.footer{display:none!important}
+  .work-panel{display:block}
+  .chat-messages{height:auto;max-height:none;overflow:visible}
+  .message{max-width:100%;break-inside:avoid;page-break-inside:avoid;border:1px solid #ddd}
+  .message strong{color:#000}
+  .card-header{background:#f5f5f5}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+</style>
+</head>
+<body class="dark fs-m">
+<div class="bg-glow" aria-hidden="true"></div>
+
+<!-- 📢 file:// детект-баннер: показывается только при открытии через файл -->
+<div id="fileProtocolBanner" style="display:none;background:linear-gradient(135deg,#f59e0b,#d97706);color:#000;padding:12px 18px;font-size:.85rem;text-align:center;line-height:1.5;font-weight:500;position:relative;z-index:50;">
+  ⚠️ <b>Вы открыли GrandHubAi через <code>file://</code>.</b>
+  Для полной функциональности (PWA, Service Worker, оффлайн-режим) запустите через локальный сервер.
+  <button id="howToServerBtn" style="margin-left:10px;padding:4px 12px;border:1px solid #000;background:#000;color:#fbbf24;border-radius:20px;cursor:pointer;font-weight:600;font-size:.78rem">📖 Как запустить</button>
+  <button id="dismissFileBannerBtn" style="margin-left:6px;padding:4px 10px;border:none;background:transparent;color:#000;cursor:pointer;font-size:.78rem">Скрыть ✕</button>
+</div>
+
+<div class="container">
+
+  <header class="hero" role="banner">
+    <div class="hero-brand">
+      <div class="hero-icon" aria-hidden="true">🧠</div>
+      <div>
+        <h1>GrandHubAi</h1>
+        <div class="hero-sub" id="agentCountLabel">Multi-Agent AI Platform · загрузка агентов...</div>
+      </div>
+    </div>
+    <div class="hero-badges">
+      <span class="badge live"><span class="led" aria-hidden="true"></span><span id="providerStatus">Не настроено</span></span>
+      <span class="badge gold">🚀 Open Source · AGPL-3.0</span>
+    </div>
+  </header>
+
+  <nav class="control-bar" role="toolbar" aria-label="Главные действия">
+    <div class="cb-group">
+      <label for="domainFilter" style="font-size:.82rem;color:var(--text-muted)">Домен:</label>
+      <select id="domainFilter" class="input" aria-label="Фильтр по домену">
+        <option value="">Все домены</option>
+      </select>
+      <select id="modelSelect" class="input" aria-label="Модель">
+        <option value="">Авто-выбор модели</option>
+      </select>
+    </div>
+    <div class="cb-group">
+      <button id="voiceBtn" class="btn btn-secondary btn-icon" title="Голосовой ввод" aria-label="Голосовой ввод">🎤</button>
+      <button id="exportTxtBtn" class="btn btn-secondary btn-icon" title="Экспорт в TXT (plain text)" aria-label="Экспорт TXT">📃 TXT</button>
+      <button id="exportMdBtn" class="btn btn-secondary btn-icon" title="Экспорт в Markdown" aria-label="Экспорт Markdown">📝 MD</button>
+      <button id="exportJsonBtn" class="btn btn-secondary btn-icon" title="Экспорт в JSON" aria-label="Экспорт JSON">📄 JSON</button>
+      <button id="exportPdfBtn" class="btn btn-secondary btn-icon" title="Печать в PDF" aria-label="Печать PDF">🖨️ PDF</button>
+      <button id="themeBtn" class="btn btn-accent btn-icon" title="Тема" aria-label="Переключить тему">🌓</button>
+      <button id="settingsBtn" class="btn btn-secondary btn-icon" title="Настройки" aria-label="Настройки">⚙️</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    <aside class="agents-panel" id="agentsPanel">
+      <div class="panel-h">
+        <span>🤖 Иерархия агентов</span>
+        <span class="badge" id="agentTotalBadge">0</span>
+      </div>
+      <input type="text" class="search-input" id="agentSearch" placeholder="🔍 Поиск агента..." aria-label="Поиск агента">
+      <div id="agentsTree" role="tree">
+        <div id="agentsLoadingState" style="padding:30px 10px;text-align:center;color:var(--text-muted);font-size:.85rem">
+          <div style="font-size:2rem;margin-bottom:10px;animation:pulse 1.5s infinite">🤖</div>
+          Загрузка 244 агентов...<br>
+          <span style="font-size:.75rem">(может занять 3-10 секунд при первом открытии)</span>
+        </div>
+      </div>
+    </aside>
+
+    <section class="work-panel">
+      <div class="monitor-card">
+        <div class="card-header">
+          <span>📡 Активность оркестратора</span>
+          <button id="clearLogsBtn" class="btn btn-ghost btn-icon" style="font-size:.75rem;padding:4px 10px" title="Очистить лог">🗑️</button>
+        </div>
+        <div class="agent-activity" id="activityLog" role="log" aria-live="polite" aria-atomic="false">
+          <div class="activity-item system"><span class="msg">⚡ GrandHubAi запущен. Откройте ⚙️ настройки для подключения провайдера.</span></div>
+        </div>
+      </div>
+
+      <div class="chat-card">
+        <div class="card-header">
+          <span>💬 Диалог с Oracle</span>
+          <span style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+            <button id="chatFontDecBtn" class="btn btn-ghost btn-icon" style="padding:4px 10px;font-size:.78rem;font-weight:700" title="Уменьшить шрифт диалога" aria-label="Уменьшить шрифт">A−</button>
+            <span id="chatFontIndicator" style="font-size:.7rem;color:var(--text-muted);min-width:20px;text-align:center" title="Текущий размер шрифта">M</span>
+            <button id="chatFontIncBtn" class="btn btn-ghost btn-icon" style="padding:4px 10px;font-size:.95rem;font-weight:700" title="Увеличить шрифт диалога" aria-label="Увеличить шрифт">A+</button>
+            <span class="badge" id="currentAgentBadge" style="margin-left:6px">Главный координатор</span>
+          </span>
+        </div>
+        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+          <div class="message agent">
+            <strong>Аида 💼</strong>
+            Здравствуйте! Я — Аида, модератор GrandHubAi.<br>
+            Опишите задачу или вопрос — я отвечу сама на простые, или привлеку команду специалистов из библиотеки на 245 экспертов для сложных.<br><br>
+            ⚠️ Перед началом работы: нажмите ⚙️ и введите API-ключ Groq (бесплатный, 2 минуты регистрации).
+          </div>
+        </div>
+        <div id="attachmentsBar" class="attachments-bar" style="display:none"></div>
+        <div class="chat-input-area">
+          <button id="attachBtn" class="btn btn-secondary btn-icon" title="Прикрепить файл (Ctrl+V — вставить из буфера)" aria-label="Прикрепить файл">📎</button>
+          <input type="file" id="attachInput" multiple accept=".txt,.md,.json,.csv,.log,.xml,.html,.js,.py,.yaml,.yml,.ini,.cfg,image/*" style="display:none">
+          <textarea id="taskInput" class="input" rows="1" placeholder="Опишите задачу или вопрос... (Enter — отправить, Shift+Enter — новая строка)" aria-label="Поле ввода задачи"></textarea>
+          <button id="sendBtn" class="btn btn-primary send-btn" title="Отправить (Enter)" aria-label="Отправить">📤</button>
+          <button id="stopBtn" class="btn btn-ghost btn-icon" title="Остановить" aria-label="Остановить" disabled>⏹</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© 2026 Кагиров Абдул-Хаким Ахмадович. Все права защищены.</div>
+    <div>GrandHubAi · v1.5.0 · Лицензия AGPL-3.0 (Community) / Commercial</div>
+    <div>📧 <a href="mailto:aslankaa@yandex.ru">aslankaa@yandex.ru</a> · 🌐 <a href="https://www.aslankaa.com" target="_blank" rel="noopener">aslankaa.com</a></div>
+  </footer>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <span id="settingsTitle">⚙️ Настройки</span>
+      <button class="close-x" data-close-modal="settingsModal" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="section-title">Провайдер ИИ</div>
+      <div class="form-row">
+        <label for="providerSelect">Провайдер:</label>
+        <select id="providerSelect" class="input">
+          <option value="groq">Groq (бесплатный, рекомендуется)</option>
+          <option value="openrouter">OpenRouter (агрегатор всех моделей)</option>
+          <option value="anthropic">Anthropic Claude (платный, премиум)</option>
+          <option value="ollama">Ollama (локально, без интернета)</option>
+        </select>
+        <div class="form-hint" id="providerHint">Бесплатный API. Регистрация на <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com</a> → Settings → Create API key.</div>
+      </div>
+      <div class="form-row">
+        <label for="apiKeyInput">API ключ:</label>
+        <input type="password" id="apiKeyInput" class="input" placeholder="gsk_..." autocomplete="off">
+        <div class="form-hint">Ключ хранится локально в IndexedDB вашего браузера и никуда не отправляется кроме самого провайдера.</div>
+      </div>
+      <div class="form-row">
+        <label for="endpointInput">Endpoint (опционально):</label>
+        <input type="text" id="endpointInput" class="input" placeholder="оставьте пустым для значения по умолчанию">
+        <div class="form-hint">Для Ollama по умолчанию: <code>http://localhost:11434/v1</code>. Менять только если знаете зачем.</div>
+      </div>
+
+      <div class="section-title">Внешний вид и доступность</div>
+      <div class="form-row">
+        <label for="themeSelect">Цветовая тема:</label>
+        <select id="themeSelect" class="input">
+          <option value="auto">🌗 Авто (по системе)</option>
+          <option value="dark">🌑 Тёмная (по умолчанию)</option>
+          <option value="light">☀️ Светлая</option>
+          <option value="sepia">📜 Сепия (для долгого чтения)</option>
+          <option value="contrast">⚡ Высокий контраст (для слабовидящих, AAA)</option>
+          <option value="solarized">🌊 Solarized Dark</option>
+          <option value="nord">❄️ Nord (арктическая)</option>
+          <option value="dracula">🦇 Dracula</option>
+        </select>
+        <div class="form-hint">«Авто» — автоматически переключается между светлой и тёмной по настройкам ОС.</div>
+      </div>
+      <div class="form-row">
+        <label for="fontSizeSelect">Размер шрифта (общий UI):</label>
+        <select id="fontSizeSelect" class="input">
+          <option value="s">S — Маленький (14px)</option>
+          <option value="m" selected>M — Стандартный (16px)</option>
+          <option value="l">L — Крупный (18px)</option>
+          <option value="xl">XL — Очень крупный (20px)</option>
+        </select>
+        <div class="form-hint">Применяется ко всему интерфейсу: меню, кнопки, заголовки.</div>
+      </div>
+      <div class="form-row">
+        <label for="chatFontSizeSelect">Размер шрифта в диалоговых окнах:</label>
+        <select id="chatFontSizeSelect" class="input">
+          <option value="s">S — Компактный</option>
+          <option value="m" selected>M — Стандартный</option>
+          <option value="l">L — Крупный</option>
+          <option value="xl">XL — Очень крупный</option>
+          <option value="xxl">XXL — Максимальный (для дальнего чтения)</option>
+        </select>
+        <div class="form-hint">Отдельно регулирует только сообщения в чате, поле ввода и лог. Быстрые кнопки <code>A−</code> / <code>A+</code> в шапке чата.</div>
+      </div>
+      <div class="form-row">
+        <label>
+          <input type="checkbox" id="reducedMotionToggle"> Уменьшить анимации (для эпилепсии и слабых ПК)
+        </label>
+      </div>
+
+      <div class="section-title">Параметры генерации</div>
+      <div class="form-row">
+        <label for="defaultModelInput">Модель по умолчанию:</label>
+        <input type="text" id="defaultModelInput" class="input" placeholder="llama-3.3-70b-versatile">
+        <div class="form-hint">Groq: <code>llama-3.3-70b-versatile</code>, <code>llama-3.1-8b-instant</code>, <code>deepseek-r1-distill-llama-70b</code>. Anthropic: <code>claude-sonnet-4-6</code>. Ollama: <code>qwen2.5:7b</code> и т.д.</div>
+      </div>
+      <div class="form-row">
+        <label for="orchestratorScale">Размер команды агентов на задачу:</label>
+        <select id="orchestratorScale" class="input">
+          <option value="1">1 (быстро, прямой ответ)</option>
+          <option value="3" selected>3 (баланс)</option>
+          <option value="5">5 (детально)</option>
+          <option value="7">7 (углублённо)</option>
+          <option value="10">10 (максимум — медленно и дорого)</option>
+        </select>
+        <div class="form-hint">Сколько специалистов Oracle привлекает к задаче. Каждый = отдельный API-вызов.</div>
+      </div>
+      <div class="form-row">
+        <label for="streamingToggle">
+          <input type="checkbox" id="streamingToggle" checked> Streaming-режим (печать ответа по словам)
+        </label>
+      </div>
+      <div class="form-row">
+        <label for="useConciergeToggle">
+          <input type="checkbox" id="useConciergeToggle" checked> Модератор Аида 💼 (первая линия — встречает, уточняет, передаёт команде)
+        </label>
+        <div class="form-hint">Если выключено — Oracle отвечает напрямую, без посредника. С модератором экономнее на простых вопросах, но добавляет +1 API-вызов на сложных.</div>
+      </div>
+
+      <div class="section-title">Безопасность</div>
+      <div class="form-row">
+        <label>
+          <input type="checkbox" id="encryptKeyToggle"> Шифровать API-ключ master-паролем
+        </label>
+        <div class="form-hint">⚠️ AES-GCM 256-бит. Если включено — при каждом запуске потребуется ввести пароль. <b>При утере пароля ключ восстановить нельзя</b> — придётся ввести заново.</div>
+      </div>
+
+      <div class="section-title">Данные</div>
+      <div class="form-row">
+        <button id="clearAllBtn" class="btn btn-ghost" style="width:100%">🗑️ Очистить всю историю и настройки</button>
+        <div class="form-hint">Удалит API-ключ, диалог, лог. Действие необратимо.</div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close-modal="settingsModal">Отмена</button>
+      <button id="saveSettingsBtn" class="btn btn-primary">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOW-TO-RUN-SERVER MODAL -->
+<div class="modal-overlay" id="serverHelpModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <span>🚀 Как запустить локальный сервер</span>
+      <button class="close-x" data-close-modal="serverHelpModal" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.88rem;line-height:1.6;margin-bottom:14px">
+        Для полной работы GrandHubAi (включая установку как приложение, оффлайн-режим, фоновые уведомления)
+        нужно запустить локальный HTTP-сервер. Это занимает <b>10 секунд</b>.
+      </p>
+
+      <div class="section-title">Способ 1 — Двойной клик (Windows)</div>
+      <ol style="padding-left:22px;font-size:.85rem;line-height:1.7">
+        <li>В корне папки проекта найдите файл <code>start.bat</code></li>
+        <li><b>Двойной клик</b> по нему</li>
+        <li>Откроется чёрное окно консоли + автоматически браузер на <code>http://localhost:8080</code></li>
+      </ol>
+
+      <div class="section-title">Способ 2 — Двойной клик (macOS / Linux)</div>
+      <ol style="padding-left:22px;font-size:.85rem;line-height:1.7">
+        <li>В терминале: <code>cd /путь/к/GrandHubAi</code></li>
+        <li><code>chmod +x start.sh</code> (один раз)</li>
+        <li><code>./start.sh</code></li>
+      </ol>
+
+      <div class="section-title">Способ 3 — Через Python вручную</div>
+      <pre style="background:var(--bg-input);padding:10px 14px;border-radius:8px;font-size:.78rem;overflow-x:auto">cd "C:\Users\ais001\Documents\История_работы\GrandHubAi\GrandHubAi\src"
+python -m http.server 8080</pre>
+      <p style="font-size:.82rem;color:var(--text-muted);margin-top:8px">
+        Затем откройте <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a>
+      </p>
+
+      <div class="section-title">Если Python не установлен</div>
+      <p style="font-size:.85rem;line-height:1.6">
+        Скачайте с <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org/downloads</a> →
+        <b>при установке отметьте «Add Python to PATH»</b>. После установки запустите <code>start.bat</code> снова.
+      </p>
+
+      <div class="section-title">Что это даёт?</div>
+      <ul style="padding-left:22px;font-size:.85rem;line-height:1.7">
+        <li>✅ Установка GrandHubAi как приложения (иконка на рабочем столе)</li>
+        <li>✅ Работа оффлайн (после первой загрузки)</li>
+        <li>✅ Безопасное хранилище данных</li>
+        <li>✅ Фоновые уведомления</li>
+        <li>✅ Доступ со смартфона по локальной сети (через IP компьютера)</li>
+      </ul>
+
+      <div style="margin-top:14px;padding:10px 14px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.4);border-radius:8px;font-size:.82rem;line-height:1.5">
+        💡 <b>Подсказка:</b> для постоянной работы — задеплойте проект на бесплатный хостинг
+        (Vercel / GitHub Pages / Cloudflare Pages). См. <code>INSTALL.md</code> в корне проекта.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" data-close-modal="serverHelpModal">Понятно, спасибо</button>
+    </div>
+  </div>
+</div>
+
+<!-- MASTER PASSWORD MODAL -->
+<div class="modal-overlay" id="passwordModal" role="dialog" aria-modal="true">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <span id="passwordTitle">🔐 Master-пароль</span>
+    </div>
+    <div class="modal-body">
+      <p id="passwordPrompt" style="font-size:.88rem;line-height:1.6;margin-bottom:14px">Введите master-пароль для расшифровки API-ключа:</p>
+      <input type="password" id="passwordInput" class="input" placeholder="••••••••" autocomplete="off" style="margin-bottom:8px">
+      <div id="passwordError" style="display:none;color:var(--danger);font-size:.78rem;margin-top:6px"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="passwordCancelBtn">Отмена</button>
+      <button class="btn btn-primary" id="passwordOkBtn">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- AGENT INFO MODAL -->
+<div class="modal-overlay" id="agentModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <span id="agentModalTitle">Агент</span>
+      <button class="close-x" data-close-modal="agentModal" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-body" id="agentModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" data-close-modal="agentModal">Закрыть</button>
+      <button id="useAgentBtn" class="btn btn-primary">Прямой вызов</button>
+    </div>
+  </div>
+</div>
+
+<!-- AGENT REGISTRY: bundled (один HTTP-запрос вместо 31, defer = параллельная загрузка) -->
+<script>window.AGENTS = window.AGENTS || {}; window.AGENTS_BY_DOMAIN = window.AGENTS_BY_DOMAIN || {};</script>
+<script src="prompts/_all.js" defer></script>
+
+<script>
+/* ============================================================
+ * GrandHubAi · Multi-Agent AI Platform
+ * Copyright © 2026 Кагиров Абдул-Хаким Ахмадович
+ * Licensed under AGPL-3.0 (Community) or Commercial License
+ * ============================================================ */
+
+const APP = {
+  version: '1.5.0',
+  copyright: '© 2026 Кагиров Абдул-Хаким Ахмадович',
+  storageKey: 'grandhubai_v1',
+};
+
+/* ====== UTILITIES ====== */
+const $ = (id) => document.getElementById(id);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+/** Безопасное экранирование HTML для предотвращения XSS */
+function escapeHtml(s){
+  if(s == null) return '';
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/** Минимальный safe markdown rendering: **bold**, *italic*, `code`, ```code blocks```, переводы строк */
+function renderMd(s){
+  if(!s) return '';
+  let html = escapeHtml(s);
+  // code blocks ``` ... ```
+  html = html.replace(/```([\s\S]*?)```/g, (_, code) => `<pre>${code}</pre>`);
+  // inline code `...`
+  html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  // bold **...**
+  html = html.replace(/\*\*([^*\n]+)\*\*/g, '<strong style="display:inline;color:inherit;text-transform:none;letter-spacing:normal;font-size:inherit">$1</strong>');
+  // italic *...*
+  html = html.replace(/(^|\W)\*([^*\n]+)\*/g, '$1<em>$2</em>');
+  // line breaks
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+function timestamp(){
+  return new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+/** Извлекает первый сбалансированный JSON-объект из строки. Учитывает строки и escape-символы. */
+function extractJsonObject(s){
+  if(!s) throw new Error('Пустой ответ');
+  // Найти первый '{'
+  const start = s.indexOf('{');
+  if(start === -1) throw new Error('JSON не найден в ответе');
+  let depth = 0, inStr = false, esc = false;
+  for(let i = start; i < s.length; i++){
+    const ch = s[i];
+    if(esc){ esc = false; continue; }
+    if(ch === '\\'){ esc = true; continue; }
+    if(ch === '"'){ inStr = !inStr; continue; }
+    if(inStr) continue;
+    if(ch === '{') depth++;
+    else if(ch === '}'){
+      depth--;
+      if(depth === 0) return JSON.parse(s.slice(start, i+1));
+    }
+  }
+  throw new Error('Незакрытый JSON в ответе');
+}
+
+/* ====== STATE ====== */
+const state = {
+  settings: {
+    provider: 'groq',
+    apiKey: '',
+    endpoint: '',
+    defaultModel: 'llama-3.3-70b-versatile',
+    orchestratorScale: 3,
+    streaming: true,
+    theme: 'dark',           // 'auto'|'dark'|'light'|'sepia'|'contrast'|'solarized'|'nord'|'dracula'
+    fontSize: 'm',           // 's'|'m'|'l'|'xl' — общий UI
+    chatFontSize: 'm',       // 's'|'m'|'l'|'xl'|'xxl' — отдельно для диалоговых окон
+    reducedMotion: false,
+    encryptKey: false,       // шифровать ли API-ключ master-паролем
+    useConcierge: true,      // первой реагирует модератор Аида (можно отключить)
+    domainFilter: '',
+  },
+  usedAgentsInSession: new Set(),  // ID агентов которые отвечали в этой сессии
+  encryptedKey: null,        // зашифрованная обёртка { iv, salt, ct } или null
+  conversation: [],
+  activityLogs: [],
+  inflight: null,
+  attachments: [],          // [{name, size, type, content, isImage}]
+};
+
+const MAX_ATTACHMENT_SIZE = 5 * 1024 * 1024;       // 5 МБ на один файл
+const MAX_ATTACHMENTS_TOTAL = 20 * 1024 * 1024;     // 20 МБ суммарно
+
+const VALID_THEMES = new Set(['auto','dark','light','sepia','contrast','solarized','nord','dracula']);
+const VALID_FONT_SIZES = new Set(['s','m','l','xl']);
+const VALID_CHAT_FONT_SIZES = ['s','m','l','xl','xxl'];
+const CHAT_FS_LABELS = { s:'S', m:'M', l:'L', xl:'XL', xxl:'XXL' };
+const THEME_LABELS = {
+  dark:'🌑 Тёмная', light:'☀️ Светлая', sepia:'📜 Сепия',
+  contrast:'⚡ Высокий контраст', solarized:'🌊 Solarized', nord:'❄️ Nord',
+  dracula:'🦇 Dracula', auto:'🌗 Авто'
+};
+const BEIGE_LABELS = THEME_LABELS; // alias for theme button
+
+/* ====== INDEXED DB STORAGE ====== */
+const DB = (() => {
+  const DBNAME = 'grandhubai';
+  const STORE = 'kv';
+  let _db = null;
+
+  function open(){
+    return new Promise((resolve, reject) => {
+      if(_db) return resolve(_db);
+      const req = indexedDB.open(DBNAME, 1);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if(!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE);
+      };
+      req.onsuccess = () => { _db = req.result; resolve(_db); };
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function get(key){
+    const db = await open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE,'readonly').objectStore(STORE).get(key);
+      tx.onsuccess = () => resolve(tx.result);
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+  async function set(key, value){
+    const db = await open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE,'readwrite').objectStore(STORE).put(value, key);
+      tx.onsuccess = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+  async function clear(){
+    const db = await open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE,'readwrite').objectStore(STORE).clear();
+      tx.onsuccess = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+  return { get, set, clear };
+})();
+
+async function persistState(){
+  try{
+    // если шифрование включено — apiKey не сохраняется в открытом виде, отдельно state.encryptedKey
+    const settingsToStore = { ...state.settings };
+    if(state.settings.encryptKey && state.encryptedKey){
+      settingsToStore.apiKey = ''; // не храним plain
+    }
+    await DB.set('settings', settingsToStore);
+    if(state.settings.encryptKey && state.encryptedKey){
+      await DB.set('encryptedKey', state.encryptedKey);
+    } else {
+      await DB.set('encryptedKey', null);
+    }
+    const conv = state.conversation.slice(-200);
+    const logs = state.activityLogs.slice(-100);
+    await DB.set('conversation', conv);
+    await DB.set('activityLogs', logs);
+    // Set нельзя структурно клонировать в IndexedDB — храним как массив
+    const usedArr = state.usedAgentsInSession instanceof Set
+      ? Array.from(state.usedAgentsInSession)
+      : (Array.isArray(state.usedAgentsInSession) ? state.usedAgentsInSession : []);
+    await DB.set('usedAgentsInSession', usedArr);
+  } catch(e){ console.warn('persistState failed:', e); }
+}
+
+async function loadState(){
+  try{
+    const settings = await DB.get('settings');
+    if(settings) Object.assign(state.settings, settings);
+    state.encryptedKey = (await DB.get('encryptedKey')) || null;
+    state.conversation = (await DB.get('conversation')) || [];
+    state.activityLogs = (await DB.get('activityLogs')) || [];
+    const usedArr = (await DB.get('usedAgentsInSession')) || [];
+    state.usedAgentsInSession = new Set(Array.isArray(usedArr) ? usedArr : []);
+  } catch(e){ console.warn('loadState failed:', e); }
+}
+
+/* ====== ENCRYPTION (Web Crypto API · AES-GCM 256) ====== */
+async function deriveKey(password, salt){
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey(
+    'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveKey']
+  );
+  return await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+    baseKey,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt','decrypt']
+  );
+}
+async function encryptString(plain, password){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await deriveKey(password, salt);
+  const ct = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    key,
+    new TextEncoder().encode(plain)
+  );
+  return {
+    iv: Array.from(iv),
+    salt: Array.from(salt),
+    ct: Array.from(new Uint8Array(ct)),
+    v: 1
+  };
+}
+async function decryptString(wrapped, password){
+  const iv = new Uint8Array(wrapped.iv);
+  const salt = new Uint8Array(wrapped.salt);
+  const ct = new Uint8Array(wrapped.ct);
+  const key = await deriveKey(password, salt);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+  return new TextDecoder().decode(plain);
+}
+
+/** Запрашивает пароль через модал. Возвращает Promise<string|null> */
+function askPassword(title, prompt){
+  return new Promise((resolve) => {
+    $('passwordTitle').textContent = title || '🔐 Master-пароль';
+    $('passwordPrompt').textContent = prompt || 'Введите master-пароль:';
+    $('passwordInput').value = '';
+    $('passwordError').style.display = 'none';
+    showModal('passwordModal');
+    setTimeout(() => $('passwordInput').focus(), 100);
+    const ok = () => {
+      const v = $('passwordInput').value;
+      cleanup();
+      resolve(v || null);
+    };
+    const cancel = () => { cleanup(); resolve(null); };
+    const onKey = (e) => { if(e.key === 'Enter'){ e.preventDefault(); ok(); } else if(e.key === 'Escape'){ cancel(); } };
+    const cleanup = () => {
+      $('passwordOkBtn').removeEventListener('click', ok);
+      $('passwordCancelBtn').removeEventListener('click', cancel);
+      $('passwordInput').removeEventListener('keydown', onKey);
+      hideModal('passwordModal');
+    };
+    $('passwordOkBtn').addEventListener('click', ok);
+    $('passwordCancelBtn').addEventListener('click', cancel);
+    $('passwordInput').addEventListener('keydown', onKey);
+  });
+}
+
+/** При запуске — если ключ зашифрован, попросить пароль */
+async function unlockApiKeyIfNeeded(){
+  if(!state.settings.encryptKey || !state.encryptedKey) return;
+  for(let attempt = 0; attempt < 3; attempt++){
+    const pwd = await askPassword(
+      attempt === 0 ? '🔐 Разблокировать ключ' : '❌ Неверный пароль, попробуйте снова',
+      attempt === 0 ? 'Введите master-пароль для расшифровки API-ключа:' : `Осталось попыток: ${3 - attempt}`
+    );
+    if(!pwd){
+      addActivity('Безопасность', 'API-ключ остался заблокированным. Введите его заново через ⚙️ Настройки.', 'error');
+      state.settings.apiKey = '';
+      return;
+    }
+    try{
+      state.settings.apiKey = await decryptString(state.encryptedKey, pwd);
+      addActivity('Безопасность', '🔓 API-ключ расшифрован', 'success');
+      return;
+    } catch(e){ /* неверный пароль, повторяем */ }
+  }
+  addActivity('Безопасность', '⚠️ Превышено число попыток. Очистите и введите ключ заново.', 'error');
+  state.settings.apiKey = '';
+}
+
+/* ====== PROVIDERS ====== */
+const PROVIDERS = {
+  groq: {
+    name: 'Groq',
+    endpointDefault: 'https://api.groq.com/openai/v1',
+    keyFormat: 'gsk_...',
+    keyPrefix: 'gsk_',
+    keyHelp: 'Регистрация: console.groq.com → Settings → Create API key',
+    defaultModels: ['llama-3.3-70b-versatile','llama-3.1-8b-instant','deepseek-r1-distill-llama-70b','mixtral-8x7b-32768','gemma2-9b-it'],
+    requestStyle: 'openai',
+  },
+  openrouter: {
+    name: 'OpenRouter',
+    endpointDefault: 'https://openrouter.ai/api/v1',
+    keyFormat: 'sk-or-...',
+    keyPrefix: 'sk-or-',
+    keyHelp: 'Регистрация: openrouter.ai → Keys',
+    defaultModels: ['anthropic/claude-sonnet-4.6','openai/gpt-4o-mini','google/gemini-flash-1.5','meta-llama/llama-3.3-70b-instruct','deepseek/deepseek-chat'],
+    requestStyle: 'openai',
+  },
+  anthropic: {
+    name: 'Anthropic Claude',
+    endpointDefault: 'https://api.anthropic.com/v1',
+    keyFormat: 'sk-ant-...',
+    keyPrefix: 'sk-ant-',
+    keyHelp: 'Регистрация: console.anthropic.com → API Keys',
+    defaultModels: ['claude-sonnet-4-6','claude-opus-4-7','claude-haiku-4-5-20251001'],
+    requestStyle: 'anthropic',
+  },
+  ollama: {
+    name: 'Ollama (local)',
+    endpointDefault: 'http://localhost:11434/v1',
+    keyFormat: '(не требуется)',
+    keyPrefix: '',
+    keyHelp: 'Установите Ollama (ollama.com), запустите: ollama pull qwen2.5:7b',
+    defaultModels: ['qwen2.5:7b','llama3.1:8b','deepseek-r1:7b','phi3:mini','gemma2:9b'],
+    requestStyle: 'openai',
+  },
+};
+
+/** Универсальный вызов LLM через выбранный провайдер. Поддерживает streaming. */
+async function callLLM({ messages, model, temperature = 0.5, signal, onToken }){
+  const s = state.settings;
+  const prov = PROVIDERS[s.provider];
+  if(!prov) throw new Error('Провайдер не сконфигурирован');
+  // Endpoint: пользовательский только если он подходит к выбранному провайдеру.
+  // Иначе используем endpointDefault — это защищает от ситуации «остался endpoint от предыдущего провайдера».
+  let endpoint = prov.endpointDefault;
+  if(s.endpoint){
+    // эвристика: пользовательский endpoint совпадает с дефолтным провайдера по hostname → используем его
+    try{
+      const userHost = new URL(s.endpoint).host;
+      const provHost = new URL(prov.endpointDefault).host;
+      if(userHost === provHost) endpoint = s.endpoint;
+    } catch(e){ /* невалидный URL — использовать default */ }
+  }
+  endpoint = endpoint.replace(/\/$/,'');
+  const useModel = model || s.defaultModel || prov.defaultModels[0];
+  const stream = !!(s.streaming && onToken);
+
+  if(prov.requestStyle === 'anthropic'){
+    return callAnthropic({ endpoint, apiKey: s.apiKey, messages, model: useModel, temperature, stream, signal, onToken });
+  }
+  return callOpenAICompat({ endpoint, apiKey: s.apiKey, messages, model: useModel, temperature, stream, signal, onToken });
+}
+
+async function callOpenAICompat({ endpoint, apiKey, messages, model, temperature, stream, signal, onToken }){
+  const url = endpoint + '/chat/completions';
+  const headers = { 'Content-Type': 'application/json' };
+  if(apiKey) headers['Authorization'] = 'Bearer ' + apiKey;
+  const body = JSON.stringify({ model, messages, temperature, stream });
+
+  const res = await fetch(url, { method: 'POST', headers, body, signal });
+  if(!res.ok){
+    const txt = await res.text().catch(()=>res.statusText);
+    throw new Error(`HTTP ${res.status}: ${txt.substring(0,300)}`);
+  }
+  if(!stream){
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || '';
+  }
+  // SSE streaming
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder('utf-8');
+  let buffer = '', full = '';
+  while(true){
+    const { value, done } = await reader.read();
+    if(done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop();
+    for(const line of lines){
+      const trimmed = line.trim();
+      if(!trimmed.startsWith('data:')) continue;
+      const data = trimmed.slice(5).trim();
+      if(data === '[DONE]') return full;
+      try{
+        const json = JSON.parse(data);
+        const delta = json.choices?.[0]?.delta?.content || '';
+        if(delta){ full += delta; onToken && onToken(delta, full); }
+      } catch(e){ /* skip malformed chunks */ }
+    }
+  }
+  return full;
+}
+
+async function callAnthropic({ endpoint, apiKey, messages, model, temperature, stream, signal, onToken }){
+  // Convert OpenAI messages to Anthropic format
+  let system = '';
+  const anthMessages = [];
+  for(const m of messages){
+    if(m.role === 'system'){ system += (system ? '\n\n' : '') + m.content; }
+    else anthMessages.push({ role: m.role, content: m.content });
+  }
+  const url = endpoint + '/messages';
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-api-key': apiKey,
+    'anthropic-version': '2023-06-01',
+    'anthropic-dangerous-direct-browser-access': 'true',
+  };
+  const body = JSON.stringify({
+    model,
+    max_tokens: 4096,
+    temperature,
+    system: system || undefined,
+    messages: anthMessages,
+    stream,
+  });
+  const res = await fetch(url, { method: 'POST', headers, body, signal });
+  if(!res.ok){
+    const txt = await res.text().catch(()=>res.statusText);
+    throw new Error(`HTTP ${res.status}: ${txt.substring(0,300)}`);
+  }
+  if(!stream){
+    const data = await res.json();
+    return data.content?.[0]?.text || '';
+  }
+  // Anthropic SSE
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder('utf-8');
+  let buffer = '', full = '';
+  while(true){
+    const { value, done } = await reader.read();
+    if(done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop();
+    for(const line of lines){
+      const trimmed = line.trim();
+      if(!trimmed.startsWith('data:')) continue;
+      const data = trimmed.slice(5).trim();
+      try{
+        const json = JSON.parse(data);
+        if(json.type === 'content_block_delta'){
+          const delta = json.delta?.text || '';
+          if(delta){ full += delta; onToken && onToken(delta, full); }
+        }
+      } catch(e){ /* skip */ }
+    }
+  }
+  return full;
+}
+
+/* ====== ORCHESTRATOR (Oracle) ====== */
+const ORACLE_DECOMPOSE_PROMPT = `Ты — Oracle, главный координатор GrandHubAi. Твоя задача: разобрать запрос пользователя на подзадачи и выбрать релевантных специалистов из библиотеки.
+
+Формат ответа — строго JSON без какого-либо текста до или после:
+{
+  "analysis": "краткий разбор задачи в 1-2 предложениях",
+  "subtasks": [
+    {"agent_id": "id_из_списка", "subtask": "конкретная подзадача для этого специалиста"},
+    ...
+  ]
+}
+
+Доступные специалисты (id → название):
+{AGENT_LIST}
+
+Правила:
+- Подбирай {N} наиболее подходящих специалистов (не больше).
+- Каждой подзадаче — свой специалист, без дублей.
+- Если задача проста — можно использовать 1 специалиста.
+- Если в библиотеке нет точно подходящего — выбирай ближайшего по смыслу.
+
+Запрос пользователя следует ниже.`;
+
+const ORACLE_AGGREGATE_PROMPT = `Ты — Oracle, главный координатор. Тебе предоставлены результаты работы команды специалистов по подзадачам пользователя. Объедини их в единый чёткий ответ.
+
+Структурируй ответ так:
+1. Краткое резюме (1-2 предложения)
+2. Развёрнутый ответ по существу с использованием выводов команды
+3. (если уместно) Дальнейшие шаги или рекомендации
+
+Не повторяй имена специалистов в каждом параграфе. Не пиши "согласно ответу X" — пиши от первого лица как координатор. Сохраняй ключевые формулы, цифры, ссылки на нормативы которые упомянули специалисты.`;
+
+function listAgentsForOracle(domainFilter){
+  const all = window.AGENTS || {};
+  const list = [];
+  for(const id in all){
+    const a = all[id];
+    if(domainFilter && a.domain !== domainFilter) continue;
+    if(id === 'oracle' || id === 'qa_critic' || id === 'concierge') continue;
+    list.push(`${id}: ${a.name} — ${a.description || a.domain}`);
+  }
+  return list.join('\n');
+}
+
+/* ====== CONCIERGE (модератор первой линии) ====== */
+const CONCIERGE_RESULT_HANDOFF = `Команда специалистов завершила работу. Передайте клиенту результат, добавив короткое тёплое вступление от лица Аиды (1-2 предложения), затем сам результат без изменений, затем короткое предложение задать вопросы или продолжить. Не дублируйте имена специалистов.
+
+Результат от команды:`;
+
+/** Записывает использование агента в текущей сессии (для зелёного badge) */
+function markAgentUsed(agentId){
+  if(!agentId) return;
+  if(!state.usedAgentsInSession) state.usedAgentsInSession = new Set();
+  // если хранится в JSON (после restore) — превратим в Set
+  if(Array.isArray(state.usedAgentsInSession)) state.usedAgentsInSession = new Set(state.usedAgentsInSession);
+  state.usedAgentsInSession.add(agentId);
+  // обновляем UI: помечаем в дереве
+  const item = document.querySelector(`.agent-item[data-agent-id="${agentId}"]`);
+  if(item && !item.querySelector('.agent-used-badge')){
+    const dot = document.createElement('span');
+    dot.className = 'agent-used-badge';
+    dot.title = 'Использовался в этой сессии';
+    item.querySelector('.agent-name')?.appendChild(dot);
+  }
+}
+
+/** Вызывает модератора Аиду как первое звено обработки. Возвращает решение Аиды. */
+async function callConcierge(task, signal){
+  const concierge = window.AGENTS.concierge;
+  if(!concierge) throw new Error('Агент concierge не найден');
+  const history = buildConversationContext(8);
+  const raw = await callLLM({
+    messages: [
+      { role: 'system', content: concierge.system_prompt },
+      ...history,
+      { role: 'user', content: task }
+    ],
+    temperature: concierge.temperature ?? 0.5,
+    signal,
+  });
+  try{
+    return extractJsonObject(raw);
+  } catch(e){
+    // Если Аида ответила не JSON — считаем что это прямой ответ-приветствие
+    return { action: 'answer', text: raw };
+  }
+}
+
+async function orchestrate(task, signal){
+  const s = state.settings;
+  const N = parseInt(s.orchestratorScale, 10) || 3;
+
+  if(!s.apiKey && s.provider !== 'ollama'){
+    throw new Error('API-ключ не задан. Откройте ⚙️ настройки.');
+  }
+  if(N === 1){
+    // Прямой вызов — Oracle отвечает сам как general assistant
+    return await directOracle(task, signal);
+  }
+
+  // STEP 1: Decomposition
+  addActivity('Oracle','🧠 Декомпозиция задачи и выбор команды...', 'system');
+  const agentsList = listAgentsForOracle(s.domainFilter);
+  const decomposePrompt = ORACLE_DECOMPOSE_PROMPT
+    .replace('{AGENT_LIST}', agentsList)
+    .replace('{N}', N);
+  let decomposition;
+  try{
+    const raw = await callLLM({
+      messages: [
+        { role: 'system', content: decomposePrompt },
+        { role: 'user', content: task }
+      ],
+      temperature: 0.3,
+      signal,
+    });
+    // Извлечь JSON из ответа: ищем сбалансированные { ... }, начиная с первой скобки
+    decomposition = extractJsonObject(raw);
+  } catch(e){
+    addActivity('Oracle', '⚠️ Не удалось разобрать декомпозицию, переключаюсь в прямой режим.', 'error');
+    return await directOracle(task, signal);
+  }
+
+  if(!decomposition.subtasks || !decomposition.subtasks.length){
+    return await directOracle(task, signal);
+  }
+
+  addActivity('Oracle', `📋 ${decomposition.analysis || 'План готов'}. Команда: ${decomposition.subtasks.length} специалистов.`, 'success');
+
+  // STEP 2: Run specialists in parallel
+  const specialists = decomposition.subtasks.map(sub => {
+    const agent = window.AGENTS[sub.agent_id];
+    if(!agent) return null;
+    return { agent, subtask: sub.subtask, agent_id: sub.agent_id };
+  }).filter(Boolean);
+
+  const results = await Promise.all(specialists.map(async (sp) => {
+    addActivity(sp.agent.name, `⏳ обрабатывает: ${sp.subtask.substring(0,80)}...`);
+    markAgentUsed(sp.agent_id);
+    try{
+      const out = await callLLM({
+        messages: [
+          { role: 'system', content: sp.agent.system_prompt },
+          { role: 'user', content: sp.subtask }
+        ],
+        model: sp.agent.model_preference || undefined,
+        temperature: sp.agent.temperature ?? 0.5,
+        signal,
+      });
+      addActivity(sp.agent.name, '✅ готов', 'success');
+      return { agent: sp.agent, subtask: sp.subtask, result: out };
+    } catch(err){
+      addActivity(sp.agent.name, `❌ ошибка: ${err.message}`, 'error');
+      return { agent: sp.agent, subtask: sp.subtask, result: `(ошибка: ${err.message})` };
+    }
+  }));
+
+  // STEP 3: Aggregate
+  addActivity('Oracle', '🧬 Синтез финального ответа из результатов команды...', 'system');
+  const history = buildConversationContext(6);
+  const aggregateUserMsg = `Запрос пользователя:\n${task}\n\n---\n\nРезультаты команды:\n\n` +
+    results.map(r => `### ${r.agent.name} (${r.agent.domain})\nПодзадача: ${r.subtask}\n\n${r.result}`).join('\n\n---\n\n');
+
+  return await callLLMStreaming({
+    messages: [
+      { role: 'system', content: ORACLE_AGGREGATE_PROMPT },
+      ...history,
+      { role: 'user', content: aggregateUserMsg }
+    ],
+    temperature: 0.5,
+    signal,
+    senderName: 'Oracle 🧠 (синтез)',
+  });
+}
+
+async function directOracle(task, signal){
+  const oracle = window.AGENTS.oracle;
+  const sys = oracle ? oracle.system_prompt : 'Ты — полезный AI-ассистент.';
+  // Передаём последние ~6 сообщений как контекст, чтобы бот помнил предыдущий обмен
+  const history = buildConversationContext(6);
+  return await callLLMStreaming({
+    messages: [
+      { role: 'system', content: sys },
+      ...history,
+      { role: 'user', content: task }
+    ],
+    temperature: 0.5,
+    signal,
+    senderName: 'Oracle 🧠',
+  });
+}
+
+/** Строит контекст разговора для передачи в LLM (формат OpenAI). */
+function buildConversationContext(maxMessages){
+  // Берём последние maxMessages сообщений из state.conversation, исключая текущую (последнюю) реплику пользователя
+  // (она передаётся отдельно как user message). Также пропускаем пустые сообщения и системные ошибки.
+  const conv = state.conversation.filter(m => m && m.text && m.text.trim());
+  // Последнее сообщение — это только что добавленная реплика пользователя. Исключаем её.
+  const slice = conv.slice(0, -1).slice(-maxMessages);
+  return slice.map(m => ({
+    role: m.role === 'user' ? 'user' : 'assistant',
+    content: m.text
+  }));
+}
+
+/** Вызов LLM со стримингом сразу в чат (создаёт новое сообщение). */
+async function callLLMStreaming({ messages, temperature, signal, senderName, model }){
+  const msgEl = createMessageElement('agent', senderName || 'Agent');
+  let full = '';
+  try{
+    full = await callLLM({
+      messages, temperature, model, signal,
+      onToken: (delta, accumulated) => {
+        msgEl.contentEl.innerHTML = renderMd(accumulated);
+        scrollChatToBottom();
+      },
+    });
+    if(!state.settings.streaming){
+      msgEl.contentEl.innerHTML = renderMd(full);
+    }
+  } catch(err){
+    if(err.name === 'AbortError'){
+      msgEl.contentEl.innerHTML += '<br><em style="color:var(--warning)">[прервано пользователем]</em>';
+    } else {
+      msgEl.contentEl.innerHTML = renderMd(`❌ Ошибка: ${err.message}`);
+      addActivity('Система', `Ошибка LLM: ${err.message}`, 'error');
+    }
+  }
+  // Сохраняем в историю
+  state.conversation.push({ role: 'agent', sender: senderName || 'Agent', text: full, time: new Date().toISOString() });
+  persistState();
+  return full;
+}
+
+/* ====== UI: MESSAGES ====== */
+function createMessageElement(role, sender){
+  const container = $('chatMessages');
+  const div = document.createElement('div');
+  div.className = `message ${role}`;
+  if(role === 'user'){
+    div.innerHTML = `<strong>Вы</strong><span class="message-content"></span>`;
+  } else if(role === 'system'){
+    div.innerHTML = `<span class="message-content"></span>`;
+  } else {
+    div.innerHTML = `<strong>${escapeHtml(sender || 'Oracle')}</strong><span class="message-content"></span>`;
+  }
+  const contentEl = div.querySelector('.message-content');
+  container.appendChild(div);
+  scrollChatToBottom();
+  return { div, contentEl };
+}
+
+function appendUserMessage(text){
+  const { contentEl } = createMessageElement('user');
+  contentEl.innerHTML = renderMd(text);
+  state.conversation.push({ role: 'user', text, time: new Date().toISOString() });
+  persistState();
+}
+
+function appendSystemMessage(text){
+  const { contentEl } = createMessageElement('system');
+  contentEl.innerHTML = renderMd(text);
+}
+
+function scrollChatToBottom(){
+  const c = $('chatMessages');
+  c.scrollTop = c.scrollHeight;
+}
+
+function restoreChat(){
+  const c = $('chatMessages');
+  c.innerHTML = '';
+  if(!state.conversation.length){
+    const greeter = state.settings.useConcierge ? 'Аида 💼' : 'Oracle 🧠';
+    c.innerHTML = `<div class="message agent"><strong>${greeter}</strong>Сессия восстановлена. Готова к работе.</div>`;
+    return;
+  }
+  for(const m of state.conversation){
+    if(m.role === 'user'){
+      const d = document.createElement('div');
+      d.className = 'message user';
+      d.innerHTML = `<strong>Вы</strong>${renderMd(m.text)}`;
+      c.appendChild(d);
+    } else {
+      const d = document.createElement('div');
+      d.className = 'message agent';
+      d.innerHTML = `<strong>${escapeHtml(m.sender || 'Agent')}</strong>${renderMd(m.text)}`;
+      c.appendChild(d);
+    }
+  }
+  scrollChatToBottom();
+}
+
+/* ====== UI: ACTIVITY LOG ====== */
+function addActivity(agent, action, kind){
+  const logDiv = $('activityLog');
+  const entry = document.createElement('div');
+  entry.className = `activity-item ${kind || ''}`;
+  entry.innerHTML = `<span class="ts">${timestamp()}</span><span class="msg"><b>${escapeHtml(agent)}:</b> ${escapeHtml(action)}</span>`;
+  logDiv.appendChild(entry);
+  logDiv.scrollTop = logDiv.scrollHeight;
+  state.activityLogs.push({ time: new Date().toISOString(), agent, action, kind: kind || '' });
+  while(logDiv.children.length > 100) logDiv.removeChild(logDiv.firstChild);
+  persistState();
+}
+
+function restoreActivity(){
+  const logDiv = $('activityLog');
+  logDiv.innerHTML = '';
+  for(const l of state.activityLogs.slice(-50)){
+    const entry = document.createElement('div');
+    entry.className = `activity-item ${l.kind || ''}`;
+    const t = new Date(l.time).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    entry.innerHTML = `<span class="ts">${t}</span><span class="msg"><b>${escapeHtml(l.agent)}:</b> ${escapeHtml(l.action)}</span>`;
+    logDiv.appendChild(entry);
+  }
+}
+
+/* ====== UI: AGENTS TREE ====== */
+/** Удаляет loading-плейсхолдер если он ещё в DOM */
+function hideAgentsLoading(){
+  const ld = $('agentsLoadingState');
+  if(ld && ld.parentNode) ld.parentNode.removeChild(ld);
+}
+function buildAgentsByDomain(){
+  const all = window.AGENTS || {};
+  const byDomain = {};
+  for(const id in all){
+    const a = all[id];
+    const d = a.domain || 'Прочее';
+    if(!byDomain[d]) byDomain[d] = [];
+    byDomain[d].push({ id, ...a });
+  }
+  // sort agents within each domain
+  for(const d in byDomain) byDomain[d].sort((x,y) => x.name.localeCompare(y.name,'ru'));
+  return byDomain;
+}
+
+function renderAgentsTree(){
+  hideAgentsLoading();
+  const container = $('agentsTree');
+  const search = ($('agentSearch').value || '').trim().toLowerCase();
+  const filterDomain = state.settings.domainFilter;
+  const byDomain = buildAgentsByDomain();
+  const total = Object.keys(window.AGENTS || {}).length;
+
+  // обновляем бейдж и подзаголовок
+  $('agentTotalBadge').textContent = total;
+  $('agentCountLabel').textContent = `Multi-Agent AI Platform · ${total} специализированных агентов`;
+
+  // обновляем фильтр доменов (один раз)
+  if(!$('domainFilter').dataset.populated){
+    const dFilter = $('domainFilter');
+    const domains = Object.keys(byDomain).sort((a,b)=>a.localeCompare(b,'ru'));
+    for(const d of domains){
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = `${d} (${byDomain[d].length})`;
+      dFilter.appendChild(opt);
+    }
+    dFilter.dataset.populated = '1';
+  }
+
+  // рендер дерева
+  container.innerHTML = '';
+  const sortedDomains = Object.keys(byDomain).sort((a,b)=>a.localeCompare(b,'ru'));
+  let shown = 0;
+  for(const domain of sortedDomains){
+    if(filterDomain && domain !== filterDomain) continue;
+    const agents = byDomain[domain].filter(a => {
+      if(!search) return true;
+      return (a.name + ' ' + (a.description || '') + ' ' + a.id).toLowerCase().includes(search);
+    });
+    if(!agents.length) continue;
+    const det = document.createElement('details');
+    det.className = 'cat';
+    det.open = !!filterDomain || !!search;
+    const sum = document.createElement('summary');
+    sum.innerHTML = `<span>${escapeHtml(domain)}</span><span class="badge" style="font-size:.65rem">${agents.length}</span>`;
+    det.appendChild(sum);
+    const list = document.createElement('div');
+    list.className = 'cat-list';
+    // нормализуем usedAgentsInSession (после restore из IndexedDB может быть массивом)
+    if(state.usedAgentsInSession && !(state.usedAgentsInSession instanceof Set)){
+      state.usedAgentsInSession = new Set(state.usedAgentsInSession);
+    }
+    for(const a of agents){
+      const row = document.createElement('div');
+      row.className = 'agent-item';
+      row.dataset.agentId = a.id;
+      row.tabIndex = 0;
+      const usedBadge = state.usedAgentsInSession?.has?.(a.id) ? '<span class="agent-used-badge" title="Использовался в этой сессии"></span>' : '';
+      row.innerHTML = `<span class="agent-name">${escapeHtml(a.name)}${usedBadge}</span><span class="agent-desc">${escapeHtml((a.description||'').substring(0,40))}</span>`;
+      row.addEventListener('click', () => openAgentInfo(a.id));
+      row.addEventListener('keydown', (e) => { if(e.key === 'Enter') openAgentInfo(a.id); });
+      list.appendChild(row);
+      shown++;
+    }
+    det.appendChild(list);
+    container.appendChild(det);
+  }
+  if(shown === 0){
+    container.innerHTML = '<div style="padding:20px;color:var(--text-muted);text-align:center;font-size:.85rem">Ничего не найдено</div>';
+  }
+}
+
+/* ====== UI: AGENT INFO MODAL ====== */
+let activeDirectAgent = null;
+function openAgentInfo(id){
+  const a = window.AGENTS[id];
+  if(!a) return;
+  activeDirectAgent = id;
+  $('agentModalTitle').textContent = `${a.name} (${a.domain})`;
+  const body = $('agentModalBody');
+  const exHtml = (a.examples || []).map(e => `<li>${escapeHtml(e)}</li>`).join('');
+  body.innerHTML = `
+    <div class="form-row"><label>ID:</label><code>${escapeHtml(id)}</code></div>
+    <div class="form-row"><label>Описание:</label><div>${escapeHtml(a.description || '—')}</div></div>
+    <div class="form-row"><label>Системный промпт:</label>
+      <textarea class="input" rows="8" readonly style="font-family:'Cascadia Code',monospace;font-size:.78rem">${escapeHtml(a.system_prompt || '')}</textarea>
+    </div>
+    <div class="form-row"><label>Параметры:</label>
+      <div style="font-size:.82rem;color:var(--text-subtle)">
+        Temperature: <code>${a.temperature ?? 0.5}</code> ·
+        Предпочтительная модель: <code>${a.model_preference || 'авто'}</code>
+      </div>
+    </div>
+    ${exHtml ? `<div class="form-row"><label>Примеры запросов:</label><ul style="padding-left:18px;font-size:.82rem;line-height:1.6">${exHtml}</ul></div>` : ''}
+  `;
+  showModal('agentModal');
+}
+
+/* ====== UI: MODALS ====== */
+function showModal(id){ $(id).classList.add('active'); }
+function hideModal(id){ $(id).classList.remove('active'); }
+
+/** Обновляет бейдж в шапке чата — показывает текущий режим работы. */
+function updateCurrentAgentBadge(){
+  const badge = $('currentAgentBadge');
+  if(!badge) return;
+  if(activeDirectAgent && $('useAgentBtn').dataset.armed === '1'){
+    const a = window.AGENTS[activeDirectAgent];
+    badge.textContent = a ? `🎯 ${a.name}` : 'Прямой вызов';
+  } else if(state.settings.useConcierge){
+    const N = parseInt(state.settings.orchestratorScale, 10) || 3;
+    badge.textContent = N === 1 ? 'Аида 💼 + Oracle' : `Аида 💼 + команда (${N})`;
+  } else {
+    const N = parseInt(state.settings.orchestratorScale, 10) || 3;
+    badge.textContent = N === 1 ? 'Oracle (прямой)' : `Oracle + команда из ${N}`;
+  }
+}
+
+/* ====== EXPORT ====== */
+function exportJSON(){
+  const data = {
+    platform: 'GrandHubAi',
+    version: APP.version,
+    copyright: APP.copyright,
+    timestamp: new Date().toISOString(),
+    settings: { ...state.settings, apiKey: '[REDACTED]' },
+    conversation: state.conversation,
+    activityLogs: state.activityLogs,
+  };
+  downloadFile(`grandhubai_${Date.now()}.json`, JSON.stringify(data, null, 2), 'application/json');
+  addActivity('Система', '📄 JSON экспортирован', 'success');
+}
+
+function exportTXT(){
+  let txt = `GrandHubAi — диалог\n`;
+  txt += `Дата: ${new Date().toLocaleString('ru-RU')}\n`;
+  txt += `Платформа: GrandHubAi v${APP.version}\n`;
+  txt += `Провайдер: ${state.settings.provider}\n`;
+  txt += `${'═'.repeat(60)}\n\n`;
+  for(const m of state.conversation){
+    const sender = m.role === 'user' ? 'ВЫ' : (m.sender || 'AGENT').toUpperCase();
+    txt += `[${sender}]\n${m.text}\n\n${'─'.repeat(60)}\n\n`;
+  }
+  txt += `\n${APP.copyright}\n`;
+  downloadFile(`grandhubai_${Date.now()}.txt`, txt, 'text/plain;charset=utf-8');
+  addActivity('Система', '📃 TXT экспортирован', 'success');
+}
+
+function exportMarkdown(){
+  let md = `# GrandHubAi — диалог\n\n`;
+  md += `> **Дата:** ${new Date().toLocaleString('ru-RU')}\n`;
+  md += `> **Платформа:** GrandHubAi v${APP.version}\n`;
+  md += `> **Провайдер:** ${state.settings.provider}\n\n---\n\n`;
+  for(const m of state.conversation){
+    if(m.role === 'user') md += `### 👤 Вы\n\n${m.text}\n\n`;
+    else md += `### 🤖 ${m.sender || 'Agent'}\n\n${m.text}\n\n`;
+    md += `---\n\n`;
+  }
+  md += `\n\n*Сгенерировано GrandHubAi · ${APP.copyright}*\n`;
+  downloadFile(`grandhubai_${Date.now()}.md`, md, 'text/markdown');
+  addActivity('Система', '📝 Markdown экспортирован', 'success');
+}
+
+function exportPDF(){
+  // Используем встроенный print-диалог браузера — самый надёжный путь без CDN-зависимости.
+  // У всех современных браузеров есть «Сохранить как PDF» в диалоге печати.
+  addActivity('Система', '🖨️ Открываю диалог печати (выберите «Save as PDF»)', 'system');
+  setTimeout(() => window.print(), 100);
+}
+
+function downloadFile(name, content, mime){
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* ====== FILE ATTACHMENTS ====== */
+function formatFileSize(bytes){
+  if(bytes < 1024) return bytes + ' B';
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' КБ';
+  return (bytes/(1024*1024)).toFixed(2) + ' МБ';
+}
+
+function fileIcon(type, name){
+  if(type.startsWith('image/')) return '🖼️';
+  const ext = (name.split('.').pop() || '').toLowerCase();
+  const map = { txt:'📄', md:'📝', json:'🗂️', csv:'📊', log:'📋', xml:'📰',
+                html:'🌐', js:'📜', py:'🐍', yaml:'⚙️', yml:'⚙️', ini:'⚙️', cfg:'⚙️' };
+  return map[ext] || '📎';
+}
+
+function readFileAsText(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsText(file, 'utf-8');
+  });
+}
+
+function readFileAsDataURL(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleFiles(fileList){
+  const files = Array.from(fileList || []);
+  for(const file of files){
+    if(file.size > MAX_ATTACHMENT_SIZE){
+      addActivity('Прикрепление', `❌ ${file.name}: больше ${formatFileSize(MAX_ATTACHMENT_SIZE)}`, 'error');
+      continue;
+    }
+    const totalSize = state.attachments.reduce((a, x) => a + (x.size || 0), 0);
+    if(totalSize + file.size > MAX_ATTACHMENTS_TOTAL){
+      addActivity('Прикрепление', `❌ Превышен суммарный лимит ${formatFileSize(MAX_ATTACHMENTS_TOTAL)}`, 'error');
+      break;
+    }
+    const isImage = file.type.startsWith('image/');
+    try{
+      let content;
+      if(isImage){
+        content = await readFileAsDataURL(file);
+      } else {
+        content = await readFileAsText(file);
+      }
+      state.attachments.push({
+        name: file.name,
+        size: file.size,
+        type: file.type || 'text/plain',
+        content,
+        isImage,
+      });
+      addActivity('Прикрепление', `📎 ${file.name} (${formatFileSize(file.size)})`, 'success');
+    } catch(e){
+      addActivity('Прикрепление', `❌ Ошибка чтения ${file.name}: ${e.message}`, 'error');
+    }
+  }
+  renderAttachments();
+}
+
+function renderAttachments(){
+  const bar = $('attachmentsBar');
+  if(!bar) return;
+  if(!state.attachments.length){ bar.style.display = 'none'; bar.innerHTML = ''; return; }
+  bar.style.display = 'flex';
+  bar.innerHTML = '';
+  state.attachments.forEach((att, idx) => {
+    const chip = document.createElement('div');
+    chip.className = 'attachment-chip';
+    chip.innerHTML = `
+      <span class="att-icon">${escapeHtml(fileIcon(att.type, att.name))}</span>
+      <span class="att-name" title="${escapeHtml(att.name)}">${escapeHtml(att.name)}</span>
+      <span class="att-size">${formatFileSize(att.size)}</span>
+      <button class="att-remove" data-idx="${idx}" aria-label="Удалить">×</button>
+    `;
+    chip.querySelector('.att-remove').addEventListener('click', () => {
+      state.attachments.splice(idx, 1);
+      renderAttachments();
+    });
+    bar.appendChild(chip);
+  });
+}
+
+/** Встраивает контекст из прикреплённых файлов в текст задачи.
+ *  Текстовые файлы — встраиваются полностью (с усечением до 30к символов).
+ *  Изображения — упоминаются по имени с предупреждением (vision API в roadmap v1.3). */
+function buildTaskWithAttachments(task){
+  if(!state.attachments.length) return task;
+  let text = task;
+  const textFiles = state.attachments.filter(a => !a.isImage);
+  const imageFiles = state.attachments.filter(a => a.isImage);
+  if(textFiles.length){
+    text += '\n\n— Прикреплённые файлы —';
+    for(const f of textFiles){
+      const max = 30000;
+      const content = f.content.length > max
+        ? f.content.substring(0, max) + `\n\n[... файл усечён, оригинал ${formatFileSize(f.size)}]`
+        : f.content;
+      text += `\n\n### Файл: ${f.name} (${formatFileSize(f.size)})\n\n\`\`\`\n${content}\n\`\`\``;
+    }
+  }
+  if(imageFiles.length){
+    text += `\n\n— Изображения (vision-API будет в v1.3) —\nПрикреплены: ${imageFiles.map(f => f.name).join(', ')}.\n`
+         +  `В текущей версии модель не видит содержимое изображений. Опишите в тексте, что на них.`;
+  }
+  return text;
+}
+
+function clearAttachments(){
+  state.attachments = [];
+  renderAttachments();
+}
+
+/* ====== VOICE INPUT ====== */
+function setupVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    const btn = $('voiceBtn');
+    if(btn){ btn.disabled = true; btn.title = 'Голос не поддерживается этим браузером'; }
+    return null;
+  }
+  const rec = new SR();
+  rec.lang = 'ru-RU';
+  rec.continuous = false;
+  rec.interimResults = false;
+  rec.onresult = (e) => {
+    const text = e.results[0][0].transcript;
+    const ti = $('taskInput');
+    ti.value = (ti.value ? ti.value + ' ' : '') + text;
+    autoGrow(ti);
+    addActivity('Голос', `Распознано: "${text.substring(0,80)}"`, 'success');
+  };
+  rec.onerror = (e) => addActivity('Голос', `Ошибка: ${e.error}`, 'error');
+  rec.onend = () => $('voiceBtn').classList.remove('recording');
+  return rec;
+}
+
+/* ====== THEME & ACCESSIBILITY ====== */
+function applyTheme(){
+  let theme = state.settings.theme || 'dark';
+  if(theme === 'auto'){
+    // следуем системе
+    const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    theme = dark ? 'dark' : 'light';
+  }
+  if(!VALID_THEMES.has(theme)) theme = 'dark';
+  // обновляем body классы
+  document.body.className = document.body.className
+    .split(/\s+/)
+    .filter(c => !['dark','light','sepia','contrast','solarized','nord','dracula',
+                   'fs-s','fs-m','fs-l','fs-xl',
+                   'cf-s','cf-m','cf-l','cf-xl','cf-xxl',
+                   'reduced-motion'].includes(c))
+    .join(' ').trim();
+  document.body.classList.add(theme);
+  // размер шрифта общий
+  const fs = VALID_FONT_SIZES.has(state.settings.fontSize) ? state.settings.fontSize : 'm';
+  document.body.classList.add('fs-' + fs);
+  // размер шрифта в чате (отдельно)
+  const cf = VALID_CHAT_FONT_SIZES.includes(state.settings.chatFontSize) ? state.settings.chatFontSize : 'm';
+  document.body.classList.add('cf-' + cf);
+  // обновить индикатор размера шрифта чата
+  const ind = document.getElementById('chatFontIndicator');
+  if(ind) ind.textContent = CHAT_FS_LABELS[cf] || 'M';
+  // reduced motion
+  if(state.settings.reducedMotion) document.body.classList.add('reduced-motion');
+  // обновим meta theme-color
+  const themeColors = {
+    dark:'#0f172a', light:'#ffffff', sepia:'#fbf3df', contrast:'#000000',
+    solarized:'#073642', nord:'#3b4252', dracula:'#343746'
+  };
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if(metaTheme) metaTheme.setAttribute('content', themeColors[theme] || '#0f172a');
+}
+
+// Подписка на изменение системной темы (для auto-режима)
+if(window.matchMedia){
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  if(mq.addEventListener) mq.addEventListener('change', () => {
+    if(state.settings.theme === 'auto') applyTheme();
+  });
+}
+
+/* ====== FILE:// DETECTION ====== */
+function checkFileProtocol(){
+  if(location.protocol === 'file:'){
+    const banner = $('fileProtocolBanner');
+    if(banner) banner.style.display = 'block';
+  }
+}
+
+/* ====== ANTI-CLICKJACKING ====== */
+// Защита от встраивания в iframe (clickjacking)
+if(window.top !== window.self){
+  document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif;color:#fff;background:#000"><h1>⚠️ GrandHubAi не может работать во встроенном фрейме</h1><p>Это защита от clickjacking-атак. Откройте приложение напрямую: <a href="' + location.href + '" target="_top" style="color:#fbbf24">' + location.href + '</a></p></div>';
+  throw new Error('Clickjacking attempt blocked');
+}
+
+/* ====== SETTINGS UI ====== */
+function applyProviderHints(){
+  const p = $('providerSelect').value;
+  const prov = PROVIDERS[p];
+  if(!prov) return;
+  // Безопасное построение подсказки с кликабельной ссылкой:
+  // парсим строку формата "Текст: domain.com → ещё текст" и оборачиваем домен в <a>
+  const hint = prov.keyHelp || '';
+  const linkMatch = hint.match(/(https?:\/\/[^\s]+|[a-z0-9-]+\.[a-z]{2,}(?:\/[^\s]*)?)/i);
+  const hintEl = $('providerHint');
+  hintEl.textContent = ''; // очищаем безопасно
+  if(linkMatch){
+    const url = linkMatch[0];
+    const before = hint.substring(0, linkMatch.index);
+    const after = hint.substring(linkMatch.index + url.length);
+    hintEl.appendChild(document.createTextNode(before));
+    const a = document.createElement('a');
+    a.href = url.startsWith('http') ? url : 'https://' + url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = url;
+    hintEl.appendChild(a);
+    hintEl.appendChild(document.createTextNode(after));
+  } else {
+    hintEl.textContent = hint;
+  }
+  $('apiKeyInput').placeholder = prov.keyFormat;
+  $('endpointInput').placeholder = prov.endpointDefault;
+  $('defaultModelInput').placeholder = prov.defaultModels[0];
+  // подгружаем модели в селектор
+  const sel = $('modelSelect');
+  sel.innerHTML = '<option value="">Авто (default)</option>';
+  for(const m of prov.defaultModels){
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = m;
+    sel.appendChild(opt);
+  }
+}
+
+function loadSettingsToUI(){
+  $('providerSelect').value = state.settings.provider || 'groq';
+  $('apiKeyInput').value = state.settings.apiKey || '';
+  $('endpointInput').value = state.settings.endpoint || '';
+  $('defaultModelInput').value = state.settings.defaultModel || '';
+  $('orchestratorScale').value = state.settings.orchestratorScale || 3;
+  $('streamingToggle').checked = !!state.settings.streaming;
+  $('useConciergeToggle').checked = !!state.settings.useConcierge;
+  $('domainFilter').value = state.settings.domainFilter || '';
+  $('themeSelect').value = state.settings.theme || 'dark';
+  $('fontSizeSelect').value = state.settings.fontSize || 'm';
+  $('chatFontSizeSelect').value = state.settings.chatFontSize || 'm';
+  $('reducedMotionToggle').checked = !!state.settings.reducedMotion;
+  $('encryptKeyToggle').checked = !!state.settings.encryptKey;
+  applyProviderHints();
+  updateProviderStatus();
+}
+
+async function saveSettingsFromUI(){
+  const newProvider = $('providerSelect').value;
+  const oldProvider = state.settings.provider;
+  state.settings.provider = newProvider;
+  const newApiKey = $('apiKeyInput').value.trim();
+  state.settings.apiKey = newApiKey;
+  // Если провайдер сменился — сбрасываем endpoint и модель, чтобы не использовать значения от предыдущего
+  const userEndpoint = $('endpointInput').value.trim();
+  const userModel = $('defaultModelInput').value.trim();
+  if(newProvider !== oldProvider){
+    state.settings.endpoint = '';
+    state.settings.defaultModel = userModel || PROVIDERS[newProvider].defaultModels[0];
+    if(userEndpoint) state.settings.endpoint = userEndpoint;
+  } else {
+    state.settings.endpoint = userEndpoint;
+    state.settings.defaultModel = userModel || PROVIDERS[newProvider].defaultModels[0];
+  }
+  state.settings.orchestratorScale = parseInt($('orchestratorScale').value, 10) || 3;
+  state.settings.streaming = $('streamingToggle').checked;
+  state.settings.useConcierge = $('useConciergeToggle').checked;
+  // Тема + размер + accessibility
+  const theme = $('themeSelect').value;
+  state.settings.theme = VALID_THEMES.has(theme) ? theme : 'dark';
+  const fs = $('fontSizeSelect').value;
+  state.settings.fontSize = VALID_FONT_SIZES.has(fs) ? fs : 'm';
+  const cf = $('chatFontSizeSelect').value;
+  state.settings.chatFontSize = VALID_CHAT_FONT_SIZES.includes(cf) ? cf : 'm';
+  state.settings.reducedMotion = $('reducedMotionToggle').checked;
+  applyTheme();
+  // Шифрование ключа
+  const wantEncrypt = $('encryptKeyToggle').checked;
+  const wasEncrypt = state.settings.encryptKey;
+  state.settings.encryptKey = wantEncrypt;
+  if(wantEncrypt && newApiKey){
+    // включили шифрование — спрашиваем пароль и шифруем
+    const pwd = await askPassword('🔐 Установить master-пароль', 'Придумайте пароль для шифрования API-ключа:');
+    if(!pwd){
+      state.settings.encryptKey = false;
+      $('encryptKeyToggle').checked = false;
+      addActivity('Безопасность', 'Шифрование отменено — пароль не задан', 'error');
+    } else if(pwd.length < 4){
+      state.settings.encryptKey = false;
+      $('encryptKeyToggle').checked = false;
+      addActivity('Безопасность', 'Пароль слишком короткий (минимум 4 символа)', 'error');
+    } else {
+      try{
+        state.encryptedKey = await encryptString(newApiKey, pwd);
+        addActivity('Безопасность', '🔒 API-ключ зашифрован AES-256-GCM', 'success');
+      } catch(e){
+        state.settings.encryptKey = false;
+        $('encryptKeyToggle').checked = false;
+        addActivity('Безопасность', 'Ошибка шифрования: ' + e.message, 'error');
+      }
+    }
+  } else if(!wantEncrypt && wasEncrypt){
+    state.encryptedKey = null;
+    addActivity('Безопасность', '🔓 Шифрование отключено', 'system');
+  }
+  await persistState();
+  updateProviderStatus();
+  addActivity('Система', `Настройки сохранены. Провайдер: ${state.settings.provider}`, 'success');
+  hideModal('settingsModal');
+}
+
+function updateProviderStatus(){
+  const s = state.settings;
+  const ok = s.provider === 'ollama' || !!s.apiKey;
+  $('providerStatus').textContent = ok
+    ? `${PROVIDERS[s.provider].name} активен`
+    : `${PROVIDERS[s.provider].name} — нет API ключа`;
+}
+
+/* ====== INPUT HELPERS ====== */
+function autoGrow(textarea){
+  textarea.style.height = 'auto';
+  textarea.style.height = Math.min(textarea.scrollHeight, 160) + 'px';
+}
+
+/* ====== MAIN ACTIONS ====== */
+async function handleSend(){
+  const ti = $('taskInput');
+  const rawTask = ti.value.trim();
+  if(!rawTask && !state.attachments.length) return;
+  // Собираем задачу с прикреплёнными файлами
+  const task = buildTaskWithAttachments(rawTask || '(см. прикреплённые файлы)');
+  ti.value = '';
+  autoGrow(ti);
+  // Показываем в чате что отправил пользователь — оригинальный текст + список файлов
+  let displayMsg = rawTask || '';
+  if(state.attachments.length){
+    displayMsg += (displayMsg ? '\n\n' : '') + '📎 ' + state.attachments.map(a => a.name).join(', ');
+  }
+  appendUserMessage(displayMsg);
+  // После отправки очищаем прикрепления
+  clearAttachments();
+
+  // если активен «прямой вызов» агента — используем его
+  const directId = activeDirectAgent && $('useAgentBtn').dataset.armed === '1' ? activeDirectAgent : null;
+
+  $('sendBtn').disabled = true;
+  $('stopBtn').disabled = false;
+  state.inflight = new AbortController();
+  try{
+    if(directId){
+      const a = window.AGENTS[directId];
+      addActivity(a.name, `🎯 Прямой вызов`, 'system');
+      markAgentUsed(directId);
+      await callLLMStreaming({
+        messages: [
+          { role: 'system', content: a.system_prompt },
+          { role: 'user', content: task }
+        ],
+        temperature: a.temperature ?? 0.5,
+        model: a.model_preference,
+        signal: state.inflight.signal,
+        senderName: a.name,
+      });
+      $('useAgentBtn').dataset.armed = '0';
+      activeDirectAgent = null;
+      updateCurrentAgentBadge();
+    } else if(state.settings.useConcierge){
+      // НОВЫЙ FLOW: модератор Аида первой линии
+      addActivity('Аида 💼', 'Принимаю запрос...', 'system');
+      markAgentUsed('concierge');
+      let decision;
+      try{
+        decision = await callConcierge(task, state.inflight.signal);
+      } catch(err){
+        if(err.name === 'AbortError') throw err;
+        // Если concierge упал — fallback на прямую оркестрацию
+        addActivity('Аида 💼', `⚠️ Не удалось обработать через модератора, передаю напрямую: ${err.message}`, 'error');
+        await orchestrate(task, state.inflight.signal);
+        return;
+      }
+      const action = (decision.action || 'answer').toLowerCase();
+      if(action === 'answer' || action === 'clarify'){
+        // Аида сама отвечает / уточняет — показываем как сообщение от Аиды
+        const msgEl = createMessageElement('agent', 'Аида 💼');
+        msgEl.contentEl.innerHTML = renderMd(decision.text || '(нет ответа)');
+        state.conversation.push({
+          role: 'agent', sender: 'Аида 💼',
+          text: decision.text || '', time: new Date().toISOString()
+        });
+        persistState();
+        addActivity('Аида 💼', action === 'clarify' ? '❓ Запросила уточнения' : '💬 Ответила сама', 'success');
+      } else if(action === 'orchestrate'){
+        // Аида передаёт оркестратору
+        const brief = decision.orchestration_brief || task;
+        if(decision.text){
+          // Промежуточное сообщение клиенту перед оркестрацией
+          appendSystemMessage('💼 Аида: ' + decision.text);
+        }
+        addActivity('Аида 💼', '🤝 Передала задачу команде специалистов', 'system');
+        const result = await orchestrate(brief, state.inflight.signal);
+        // Финальное обёртывание результата от Аиды (опционально, экономим API на простых случаях)
+        // Здесь оркестратор уже отдал свой синтез — Аида не оборачивает повторно чтобы не дублировать
+        addActivity('Аида 💼', '✓ Передала результат клиенту', 'success');
+      } else {
+        // неизвестное действие — fallback
+        appendSystemMessage('💼 Аида: ' + (decision.text || 'Не удалось разобрать запрос. Передаю команде.'));
+        await orchestrate(task, state.inflight.signal);
+      }
+    } else {
+      // Старый flow — без модератора, сразу Oracle
+      await orchestrate(task, state.inflight.signal);
+    }
+  } catch(err){
+    appendSystemMessage(`❌ ${err.message}`);
+    addActivity('Система', err.message, 'error');
+  } finally {
+    $('sendBtn').disabled = false;
+    $('stopBtn').disabled = true;
+    state.inflight = null;
+  }
+}
+
+function handleStop(){
+  if(!state.inflight) return;
+  state.inflight.abort();
+  addActivity('Система', '⏹ Остановлено пользователем', 'system');
+}
+
+function clearHistory(){
+  if(!confirm('Очистить весь диалог и логи?')) return;
+  state.conversation = [];
+  state.activityLogs = [];
+  $('chatMessages').innerHTML = '<div class="message agent"><strong>Oracle 🧠</strong>История очищена. Начните новую сессию.</div>';
+  $('activityLog').innerHTML = '<div class="activity-item system"><span class="msg">История очищена.</span></div>';
+  persistState();
+}
+
+async function clearAll(){
+  if(!confirm('Полностью удалить все данные (ключ, история, настройки)? Действие необратимо.')) return;
+  await DB.clear();
+  state.conversation = [];
+  state.activityLogs = [];
+  state.settings = { provider: 'groq', apiKey: '', endpoint: '', defaultModel: '', orchestratorScale: 3, streaming: true, theme: 'dark', domainFilter: '' };
+  loadSettingsToUI();
+  $('chatMessages').innerHTML = '';
+  $('activityLog').innerHTML = '';
+  appendSystemMessage('Все данные удалены.');
+  hideModal('settingsModal');
+}
+
+/* ====== INIT ====== */
+async function init(){
+  await loadState();
+
+  // file:// детект-баннер
+  checkFileProtocol();
+
+  // применить тему / шрифт / reduced-motion
+  applyTheme();
+
+  // если ключ зашифрован — попросить пароль
+  await unlockApiKeyIfNeeded();
+
+  // populate UI
+  loadSettingsToUI();
+  renderAgentsTree();
+  // ⚠️ ВАЖНО: после renderAgentsTree dropdown доменов заполнен — теперь восстанавливаем выбор
+  $('domainFilter').value = state.settings.domainFilter || '';
+  updateCurrentAgentBadge();
+  restoreChat();
+  restoreActivity();
+
+  // listeners
+  $('sendBtn').addEventListener('click', handleSend);
+  $('stopBtn').addEventListener('click', handleStop);
+  $('taskInput').addEventListener('input', (e) => autoGrow(e.target));
+  $('taskInput').addEventListener('keydown', (e) => {
+    // Enter (без модификаторов) — отправка
+    // Shift+Enter — новая строка
+    // Ctrl+Enter / Cmd+Enter — отправка (для совместимости)
+    if(e.key === 'Enter' && !e.shiftKey && !e.isComposing){
+      e.preventDefault();
+      handleSend();
+    }
+  });
+
+  $('voiceBtn').addEventListener('click', () => {
+    if(!voice){ addActivity('Голос', 'Не поддерживается', 'error'); return; }
+    try{ voice.start(); $('voiceBtn').classList.add('recording'); }
+    catch(e){ addActivity('Голос', e.message, 'error'); }
+  });
+
+  $('exportTxtBtn').addEventListener('click', exportTXT);
+  $('exportMdBtn').addEventListener('click', exportMarkdown);
+  $('exportJsonBtn').addEventListener('click', exportJSON);
+  $('exportPdfBtn').addEventListener('click', exportPDF);
+
+  // Прикрепление файлов
+  $('attachBtn').addEventListener('click', () => $('attachInput').click());
+  $('attachInput').addEventListener('change', (e) => {
+    handleFiles(e.target.files);
+    e.target.value = ''; // сброс чтобы можно было выбрать тот же файл повторно
+  });
+  // Drag & drop файлов
+  const dropZone = $('chatMessages');
+  ['dragover','dragenter'].forEach(evt => dropZone.addEventListener(evt, (e) => {
+    e.preventDefault();
+    dropZone.style.outline = '2px dashed var(--primary)';
+  }));
+  ['dragleave','drop'].forEach(evt => dropZone.addEventListener(evt, (e) => {
+    e.preventDefault();
+    dropZone.style.outline = '';
+  }));
+  dropZone.addEventListener('drop', (e) => {
+    if(e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+  });
+  // Paste файлов из буфера обмена
+  $('taskInput').addEventListener('paste', (e) => {
+    if(!e.clipboardData) return;
+    const files = [];
+    for(const item of e.clipboardData.items || []){
+      if(item.kind === 'file'){
+        const f = item.getAsFile();
+        if(f) files.push(f);
+      }
+    }
+    if(files.length){
+      e.preventDefault();
+      handleFiles(files);
+    }
+  });
+
+  // Кнопка 🌓 — циклическое переключение тем
+  const THEME_CYCLE = ['dark','light','sepia','solarized','nord','dracula','contrast','auto'];
+  $('themeBtn').addEventListener('click', () => {
+    const cur = state.settings.theme || 'dark';
+    const idx = THEME_CYCLE.indexOf(cur);
+    const next = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
+    state.settings.theme = next;
+    applyTheme();
+    persistState();
+    addActivity('Система', `Тема: ${BEIGE_LABELS[next] || next}`, 'system');
+  });
+
+  // file:// баннер handlers
+  if($('howToServerBtn')){
+    $('howToServerBtn').addEventListener('click', () => showModal('serverHelpModal'));
+  }
+  if($('dismissFileBannerBtn')){
+    $('dismissFileBannerBtn').addEventListener('click', () => $('fileProtocolBanner').style.display = 'none');
+  }
+
+  $('settingsBtn').addEventListener('click', () => showModal('settingsModal'));
+  $('saveSettingsBtn').addEventListener('click', saveSettingsFromUI);
+  $('clearAllBtn').addEventListener('click', clearAll);
+  $('clearLogsBtn').addEventListener('click', clearHistory);
+
+  $('providerSelect').addEventListener('change', applyProviderHints);
+
+  $('agentSearch').addEventListener('input', renderAgentsTree);
+  $('domainFilter').addEventListener('change', (e) => {
+    state.settings.domainFilter = e.target.value;
+    persistState();
+    renderAgentsTree();
+  });
+
+  $('modelSelect').addEventListener('change', (e) => {
+    if(e.target.value){
+      state.settings.defaultModel = e.target.value;
+      $('defaultModelInput').value = e.target.value;
+      persistState();
+    }
+  });
+
+  // Переключение темы из настроек
+  $('themeSelect').addEventListener('change', (e) => {
+    const theme = e.target.value;
+    state.settings.theme = VALID_THEMES.has(theme) ? theme : 'dark';
+    applyTheme();
+    persistState();
+    addActivity('Система', `Тема: ${THEME_LABELS[theme] || theme}`, 'system');
+  });
+
+  $('useAgentBtn').addEventListener('click', () => {
+    if(!activeDirectAgent) return;
+    $('useAgentBtn').dataset.armed = '1';
+    hideModal('agentModal');
+    updateCurrentAgentBadge();
+    addActivity('Система', `Следующий запрос → прямо к агенту "${window.AGENTS[activeDirectAgent].name}"`, 'system');
+    $('taskInput').focus();
+  });
+
+  // Размер команды влияет на бейдж
+  $('orchestratorScale').addEventListener('change', (e) => {
+    state.settings.orchestratorScale = parseInt(e.target.value, 10) || 3;
+    persistState();
+    updateCurrentAgentBadge();
+  });
+
+  // Быстрые кнопки A− / A+ для размера шрифта в чате
+  function shiftChatFontSize(delta){
+    const cur = state.settings.chatFontSize || 'm';
+    const idx = VALID_CHAT_FONT_SIZES.indexOf(cur);
+    const next = VALID_CHAT_FONT_SIZES[Math.min(VALID_CHAT_FONT_SIZES.length - 1, Math.max(0, idx + delta))];
+    if(next === cur){
+      addActivity('Шрифт', delta > 0 ? 'Достигнут максимум (XXL)' : 'Достигнут минимум (S)', 'system');
+      return;
+    }
+    state.settings.chatFontSize = next;
+    applyTheme();
+    persistState();
+    addActivity('Шрифт', `Размер диалога: ${CHAT_FS_LABELS[next]}`, 'success');
+  }
+  $('chatFontDecBtn').addEventListener('click', () => shiftChatFontSize(-1));
+  $('chatFontIncBtn').addEventListener('click', () => shiftChatFontSize(+1));
+
+  // Горячие клавиши Ctrl+= / Ctrl+- для регулирования размера шрифта чата
+  document.addEventListener('keydown', (e) => {
+    if((e.ctrlKey || e.metaKey) && (e.key === '=' || e.key === '+')){
+      // Если фокус не в textarea — перехватываем
+      if(document.activeElement && document.activeElement.id !== 'taskInput'){
+        e.preventDefault();
+        shiftChatFontSize(+1);
+      }
+    } else if((e.ctrlKey || e.metaKey) && e.key === '-'){
+      if(document.activeElement && document.activeElement.id !== 'taskInput'){
+        e.preventDefault();
+        shiftChatFontSize(-1);
+      }
+    }
+  });
+
+  // close modal handlers
+  $$('[data-close-modal]').forEach(b => b.addEventListener('click', () => hideModal(b.dataset.closeModal)));
+  $$('.modal-overlay').forEach(o => o.addEventListener('click', (e) => { if(e.target === o) hideModal(o.id); }));
+
+  // service worker (if served via http)
+  if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{/* fail silently */});
+  }
+
+  addActivity('GrandHubAi', `🚀 Запущен. Загружено агентов: ${Object.keys(window.AGENTS||{}).length}`, 'success');
+}
+
+const voice = setupVoice();
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

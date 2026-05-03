@@ -1,0 +1,15 @@
+{
+  "name": "grandhubai-tests",
+  "version": "1.2.0",
+  "description": "Headless browser-тесты для GrandHubAi через Playwright",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install-browsers": "npx playwright install chromium",
+    "test": "node run-tests.mjs",
+    "test:verbose": "node run-tests.mjs --verbose"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0"
+  }
+}
