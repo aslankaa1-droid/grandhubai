@@ -2464,9 +2464,20 @@ async function clearAll(){
   await DB.clear();
   state.conversation = [];
   state.activityLogs = [];
-  state.settings = { provider: 'groq', apiKey: '', endpoint: '', defaultModel: '', orchestratorScale: 3, streaming: true, theme: 'dark', domainFilter: '', tier: 'novice', diamondRequestedAgents: 5, useConcierge: true };
+  state.settings = {
+    provider: 'groq', apiKey: '', endpoint: '', defaultModel: '',
+    orchestratorScale: 3, streaming: true,
+    theme: 'dark', fontSize: 'm', chatFontSize: 'm', reducedMotion: false,
+    encryptKey: false, useConcierge: true,
+    domainFilter: '', tier: 'novice', diamondRequestedAgents: 5,
+  };
   state.usage = { monthKey: '', dayKey: '', monthTokens: 0, dayTokens: 0 };
+  state.encryptedKey = null;
+  state.attachments = [];
+  state.usedAgentsInSession = new Set();
   loadSettingsToUI();
+  applyTheme();
+  renderAttachments();
   $('chatMessages').innerHTML = '';
   $('activityLog').innerHTML = '';
   appendSystemMessage('Все данные удалены.');
