@@ -11,54 +11,33 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F0F0F'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-family='-apple-system,sans-serif' font-size='34' font-weight='700' fill='%23FFCD3C'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* Doc-specific layering on top of landing styles. */
 .doc-cover{padding:80px 0 56px;border-bottom:1px solid var(--line);text-align:center}
 .doc-cover .eyebrow{margin:0 0 28px}
 .doc-cover h1{font-size:clamp(28px,4.5vw,42px);font-weight:700;letter-spacing:-.01em;line-height:1.15;margin:0 0 14px}
 .doc-cover .sub{color:var(--muted);max-width:560px;margin:0 auto 28px;font-size:16px}
 .doc-cover .for{display:inline-block;border:1px dashed var(--line);border-radius:10px;padding:10px 18px;color:var(--muted);font-size:14px}
 .doc-cover .yr{margin-top:36px;display:inline-block;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px 22px;color:var(--accent);letter-spacing:.18em;font-size:13px}
-
 .section h2.doc-h{display:flex;align-items:center;gap:14px;font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 28px}
 .section h2.doc-h::before,.section h2.doc-h::after{content:"";flex:1;height:1px;background:var(--line)}
-
 .symbol-stage{display:grid;place-items:center;padding:48px 20px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);margin:0 0 28px}
 .symbol-stage .big-mark{width:120px;height:120px;border-radius:28px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:72px;font-weight:800;line-height:1;letter-spacing:-.04em}
 .symbol-stage .lockup{display:flex;align-items:center;gap:18px;margin-top:28px;font-weight:700;font-size:42px;letter-spacing:.04em}
 .symbol-stage .lockup .brand-mark{width:48px;height:48px;border-radius:12px;font-size:26px}
-
 .tagged{background:var(--accent);color:var(--accent-ink);font-weight:700;padding:14px 22px;border-radius:14px;margin:0 0 18px;display:inline-block}
 .note-italic{color:var(--muted);font-style:italic;font-size:15px;line-height:1.6;max-width:760px}
-
 .row-3{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;margin-top:24px}
 @media (min-width:768px){.row-3{grid-template-columns:1.1fr auto 1fr}}
 .row-3 .arrow{font-size:28px;color:var(--accent);text-align:center}
 .row-3 .ref-shot{background:var(--bg-3);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:grid;place-items:center;min-height:160px}
 .row-3 .ref-shot .label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:14px}
-
-/* visual references implemented in pure CSS/SVG so the doc is self-contained */
 .ref-chat-bubble{width:90px;height:60px;background:var(--accent);border-radius:18px 18px 18px 4px;position:relative}
 .ref-chat-bubble::after{content:"";position:absolute;top:18px;left:14px;right:14px;height:6px;background:var(--accent-ink);border-radius:3px;opacity:.35;box-shadow:0 14px 0 0 rgba(26,19,5,.35)}
-
 .ref-arrows{display:flex;gap:8px;align-items:center;color:var(--accent);font-size:32px}
 .ref-currency{display:flex;gap:14px;align-items:center;font-size:34px;color:var(--muted);font-weight:700}
 .ref-currency span{position:relative}
 .ref-currency span::after{content:"";position:absolute;left:-4px;right:-4px;top:46%;height:2px;background:var(--accent);transform:rotate(-12deg);opacity:.55}
-.ref-shield{width:64px;height:78px;background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);clip-path:polygon(50% 0,100% 18%,100% 60%,50% 100%,0 60%,0 18%);display:grid;place-items:center;color:var(--accent-ink);font-weight:800;font-size:22px}
-.ref-funnel{width:120px;height:80px;position:relative}
-.ref-funnel::before{content:"";position:absolute;inset:0;background:var(--accent);clip-path:polygon(0 0,100% 0,72% 60%,72% 100%,28% 100%,28% 60%);opacity:.85}
-.ref-flame{width:56px;height:80px;background:radial-gradient(ellipse at 50% 80%,var(--accent) 0%,var(--accent-2) 60%,transparent 75%);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;filter:blur(.5px)}
-.ref-keyboard{width:140px;display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
-.ref-keyboard span{aspect-ratio:1;background:var(--bg-2);border:1px solid var(--line);border-radius:4px}
-.ref-keyboard span:nth-child(8),.ref-keyboard span:nth-child(15){background:var(--accent)}
-
 .color-row{display:grid;grid-template-columns:1fr;gap:18px;margin-top:24px}
 @media (min-width:768px){.color-row{grid-template-columns:1.4fr 1fr}}
-.color-pair{display:flex;gap:22px;align-items:flex-start}
-.color-pair .swatch{width:120px;height:120px;border-radius:18px;display:grid;place-items:center;flex-shrink:0;font-weight:800;font-size:36px;letter-spacing:-.02em}
-.color-pair .swatch.dim{opacity:.7}
-.color-pair p{margin:0;color:var(--fg-dim);font-size:15px;line-height:1.6}
-
 .slogan-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:60px 32px;text-align:center;margin:0 0 22px}
 .slogan-card .lockup{display:inline-flex;align-items:center;gap:14px;font-weight:700;font-size:30px;letter-spacing:.04em;color:var(--fg)}
 .slogan-card .lockup .brand-mark{width:36px;height:36px;border-radius:10px;font-size:20px}
@@ -68,7 +47,6 @@
 .slogan-card .ann{margin-top:18px;color:var(--muted);font-size:13px}
 .slogan-card.primary{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 18px 50px rgba(255,205,60,.08);background:linear-gradient(180deg,rgba(255,205,60,.05) 0%,var(--bg-2) 60%)}
 .slogan-card.primary .ann{color:var(--accent)}
-
 .foot-doc{padding:48px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:14px}
 .foot-doc a{color:var(--accent)}
 </style>
@@ -83,7 +61,7 @@
     </a>
     <div class="site-head-right">
       <nav aria-label="Документы бренда" class="nav">
-        <a href="index.html">Лендинг</a>
+        <a href="index.html" data-i18n="nav.landing">Лендинг</a>
         <a href="style-guide.html" data-i18n="nav.bb.title">Брендбук</a>
         <a href="brand-description.html" aria-current="page" style="color:var(--accent)" data-i18n="nav.bd.title">Описание и слоганы</a>
       </nav>
@@ -110,10 +88,10 @@
 
   <section class="doc-cover">
     <div class="wrap">
-      <span class="eyebrow">Бренд SINTEM</span>
-      <h1>Дизайн SINTEM<br><span style="color:var(--muted);font-weight:500;font-size:.6em;letter-spacing:.08em;text-transform:uppercase">Описание и&nbsp;слоганы</span></h1>
-      <p class="sub">Документ о смыслах, заложенных в визуальный символ марки, и возможные варианты слогана для рекламных и коммуникационных материалов.</p>
-      <div class="for">Подготовлено для команды SINTEM<br>и&nbsp;партнёрских интеграций</div>
+      <span class="eyebrow" data-i18n="bd.cover.eyebrow">Бренд SINTEM</span>
+      <h1><span data-i18n="bd.cover.h1main">Дизайн SINTEM</span><br><span style="color:var(--muted);font-weight:500;font-size:.6em;letter-spacing:.08em;text-transform:uppercase" data-i18n="bd.cover.h1sub">Описание и&nbsp;слоганы</span></h1>
+      <p class="sub" data-i18n="bd.cover.sub">Документ о смыслах, заложенных в визуальный символ марки, и возможные варианты слогана для рекламных и коммуникационных материалов.</p>
+      <div class="for" data-i18n="bd.cover.for">Подготовлено для команды SINTEM<br>и&nbsp;партнёрских интеграций</div>
       <div class="yr">2026</div>
     </div>
   </section>
@@ -131,15 +109,15 @@
       <div class="row-3" style="grid-template-columns:1fr 1fr 1fr">
         <div class="ref-shot" style="background:#fff">
           <div class="brand-mark" style="background:#0F0F0F;color:#FFCD3C;width:48px;height:48px;border-radius:12px;font-size:26px;display:grid;place-items:center;font-weight:800">S</div>
-          <div class="label" style="color:#666">На светлом</div>
+          <div class="label" style="color:#666" data-i18n="bd.s1.lbl1">На светлом</div>
         </div>
         <div class="ref-shot" style="background:#0F0F0F">
           <div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:48px;height:48px;border-radius:12px;font-size:26px;display:grid;place-items:center;font-weight:800">S</div>
-          <div class="label">На тёмном (основной)</div>
+          <div class="label" data-i18n="bd.s1.lbl2">На тёмном (основной)</div>
         </div>
         <div class="ref-shot" style="background:linear-gradient(135deg,#171717 0%,#1A1505 100%)">
           <div class="lockup" style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:24px"><span class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:36px;height:36px;border-radius:10px;font-size:20px;display:grid;place-items:center;font-weight:800">S</span>SINTEM</div>
-          <div class="label">Полный лок-ап</div>
+          <div class="label" data-i18n="bd.s1.lbl3">Полный лок-ап</div>
         </div>
       </div>
     </div>
@@ -149,15 +127,15 @@
     <div class="wrap">
       <h2 class="doc-h" data-i18n="bd.s2.t">Описание визуального символа</h2>
       <div style="max-width:760px">
-        <p style="color:var(--fg-dim);font-size:16px;line-height:1.65">При разработке знака SINTEM мы выстроили словесную карту тех ситуаций, в которых наш бот реально оказывается рядом с пользователем — селлером маркетплейса. Не «вообще про IT» и не «вообще про автоматизацию», а конкретно про вечерний чат, в котором решаются операционные задачи бизнеса.</p>
-        <p style="color:var(--fg-dim);font-size:16px;line-height:1.65;margin-top:14px;font-weight:600">Из множества признаков мы выбрали следующие:</p>
+        <p style="color:var(--fg-dim);font-size:16px;line-height:1.65" data-i18n="bd.intro.p1">При разработке знака SINTEM мы выстроили словесную карту тех ситуаций, в которых наш бот реально оказывается рядом с пользователем — селлером маркетплейса. Не «вообще про IT» и не «вообще про автоматизацию», а конкретно про вечерний чат, в котором решаются операционные задачи бизнеса.</p>
+        <p style="color:var(--fg-dim);font-size:16px;line-height:1.65;margin-top:14px;font-weight:600" data-i18n="bd.intro.p2">Из множества признаков мы выбрали следующие:</p>
         <div class="tagged" style="display:block;max-width:680px">
-          <div style="margin:6px 0">1. Синтез — пять разных функций в одной оболочке</div>
-          <div style="margin:6px 0">2. Telegram-нативность — узнаваемый язык мессенджера</div>
-          <div style="margin:6px 0">3. Скорость и действие — отвечаем за 30 секунд</div>
-          <div style="margin:6px 0">4. Доверие к деньгам — расчёт юнит-экономики и выручки</div>
+          <div style="margin:6px 0" data-i18n="bd.intro.t1">1. Синтез — пять разных функций в одной оболочке</div>
+          <div style="margin:6px 0" data-i18n="bd.intro.t2">2. Telegram-нативность — узнаваемый язык мессенджера</div>
+          <div style="margin:6px 0" data-i18n="bd.intro.t3">3. Скорость и действие — отвечаем за 30 секунд</div>
+          <div style="margin:6px 0" data-i18n="bd.intro.t4">4. Доверие к деньгам — расчёт юнит-экономики и выручки</div>
         </div>
-        <p class="note-italic" style="margin-top:22px">Каждому из этих признаков свойственны свои визуальные образы. Когда мы перебирали их, у нас и получился данный символ — буква «S» в скруглённом квадрате жёлтого цвета на тёмном фоне.</p>
+        <p class="note-italic" style="margin-top:22px" data-i18n="bd.intro.note">Каждому из этих признаков свойственны свои визуальные образы. Когда мы перебирали их, у нас и получился данный символ — буква «S» в скруглённом квадрате жёлтого цвета на тёмном фоне.</p>
         <div style="text-align:center;margin-top:36px"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:inline-grid;place-items:center;font-weight:800">S</div></div>
       </div>
     </div>
@@ -166,13 +144,13 @@
   <section class="section">
     <div class="wrap">
       <h2 class="doc-h" data-i18n="bd.s2.t">Описание визуального символа</h2>
-      <div class="tagged">1. Синтез: пять помощников в одной оболочке</div>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65">Само имя «SINTEM» отсылает к «синтезу» (synthesis) — соединению нескольких независимых сущностей в единое работающее целое. Этим мы подчёркиваем главное обещание продукта: пять разнопрофильных AI-помощников (карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ, юнит-экономика) живут в одном Telegram-боте, в одной подписке, без интеграций между собой.</p>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px">Визуально это решено лаконичной буквой «S» — одной формой, в которой при этом «склеены» две дуги. Это и инициал бренда, и метафора того, как разные процессы встречаются в одной точке. Скруглённый квадрат-плашка вокруг буквы повторяет язык иконок iOS- и Android-приложений: знак сразу читается как «приложение, к которому возвращаются».</p>
+      <div class="tagged" data-i18n="bd.tag1">1. Синтез: пять помощников в одной оболочке</div>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65" data-i18n="bd.sym1.p1">Само имя «SINTEM» отсылает к «синтезу» (synthesis) — соединению нескольких независимых сущностей в единое работающее целое. Этим мы подчёркиваем главное обещание продукта: пять разнопрофильных AI-помощников (карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ, юнит-экономика) живут в одном Telegram-боте, в одной подписке, без интеграций между собой.</p>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px" data-i18n="bd.sym1.p2">Визуально это решено лаконичной буквой «S» — одной формой, в которой при этом «склеены» две дуги. Это и инициал бренда, и метафора того, как разные процессы встречаются в одной точке. Скруглённый квадрат-плашка вокруг буквы повторяет язык иконок iOS- и Android-приложений: знак сразу читается как «приложение, к которому возвращаются».</p>
       <div class="row-3">
-        <div class="ref-shot"><div class="ref-chat-bubble"></div><div class="label">Чат как контейнер</div></div>
+        <div class="ref-shot"><div class="ref-chat-bubble"></div><div class="label" data-i18n="bd.sym1.lbl1">Чат как контейнер</div></div>
         <div class="arrow">&rarr;</div>
-        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label">Один знак — пять функций</div></div>
+        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label" data-i18n="bd.sym1.lbl2">Один знак — пять функций</div></div>
       </div>
     </div>
   </section>
@@ -180,13 +158,13 @@
   <section class="section alt">
     <div class="wrap">
       <h2 class="doc-h" data-i18n="bd.s2.t">Описание визуального символа</h2>
-      <div class="tagged">2. Telegram-нативность</div>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65">Селлер WB и Ozon живёт в Telegram: там его поставщики, чаты категорий, обсуждение тонкостей маркетплейсов, поддержка площадок. Именно поэтому мы не делаем отдельное приложение, а ставим бота в его привычный мессенджер. Знак — иконка, которая визуально не выпадает из ряда чатов: скруглённый квадрат, плотный цвет, ровно одна буква в центре, как у Telegram, WhatsApp или сервисных ботов площадок.</p>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px">Жёлтый — цвет уведомления и непрочитанного: то, на что глаз селлера приучен реагировать в ленте чатов. Знак SINTEM в этом смысле работает как маленький бейдж: «здесь для тебя есть что-то полезное прямо сейчас».</p>
+      <div class="tagged" data-i18n="bd.tag2">2. Telegram-нативность</div>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65" data-i18n="bd.sym2.p1">Селлер WB и Ozon живёт в Telegram: там его поставщики, чаты категорий, обсуждение тонкостей маркетплейсов, поддержка площадок. Именно поэтому мы не делаем отдельное приложение, а ставим бота в его привычный мессенджер. Знак — иконка, которая визуально не выпадает из ряда чатов: скруглённый квадрат, плотный цвет, ровно одна буква в центре, как у Telegram, WhatsApp или сервисных ботов площадок.</p>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px" data-i18n="bd.sym2.p2">Жёлтый — цвет уведомления и непрочитанного: то, на что глаз селлера приучен реагировать в ленте чатов. Знак SINTEM в этом смысле работает как маленький бейдж: «здесь для тебя есть что-то полезное прямо сейчас».</p>
       <div class="row-3">
-        <div class="ref-shot"><div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;width:100%;max-width:220px"><div style="background:var(--bg-2);border-radius:12px;padding:8px 12px;color:var(--fg-dim);font-size:13px">@wb_seller_chat</div><div style="background:rgba(255,205,60,.12);border:1px solid rgba(255,205,60,.3);border-radius:12px;padding:8px 12px;color:var(--accent);font-size:13px">@sintem_bot</div></div><div class="label">Среди чатов селлера</div></div>
+        <div class="ref-shot"><div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;width:100%;max-width:220px"><div style="background:var(--bg-2);border-radius:12px;padding:8px 12px;color:var(--fg-dim);font-size:13px">@wb_seller_chat</div><div style="background:rgba(255,205,60,.12);border:1px solid rgba(255,205,60,.3);border-radius:12px;padding:8px 12px;color:var(--accent);font-size:13px">@sintem_bot</div></div><div class="label" data-i18n="bd.sym2.lbl1">Среди чатов селлера</div></div>
         <div class="arrow">&rarr;</div>
-        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label">Узнаваемая иконка</div></div>
+        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label" data-i18n="bd.sym2.lbl2">Узнаваемая иконка</div></div>
       </div>
     </div>
   </section>
@@ -194,13 +172,13 @@
   <section class="section">
     <div class="wrap">
       <h2 class="doc-h" data-i18n="bd.s2.t">Описание визуального символа</h2>
-      <div class="tagged">3. Скорость и действие</div>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65">Главное операционное обещание SINTEM — «первый результат за 30 секунд». Не «онбординг», не «личный кабинет», не «оставьте заявку и мы свяжемся» — а буква, шаг, ответ. Поэтому символ нарисован монолитной формой без лишней геометрии: глазу не за что зацепиться кроме самой буквы.</p>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px">Сама «S» имеет встроенное движение слева направо и сверху вниз — это естественная траектория сканирования латинского текста и одновременно метафора пути от запроса пользователя к ответу бота. Она не статична: верхняя дуга «уходит вперёд», нижняя «забирает назад» — логика поступательного движения, наступления, ответа.</p>
+      <div class="tagged" data-i18n="bd.tag3">3. Скорость и действие</div>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65" data-i18n="bd.sym3.p1">Главное операционное обещание SINTEM — «первый результат за 30 секунд». Не «онбординг», не «личный кабинет», не «оставьте заявку и мы свяжемся» — а буква, шаг, ответ. Поэтому символ нарисован монолитной формой без лишней геометрии: глазу не за что зацепиться кроме самой буквы.</p>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px" data-i18n="bd.sym3.p2">Сама «S» имеет встроенное движение слева направо и сверху вниз — это естественная траектория сканирования латинского текста и одновременно метафора пути от запроса пользователя к ответу бота. Она не статична: верхняя дуга «уходит вперёд», нижняя «забирает назад» — логика поступательного движения, наступления, ответа.</p>
       <div class="row-3">
-        <div class="ref-shot"><div class="ref-arrows">&rarr;&rarr;&rarr;</div><div class="label">Движение вперёд</div></div>
+        <div class="ref-shot"><div class="ref-arrows">&rarr;&rarr;&rarr;</div><div class="label" data-i18n="bd.sym3.lbl1">Движение вперёд</div></div>
         <div class="arrow">&rarr;</div>
-        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label">Знак в движении</div></div>
+        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label" data-i18n="bd.sym3.lbl2">Знак в движении</div></div>
       </div>
     </div>
   </section>
@@ -208,13 +186,13 @@
   <section class="section alt">
     <div class="wrap">
       <h2 class="doc-h" data-i18n="bd.s2.t">Описание визуального символа</h2>
-      <div class="tagged">4. Доверие к деньгам</div>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65">SINTEM считает выручку, комиссии маркетплейсов, логистику, возвраты, юнитку по SKU. Это про деньги пользователя — и знак должен это поддерживать. Жёлтый цвет в финансовой коммуникации устойчиво ассоциируется с золотом, ставкой, премией, наградой — он не «пугает» как красный и не «остужает» как синий, а сообщает о ценности.</p>
-      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px">Буква «S» в её каноничной форме сама напоминает символ доллара ($) без вертикальной черты — единственного валютного знака, который сделан из латинской буквы. Это не доллар и не валюта, но тонкий визуальный мостик к финансовой теме, который читается ассоциативно — как раз то, чего мы хотели от лаконичного знака.</p>
+      <div class="tagged" data-i18n="bd.tag4">4. Доверие к деньгам</div>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65" data-i18n="bd.sym4.p1">SINTEM считает выручку, комиссии маркетплейсов, логистику, возвраты, юнитку по SKU. Это про деньги пользователя — и знак должен это поддерживать. Жёлтый цвет в финансовой коммуникации устойчиво ассоциируется с золотом, ставкой, премией, наградой — он не «пугает» как красный и не «остужает» как синий, а сообщает о ценности.</p>
+      <p style="max-width:760px;color:var(--fg-dim);line-height:1.65;margin-top:12px" data-i18n="bd.sym4.p2">Буква «S» в её каноничной форме сама напоминает символ доллара ($) без вертикальной черты — единственного валютного знака, который сделан из латинской буквы. Это не доллар и не валюта, но тонкий визуальный мостик к финансовой теме, который читается ассоциативно — как раз то, чего мы хотели от лаконичного знака.</p>
       <div class="row-3">
-        <div class="ref-shot"><div class="ref-currency"><span>S</span><span>$</span><span>&euro;</span><span>&yen;</span></div><div class="label">Валютная семья букв</div></div>
+        <div class="ref-shot"><div class="ref-currency"><span>S</span><span>$</span><span>&euro;</span><span>&yen;</span></div><div class="label" data-i18n="bd.sym4.lbl1">Валютная семья букв</div></div>
         <div class="arrow">&rarr;</div>
-        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label">Тёплый «денежный» жёлтый</div></div>
+        <div class="ref-shot"><div class="brand-mark" style="background:var(--accent);color:var(--accent-ink);width:80px;height:80px;border-radius:20px;font-size:48px;display:grid;place-items:center;font-weight:800">S</div><div class="label" data-i18n="bd.sym4.lbl2">Тёплый «денежный» жёлтый</div></div>
       </div>
     </div>
   </section>
@@ -228,8 +206,8 @@
           <div class="lockup" style="margin-top:18px"><span class="brand-mark" style="background:#FFB930;color:#1A1305;width:48px;height:48px;border-radius:12px;font-size:26px;display:grid;place-items:center;font-weight:800">S</span><span>SINTEM</span></div>
         </div>
         <div>
-          <h3 style="color:var(--fg);margin:0 0 8px;font-size:18px">Янтарно-жёлтый. Основной.</h3>
-          <p class="note-italic" style="font-style:normal;color:var(--fg-dim)">Жёлтый — цвет внимания, движения, награды и денег. На тёмном фоне он работает как уведомление: глаз селлера приучен реагировать на этот сигнал в ленте Telegram. Более глубокий тон (#FFB930) уместен для фасадных и интерьерных применений, где первичный жёлтый может «выгорать» при ярком освещении.</p>
+          <h3 style="color:var(--fg);margin:0 0 8px;font-size:18px" data-i18n="bd.s3.c1.h">Янтарно-жёлтый. Основной.</h3>
+          <p class="note-italic" style="font-style:normal;color:var(--fg-dim)" data-i18n="bd.s3.c1.p">Жёлтый — цвет внимания, движения, награды и денег. На тёмном фоне он работает как уведомление: глаз селлера приучен реагировать на этот сигнал в ленте Telegram. Более глубокий тон (#FFB930) уместен для фасадных и интерьерных применений, где первичный жёлтый может «выгорать» при ярком освещении.</p>
         </div>
       </div>
       <div class="color-row" style="margin-top:32px">
@@ -237,8 +215,8 @@
           <div class="lockup"><span class="brand-mark" style="background:#34C759;color:#001a0a;width:48px;height:48px;border-radius:12px;font-size:26px;display:grid;place-items:center;font-weight:800">S</span><span>SINTEM</span></div>
         </div>
         <div>
-          <h3 style="color:var(--fg);margin:0 0 8px;font-size:18px">Зелёный «маркетплейсный».</h3>
-          <p class="note-italic" style="font-style:normal;color:var(--fg-dim)">Цвет роста, кнопки «купить», положительной динамики продаж. Может использоваться как акцент в инфографике (стрелки роста, индикаторы прибыли), но не как основной цвет идентификации — у нас иначе пропадёт отличие от тысяч маркетплейс-сервисов.</p>
+          <h3 style="color:var(--fg);margin:0 0 8px;font-size:18px" data-i18n="bd.s3.c2.h">Зелёный «маркетплейсный».</h3>
+          <p class="note-italic" style="font-style:normal;color:var(--fg-dim)" data-i18n="bd.s3.c2.p">Цвет роста, кнопки «купить», положительной динамики продаж. Может использоваться как акцент в инфографике (стрелки роста, индикаторы прибыли), но не как основной цвет идентификации — у нас иначе пропадёт отличие от тысяч маркетплейс-сервисов.</p>
         </div>
       </div>
       <div class="color-row" style="margin-top:32px">
@@ -246,8 +224,8 @@
           <div class="lockup"><span class="brand-mark" style="background:#229ED9;color:#fff;width:48px;height:48px;border-radius:12px;font-size:26px;display:grid;place-items:center;font-weight:800">S</span><span>SINTEM</span></div>
         </div>
         <div>
-          <h3 style="color:var(--fg);margin:0 0 8px;font-size:18px">Telegram-голубой.</h3>
-          <p class="note-italic" style="font-style:normal;color:var(--fg-dim)">Цвет «синего пузыря» исходящего сообщения в Telegram. Допустим в кросс-промо с площадкой и в материалах, где SINTEM встроен в скриншоты бота. Не используется как основной — мы не клон сервисного бота Telegram и должны отличаться визуально.</p>
+          <h3 style="color:var(--fg);margin:0 0 8px;font-size:18px" data-i18n="bd.s3.c3.h">Telegram-голубой.</h3>
+          <p class="note-italic" style="font-style:normal;color:var(--fg-dim)" data-i18n="bd.s3.c3.p">Цвет «синего пузыря» исходящего сообщения в Telegram. Допустим в кросс-промо с площадкой и в материалах, где SINTEM встроен в скриншоты бота. Не используется как основной — мы не клон сервисного бота Telegram и должны отличаться визуально.</p>
         </div>
       </div>
     </div>
@@ -256,76 +234,76 @@
   <section class="section alt">
     <div class="wrap">
       <h2 class="doc-h" data-i18n="bd.s4.t">Возможные слоганы бренда</h2>
+
       <div class="slogan-card primary">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Пять помощников. Один чат.</div>
+        <div class="slogan" data-i18n="bd.sl0">Пять помощников. Один чат.</div>
         <div class="rule short"></div>
-        <div class="ann">Основной слоган. Закреплён в шапке лендинга и материалах.</div>
+        <div class="ann" data-i18n="bd.sl0a">Основной слоган. Закреплён в шапке лендинга и материалах.</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Закрывает за вечер то, на что у вас уходит&nbsp;12&nbsp;часов&nbsp;в&nbsp;неделю.</div>
+        <div class="slogan" data-i18n="bd.sl1">Закрывает за вечер то, на что у вас уходит&nbsp;12&nbsp;часов&nbsp;в&nbsp;неделю.</div>
         <div class="rule short"></div>
-        <div class="ann">Длинный «боль-первый» вариант для холодных рекламных размещений.</div>
+        <div class="ann" data-i18n="bd.sl1a">Длинный «боль-первый» вариант для холодных рекламных размещений.</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Селлеру — селлерское.</div>
+        <div class="slogan" data-i18n="bd.sl2">Селлеру — селлерское.</div>
         <div class="rule short"></div>
-        <div class="ann">Короткий и резкий вариант для баннеров и SMM.</div>
+        <div class="ann" data-i18n="bd.sl2a">Короткий и резкий вариант для баннеров и SMM.</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Меньше штата. Больше выручки.</div>
+        <div class="slogan" data-i18n="bd.sl3">Меньше штата. Больше выручки.</div>
         <div class="rule short"></div>
-        <div class="ann">Финансовый угол: для аудитории, которая считает фонд оплаты труда.</div>
+        <div class="ann" data-i18n="bd.sl3a">Финансовый угол: для аудитории, которая считает фонд оплаты труда.</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Карточка-доктор. Скаут. Юнитка. В одном боте.</div>
+        <div class="slogan" data-i18n="bd.sl4">Карточка-доктор. Скаут. Юнитка. В одном боте.</div>
         <div class="rule short"></div>
-        <div class="ann">Функциональный вариант для performance-каналов, где надо сразу донести «что внутри».</div>
+        <div class="ann" data-i18n="bd.sl4a">Функциональный вариант для performance-каналов, где надо сразу донести «что внутри».</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Telegram умеет больше, чем&nbsp;вы&nbsp;думали.</div>
+        <div class="slogan" data-i18n="bd.sl5">Telegram умеет больше, чем&nbsp;вы&nbsp;думали.</div>
         <div class="rule short"></div>
-        <div class="ann">Для аудитории, которая считает Telegram «несерьёзной» площадкой для бизнес-инструмента.</div>
+        <div class="ann" data-i18n="bd.sl5a">Для аудитории, которая считает Telegram «несерьёзной» площадкой для бизнес-инструмента.</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">Помощник, не панель.</div>
+        <div class="slogan" data-i18n="bd.sl6">Помощник, не панель.</div>
         <div class="rule short"></div>
-        <div class="ann">Позиционирующий слоган: мы противопоставляем себя SaaS-сервисам с тяжёлыми личными кабинетами.</div>
+        <div class="ann" data-i18n="bd.sl6a">Позиционирующий слоган: мы противопоставляем себя SaaS-сервисам с тяжёлыми личными кабинетами.</div>
       </div>
 
       <div class="slogan-card">
         <div class="lockup"><span class="brand-mark" aria-hidden="true">S</span><span>SINTEM</span></div>
         <div class="rule"></div>
-        <div class="slogan">От триала до выручки — за&nbsp;вечер.</div>
+        <div class="slogan" data-i18n="bd.sl7">От триала до выручки — за&nbsp;вечер.</div>
         <div class="rule short"></div>
-        <div class="ann">Эмоциональный «таймлайн»-слоган: про скорость отдачи, не про функции.</div>
+        <div class="ann" data-i18n="bd.sl7a">Эмоциональный «таймлайн»-слоган: про скорость отдачи, не про функции.</div>
       </div>
     </div>
   </section>
 
   <section class="foot-doc">
     <div class="wrap">
-      <p>SINTEM. Telegram-бот для селлеров WB и Ozon.<br>
-      Связь по бренду: <a href="https://t.me/sintem_support">@sintem_support</a>. Лендинг: <a href="index.html">index.html</a>. Брендбук: <a href="style-guide.html">style-guide.html</a>.</p>
+      <p data-i18n="bd.foot.line">SINTEM. Telegram-бот для селлеров WB и Ozon.<br>Связь по бренду: <a href="https://t.me/sintem_support">@sintem_support</a>. Лендинг: <a href="index.html">index.html</a>. Брендбук: <a href="style-guide.html">style-guide.html</a>.</p>
       <p style="margin-top:18px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)">2026</p>
     </div>
   </section>

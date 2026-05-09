@@ -178,7 +178,149 @@
       'bd.sl6':         'Помощник, не панель.',
       'bd.sl6a':        'Позиционирующий слоган: противопоставляем себя SaaS-сервисам с тяжёлыми личными кабинетами.',
       'bd.sl7':         'От триала до выручки — за вечер.',
-      'bd.sl7a':        'Эмоциональный «таймлайн»-слоган: про скорость отдачи, не про функции.'
+      'bd.sl7a':        'Эмоциональный «таймлайн»-слоган: про скорость отдачи, не про функции.',
+
+      // Header / nav общие
+      'nav.landing':    'Лендинг',
+
+      // Hero chat-preview (index.html)
+      'chat.bot.head':  'Разобрал. Нашёл 7 точек роста.',
+      'chat.bot.l1':    '1. В заголовке нет ключа «осенняя» — теряете 22% поискового трафика.',
+      'chat.bot.l2':    '2. Главное фото на 4-й позиции, должно быть 1-е.',
+      'chat.bot.l3':    '3. В описании 3 канцеляризма, снижают CTR. Переписать?',
+      'chat.user.go':   'давай',
+
+      // Style-guide cover
+      'sg.cover.h1ext': 'Элементы фирменного стиля',
+
+      // Style-guide labels (gd-label) и captions
+      'sg.lbl.safe':     'Охранное поле',
+      'sg.cap.safe':     'Охранное поле логотипа',
+      'sg.lbl.bg':       'Размещение на фоне',
+      'sg.cap.pat':      'Фирменный паттерн',
+      'sg.lbl.pat':      'Фирменный паттерн',
+      'sg.lbl.bw_inv':   'Чёрно-белая — инверсия',
+      'sg.lbl.bw_main':  'Чёрно-белая — основная',
+      'sg.lbl.mono_inv': 'Монохромная — инверсия',
+      'sg.lbl.mono_main':'Монохромная — основная',
+      'sg.lbl.font':     'Гарнитура',
+
+      // Style-guide длинные параграфы
+      'sg.s1.txt1': 'На любых макетах логотип должен иметь окружающее его пространство (охранное поле), на которое не должны попадать другие графические элементы, линии или текст. В редких случаях, когда логотип в рекламных целях наносится поверх фотографии, следует следить, чтобы место фотографии под логотипом было однотонным или слабоконтрастным в пределах его охранного поля.',
+      'sg.s1.txt2': 'Охранное поле имеет относительную величину «X», равную 1/3 высоты знака, и отсчитывается во все стороны от крайних выступающих точек логотипа.',
+      'sg.s1.txt3': 'При размещении логотипа на фоне следует соблюдать минимальные размеры охранного поля. На тёмном фоне используется основная (полноцветная) версия. На светлом фоне допускается тёмная плашка под знаком.',
+      'sg.s1.txt4': 'Паттерн строится из повторов скруглённого квадрата с буквой «S», расположенных в шахматном порядке с наклоном −12°. Подходит для подложек, упаковки, фонов в презентациях и интерьерных решений (стены, шторы, текстиль).',
+      'sg.s1.txt5': 'На макетах элементы паттерна не должны быть крупнее основного знака. Расстояние между элементами и угол наклона неизменны.',
+      'sg.s2.txt':  'Кириллическая версия применяется в материалах для российского рынка и в документах юридического характера. Знак (буква «S» в плашке) остаётся неизменным в любой языковой версии — это главный элемент идентификации.',
+      'sg.s3.txt':  'Чёрно-белая версия — для нанесения чёрной краской на нецветных носителях, факсах и копиях. Монохромная — для одноцветной печати, тиснения, гравировки, сувенирной продукции в фирменном жёлтом.',
+      'sg.s4.txt':  'Цвет играет важную роль в отображении фирменного стиля SINTEM. Палитра состоит из глубокого графитового фона и янтарно-жёлтого акцента — это сочетание считывается с экрана телефона так же отчётливо, как индикатор непрочитанного сообщения, и сохраняет узнаваемость на сувенирной и интерьерной продукции.',
+      'sg.s4b.txt': 'Вторичные цвета дополняют основную палитру, но окрашенные ими элементы не являются объектами узнаваемости как сам знак. Их следует использовать с осторожностью — преимущественно для фоновых плашек, акцентных стрелок и индикаторов в инфографике.',
+
+      // Typography demo
+      'sg.s5.demo.tag':  'Пять помощников. Один чат.',
+      'sg.s5.demo.lead': 'Карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ и юнит-экономика — в Telegram, без штата.',
+      'sg.s5.txt1':      '<strong>Основная: -apple-system / Segoe UI / Inter / Roboto.</strong><br>Мы используем системные шрифты — на любом устройстве знак SINTEM выглядит «как родной». Шрифт всегда тот, который пользователь уже видит в Telegram.',
+      'sg.s5.txt2':      '<strong>Моноширинная: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Применяется для команд бота (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>), артикулов, расчётов и таблиц.',
+      'sg.s5.txt3':      'Для печатных носителей и презентаций, где требуется единообразие, рекомендованная замена — <strong>Inter</strong> (бесплатная, OFL).',
+
+      // Corporate stationery
+      'sg.s6.front':     'Пять помощников.<br>Один чат.',
+      'sg.s6.cap.front': 'Лицевая сторона',
+      'sg.s6.bcard.name':'Кодиров Аслан',
+      'sg.s6.bcard.role':'Основатель',
+      'sg.s6.cap.back':  'Оборотная сторона',
+      'sg.s6.folder.team':'Команда селлера',
+      'sg.s6.cap.folder':'Папка для документов',
+      'sg.s6.cap.env':   'Фирменный конверт',
+      'sg.s6.cap.bag':   'Фирменный пакет / мерч',
+      'sg.s6.lh.meta1':  'ИП Кодиров А. А.<br>ИНН будет указан в&nbsp;оферте<br>sintem.ru',
+      'sg.s6.lh.cap':    'Фирменный бланк A4',
+
+      // Presentation
+      'sg.s7.tag':       'Шаблон презентации',
+      'sg.s7.cover.t':   'Заголовок<br>презентации',
+      'sg.s7.cover.s':   'Преамбула, девиз или короткий подзаголовок презентации.',
+      'sg.s7.slide.t':   'Заголовок слайда',
+      'sg.s7.slide.sub': 'Подзаголовок',
+      'sg.s7.photo.tag': 'Слайд с фото',
+      'sg.s7.photo.cap': 'Пояснение к фотографии или короткий список пояснений по теме слайда.',
+      'sg.s7.thanks':    'Благодарим<br>за внимание',
+      'sg.s7.note':      'Все слайды используют 16:9. Фон по умолчанию — графитовый (#0F0F0F). Знак выровнен в правом верхнем углу. Колонцифра — в правом нижнем углу.',
+
+      // Interior
+      'sg.s8.h.facade':  'Вариант фасадной вывески',
+      'sg.s8.cap.facade':'При оформлении фасада знак выставляется на отдельной графитовой плашке. Жёлтый акцент работает как «свет в окне» — узнаваемо в любое время суток.',
+      'sg.s8.h.roof':    'Вариант крышной вывески',
+      'sg.s8.cap.roof':  'На крыше здания вывеска работает без подложки — буква и логотип читаются на фоне неба. В вечернее время плашка с буквой подсвечивается изнутри.',
+      'sg.s8.h.recept':  'Вариант зоны ресепшен',
+      'sg.s8.cap.recept':'При оформлении интерьера ресепшен жёлтая клиновидная плашка выходит из-за знака на тёмную стену. В качестве материала стойки рекомендуется тёмное дерево или матовая графитовая поверхность с янтарной подсветкой.',
+      'sg.s8.txt':       'При оформлении интерьеров желательно использовать строгие формы. Поскольку сам знак SINTEM имеет узнаваемую геометрию (скруглённый квадрат), чем строже окружение, тем сильнее работает бренд. Допустимые материалы: матовый металл, тёмное дерево, графитовая краска, янтарная LED-подсветка. Нежелательно: глянцевые поверхности с цветными бликами, тёплое деревянное окружение в светлых тонах, активные цветовые контрасты помимо жёлтого.',
+
+      // Icons
+      'sg.s9.note':      'Каждый агент имеет свою пиктограмму, единый для всех скруглённый квадрат-плашка и янтарный контур. В Telegram-боте пиктограммы выводятся в инлайн-меню; в маркетинговых материалах — в карточках агентов на лендинге.',
+
+      // DO NOT
+      'sg.s10.no1':      'Не наклонять знак',
+      'sg.s10.no2':      'Не менять цвет',
+      'sg.s10.no3':      'Не круглить плашку',
+      'sg.s10.no4':      'Не менять гарнитуру',
+      'sg.s10.no5':      'Не добавлять тени',
+      'sg.s10.no6':      'Не менять интервал',
+
+      // SG footer / brand-description footer
+      'sg.foot.year':    'Брендбук · 2026',
+      'bd.foot.line':    'SINTEM. Telegram-бот для селлеров WB и Ozon.<br>Связь по бренду: <a href="https://t.me/sintem_support">@sintem_support</a>. Лендинг: <a href="index.html">index.html</a>. Брендбук: <a href="style-guide.html">style-guide.html</a>.',
+
+      // Brand-description cover
+      'bd.cover.eyebrow':'Бренд SINTEM',
+      'bd.cover.h1main': 'Дизайн SINTEM',
+      'bd.cover.h1sub':  'Описание и&nbsp;слоганы',
+
+      // BD intro
+      'bd.intro.p1': 'При разработке знака SINTEM мы выстроили словесную карту тех ситуаций, в которых наш бот реально оказывается рядом с пользователем — селлером маркетплейса. Не «вообще про IT» и не «вообще про автоматизацию», а конкретно про вечерний чат, в котором решаются операционные задачи бизнеса.',
+      'bd.intro.p2': 'Из множества признаков мы выбрали следующие:',
+      'bd.intro.t1': '1. Синтез — пять разных функций в одной оболочке',
+      'bd.intro.t2': '2. Telegram-нативность — узнаваемый язык мессенджера',
+      'bd.intro.t3': '3. Скорость и действие — отвечаем за 30 секунд',
+      'bd.intro.t4': '4. Доверие к деньгам — расчёт юнит-экономики и выручки',
+      'bd.intro.note':'Каждому из этих признаков свойственны свои визуальные образы. Когда мы перебирали их, у нас и получился данный символ — буква «S» в скруглённом квадрате жёлтого цвета на тёмном фоне.',
+
+      // BD sym1 — Synthesis
+      'bd.sym1.p1':   'Само имя «SINTEM» отсылает к «синтезу» (synthesis) — соединению нескольких независимых сущностей в единое работающее целое. Этим мы подчёркиваем главное обещание продукта: пять разнопрофильных AI-помощников (карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ, юнит-экономика) живут в одном Telegram-боте, в одной подписке, без интеграций между собой.',
+      'bd.sym1.p2':   'Визуально это решено лаконичной буквой «S» — одной формой, в которой при этом «склеены» две дуги. Это и инициал бренда, и метафора того, как разные процессы встречаются в одной точке. Скруглённый квадрат-плашка вокруг буквы повторяет язык иконок iOS- и Android-приложений: знак сразу читается как «приложение, к которому возвращаются».',
+      'bd.sym1.lbl1': 'Чат как контейнер',
+      'bd.sym1.lbl2': 'Один знак — пять функций',
+
+      // BD sym2 — Telegram-native
+      'bd.sym2.p1':   'Селлер WB и Ozon живёт в Telegram: там его поставщики, чаты категорий, обсуждение тонкостей маркетплейсов, поддержка площадок. Именно поэтому мы не делаем отдельное приложение, а ставим бота в его привычный мессенджер. Знак — иконка, которая визуально не выпадает из ряда чатов: скруглённый квадрат, плотный цвет, ровно одна буква в центре, как у Telegram, WhatsApp или сервисных ботов площадок.',
+      'bd.sym2.p2':   'Жёлтый — цвет уведомления и непрочитанного: то, на что глаз селлера приучен реагировать в ленте чатов. Знак SINTEM в этом смысле работает как маленький бейдж: «здесь для тебя есть что-то полезное прямо сейчас».',
+      'bd.sym2.lbl1': 'Среди чатов селлера',
+      'bd.sym2.lbl2': 'Узнаваемая иконка',
+
+      // BD sym3 — Speed
+      'bd.sym3.p1':   'Главное операционное обещание SINTEM — «первый результат за 30 секунд». Не «онбординг», не «личный кабинет», не «оставьте заявку и мы свяжемся» — а буква, шаг, ответ. Поэтому символ нарисован монолитной формой без лишней геометрии: глазу не за что зацепиться кроме самой буквы.',
+      'bd.sym3.p2':   'Сама «S» имеет встроенное движение слева направо и сверху вниз — это естественная траектория сканирования латинского текста и одновременно метафора пути от запроса пользователя к ответу бота. Она не статична: верхняя дуга «уходит вперёд», нижняя «забирает назад» — логика поступательного движения, наступления, ответа.',
+      'bd.sym3.lbl1': 'Движение вперёд',
+      'bd.sym3.lbl2': 'Знак в движении',
+
+      // BD sym4 — Trust
+      'bd.sym4.p1':   'SINTEM считает выручку, комиссии маркетплейсов, логистику, возвраты, юнитку по SKU. Это про деньги пользователя — и знак должен это поддерживать. Жёлтый цвет в финансовой коммуникации устойчиво ассоциируется с золотом, ставкой, премией, наградой — он не «пугает» как красный и не «остужает» как синий, а сообщает о ценности.',
+      'bd.sym4.p2':   'Буква «S» в её каноничной форме сама напоминает символ доллара ($) без вертикальной черты — единственного валютного знака, который сделан из латинской буквы. Это не доллар и не валюта, но тонкий визуальный мостик к финансовой теме, который читается ассоциативно — как раз то, чего мы хотели от лаконичного знака.',
+      'bd.sym4.lbl1': 'Валютная семья букв',
+      'bd.sym4.lbl2': 'Тёплый «денежный» жёлтый',
+
+      // BD s1 color labels
+      'bd.s1.lbl1': 'На светлом',
+      'bd.s1.lbl2': 'На тёмном (основной)',
+      'bd.s1.lbl3': 'Полный лок-ап',
+
+      // BD s3 color variants
+      'bd.s3.c1.h': 'Янтарно-жёлтый. Основной.',
+      'bd.s3.c1.p': 'Жёлтый — цвет внимания, движения, награды и денег. На тёмном фоне он работает как уведомление: глаз селлера приучен реагировать на этот сигнал в ленте Telegram. Более глубокий тон (#FFB930) уместен для фасадных и интерьерных применений, где первичный жёлтый может «выгорать» при ярком освещении.',
+      'bd.s3.c2.h': 'Зелёный «маркетплейсный».',
+      'bd.s3.c2.p': 'Цвет роста, кнопки «купить», положительной динамики продаж. Может использоваться как акцент в инфографике (стрелки роста, индикаторы прибыли), но не как основной цвет идентификации — у нас иначе пропадёт отличие от тысяч маркетплейс-сервисов.',
+      'bd.s3.c3.h': 'Telegram-голубой.',
+      'bd.s3.c3.p': 'Цвет «синего пузыря» исходящего сообщения в Telegram. Допустим в кросс-промо с площадкой и в материалах, где SINTEM встроен в скриншоты бота. Не используется как основной — мы не клон сервисного бота Telegram и должны отличаться визуально.'
     },
 
     en: {
@@ -352,7 +494,129 @@
       'bd.sl6':         'An assistant, not a dashboard.',
       'bd.sl6a':        'Positioning line: we contrast ourselves with SaaS that drown you in admin panels.',
       'bd.sl7':         'From trial to revenue — in one evening.',
-      'bd.sl7a':        'Emotional timeline tagline: about speed of payoff, not features.'
+      'bd.sl7a':        'Emotional timeline tagline: about speed of payoff, not features.',
+
+      'nav.landing':    'Landing',
+
+      'chat.bot.head':  'Done. I found 7 growth points.',
+      'chat.bot.l1':    '1. The title is missing the keyword “autumn” — you’re losing 22% of search traffic.',
+      'chat.bot.l2':    '2. The hero photo is in 4th position, it should be 1st.',
+      'chat.bot.l3':    '3. The description has 3 stiff phrases that drag down CTR. Rewrite?',
+      'chat.user.go':   'go',
+
+      'sg.cover.h1ext': 'Corporate identity elements',
+
+      'sg.lbl.safe':     'Clear space',
+      'sg.cap.safe':     'Logo clear space',
+      'sg.lbl.bg':       'Placement on background',
+      'sg.cap.pat':      'Brand pattern',
+      'sg.lbl.pat':      'Brand pattern',
+      'sg.lbl.bw_inv':   'Black-and-white — inverse',
+      'sg.lbl.bw_main':  'Black-and-white — primary',
+      'sg.lbl.mono_inv': 'Monochrome — inverse',
+      'sg.lbl.mono_main':'Monochrome — primary',
+      'sg.lbl.font':     'Typeface',
+
+      'sg.s1.txt1': 'On every layout the logo must keep clear space around it; no graphic elements, lines or text may enter that area. In rare cases when the logo is placed over a photograph, make sure the area beneath the logo is plain or low-contrast within the clear space.',
+      'sg.s1.txt2': 'Clear space equals “X” = 1/3 of the mark height, measured outward from the outermost points of the logo on each side.',
+      'sg.s1.txt3': 'When placing the logo on a background, respect the minimum clear space. The primary full-color version is used on dark backgrounds. On light backgrounds a dark plate behind the mark is allowed.',
+      'sg.s1.txt4': 'The pattern is built from repeats of the rounded square with the “S” letter, arranged in a checkerboard with a −12° tilt. Suitable for backgrounds, packaging, slide backdrops and interior surfaces (walls, curtains, textile).',
+      'sg.s1.txt5': 'On layouts the pattern elements must not be larger than the primary mark. The spacing between elements and the tilt angle stay fixed.',
+      'sg.s2.txt':  'The Cyrillic version is used in materials for the Russian market and in legal documents. The mark itself (the “S” inside the rounded square) stays unchanged across every language version — it is the main identity element.',
+      'sg.s3.txt':  'The black-and-white version is for single-color print on non-color media, faxes and copies. The monochrome version is for single-color printing, embossing, engraving and merchandise in the brand amber.',
+      'sg.s4.txt':  'Color plays a major role in expressing SINTEM identity. The palette is built around a deep graphite background and an amber-yellow accent — the combination reads on a phone screen as clearly as an unread-message indicator and stays recognizable across merchandise and physical environments.',
+      'sg.s4b.txt': 'Secondary colors complement the main palette but elements painted with them are not identity carriers like the mark itself. Use them carefully — mainly for background blocks, accent arrows and indicators in infographics.',
+
+      'sg.s5.demo.tag':  'Five assistants. One chat.',
+      'sg.s5.demo.lead': 'Listing doctor, review responder, competitor scout, ABC-XYZ and unit economics — in Telegram, no extra hires.',
+      'sg.s5.txt1':      '<strong>Primary: -apple-system / Segoe UI / Inter / Roboto.</strong><br>We rely on system fonts so the SINTEM mark feels native on every device. The font is always the one the user already sees in Telegram.',
+      'sg.s5.txt2':      '<strong>Monospace: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Used for bot commands (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>), SKUs, calculations and tables.',
+      'sg.s5.txt3':      'For print and presentations where consistency matters, the recommended substitute is <strong>Inter</strong> (free, OFL).',
+
+      'sg.s6.front':     'Five assistants.<br>One chat.',
+      'sg.s6.cap.front': 'Front side',
+      'sg.s6.bcard.name':'Aslan Kodirov',
+      'sg.s6.bcard.role':'Founder',
+      'sg.s6.cap.back':  'Back side',
+      'sg.s6.folder.team':'Seller’s team',
+      'sg.s6.cap.folder':'Document folder',
+      'sg.s6.cap.env':   'Branded envelope',
+      'sg.s6.cap.bag':   'Branded bag / merch',
+      'sg.s6.lh.meta1':  'IE Kodirov A.&nbsp;A.<br>Tax ID will be listed in the offer<br>sintem.ru',
+      'sg.s6.lh.cap':    'A4 letterhead',
+
+      'sg.s7.tag':       'Presentation template',
+      'sg.s7.cover.t':   'Presentation<br>title',
+      'sg.s7.cover.s':   'Preamble, motto or short subtitle of the presentation.',
+      'sg.s7.slide.t':   'Slide title',
+      'sg.s7.slide.sub': 'Subtitle',
+      'sg.s7.photo.tag': 'Photo slide',
+      'sg.s7.photo.cap': 'Caption for the photo or a short list of explanations on the slide topic.',
+      'sg.s7.thanks':    'Thank you<br>for your attention',
+      'sg.s7.note':      'All slides use 16:9. Default background is graphite (#0F0F0F). The mark sits in the top-right; the page number sits in the bottom-right.',
+
+      'sg.s8.h.facade':  'Facade signage variant',
+      'sg.s8.cap.facade':'On a facade the mark sits on a separate graphite plate. The amber accent works like “a light in the window” — recognizable at any time of day.',
+      'sg.s8.h.roof':    'Rooftop signage variant',
+      'sg.s8.cap.roof':  'On a rooftop the signage works without a backplate — the letter and logo read against the sky. After dark the mark plate is back-lit.',
+      'sg.s8.h.recept':  'Reception area variant',
+      'sg.s8.cap.recept':'In a reception interior the amber wedge plate emerges from behind the mark onto a dark wall. Recommended desk materials: dark wood or matte graphite with amber LED back-light.',
+      'sg.s8.txt':       'For interiors prefer strict shapes. Because the SINTEM mark already has its own recognizable geometry (the rounded square), the stricter the surroundings, the stronger the brand reads. Allowed materials: matte metal, dark wood, graphite paint, amber LED back-light. Avoid: glossy surfaces with colored reflections, warm light-wood environments and active color contrasts other than amber.',
+
+      'sg.s9.note':      'Each agent has its own pictogram, sharing the same rounded square plate and amber outline. In the Telegram bot the pictograms appear in the inline menu; in marketing materials they sit in the agent cards on the landing.',
+
+      'sg.s10.no1':      'No tilting',
+      'sg.s10.no2':      'No color change',
+      'sg.s10.no3':      'No round plate',
+      'sg.s10.no4':      'No font change',
+      'sg.s10.no5':      'No drop shadow',
+      'sg.s10.no6':      'No spacing change',
+
+      'sg.foot.year':    'Brand book · 2026',
+      'bd.foot.line':    'SINTEM. Telegram bot for WB and Ozon sellers.<br>Brand contact: <a href="https://t.me/sintem_support">@sintem_support</a>. Landing: <a href="index.html">index.html</a>. Brand book: <a href="style-guide.html">style-guide.html</a>.',
+
+      'bd.cover.eyebrow':'SINTEM brand',
+      'bd.cover.h1main': 'SINTEM design',
+      'bd.cover.h1sub':  'Description and&nbsp;taglines',
+
+      'bd.intro.p1': 'When designing the SINTEM mark we mapped out the situations in which our bot actually appears next to the user — a marketplace seller. Not “IT in general” and not “automation in general”, but the evening chat in which a small business handles its operational tasks.',
+      'bd.intro.p2': 'From a long list of attributes, we chose the following:',
+      'bd.intro.t1': '1. Synthesis — five different functions in one shell',
+      'bd.intro.t2': '2. Telegram-native — the recognizable language of the messenger',
+      'bd.intro.t3': '3. Speed and action — we answer in 30 seconds',
+      'bd.intro.t4': '4. Trust around money — unit economics and revenue',
+      'bd.intro.note':'Each of these attributes carries its own visual associations. As we sorted through them, this mark emerged — the letter “S” in a rounded yellow square on a dark background.',
+
+      'bd.sym1.p1':   'The name “SINTEM” itself nods to “synthesis” — joining several independent things into one working whole. That captures the product’s main promise: five very different AI assistants (listing doctor, review responder, competitor scout, ABC-XYZ, unit economics) live in one Telegram bot, in one subscription, with no integrations between them.',
+      'bd.sym1.p2':   'Visually this is solved with a single concise letter “S” — one shape that nonetheless “glues together” two arcs. It is both the brand initial and a metaphor for different processes meeting at one point. The rounded plate around the letter echoes the language of iOS and Android app icons: the mark instantly reads as “an app you come back to”.',
+      'bd.sym1.lbl1': 'The chat as container',
+      'bd.sym1.lbl2': 'One mark — five functions',
+
+      'bd.sym2.p1':   'A WB and Ozon seller lives inside Telegram: that’s where the suppliers are, the category chats, the marketplace gossip, the platform support. That’s why we don’t build a separate app — we drop a bot into the messenger they already use. The mark is an icon that doesn’t look out of place in their chat list: a rounded square, a solid color, exactly one letter in the middle, just like Telegram, WhatsApp or the marketplace service bots.',
+      'bd.sym2.p2':   'Yellow is the color of notifications and unread items: the signal a seller’s eye is trained to react to in their chat list. In that sense the SINTEM mark works like a small badge: “there’s something useful for you here right now.”',
+      'bd.sym2.lbl1': 'Among the seller’s chats',
+      'bd.sym2.lbl2': 'Recognizable icon',
+
+      'bd.sym3.p1':   'SINTEM’s core operational promise is “first result in 30 seconds”. Not “onboarding”, not “personal dashboard”, not “leave a request and we’ll reply” — but a letter, a step, an answer. So the mark is drawn as a monolithic shape with no extra geometry: there’s nothing for the eye to catch besides the letter itself.',
+      'bd.sym3.p2':   'The “S” itself carries built-in motion — left to right and top to bottom. That is the natural Latin scanning trajectory and at the same time a metaphor for the path from a user prompt to the bot’s answer. It isn’t static: the upper arc “moves forward”, the lower one “pulls back” — the logic of forward motion, advance, response.',
+      'bd.sym3.lbl1': 'Forward motion',
+      'bd.sym3.lbl2': 'Mark in motion',
+
+      'bd.sym4.p1':   'SINTEM calculates revenue, marketplace fees, logistics, returns and unit math per SKU. It’s about the user’s money — and the mark has to support that. Yellow in financial communication is steadily linked to gold, stake, premium, reward — it doesn’t alarm like red, it doesn’t cool down like blue, it signals value.',
+      'bd.sym4.p2':   'In its canonical form the “S” itself resembles the dollar sign ($) without the vertical bar — the only currency symbol shaped from a Latin letter. It is neither a dollar nor a currency, but a thin visual bridge to financial topics that reads associatively — exactly what we wanted from a concise mark.',
+      'bd.sym4.lbl1': 'Currency family of letters',
+      'bd.sym4.lbl2': 'Warm “money” yellow',
+
+      'bd.s1.lbl1': 'On light',
+      'bd.s1.lbl2': 'On dark (primary)',
+      'bd.s1.lbl3': 'Full lockup',
+
+      'bd.s3.c1.h': 'Amber yellow. Primary.',
+      'bd.s3.c1.p': 'Yellow is the color of attention, motion, reward and money. On a dark background it works as a notification — the seller’s eye is trained to react to this signal in the Telegram feed. The deeper tone (#FFB930) suits facade and interior work where the primary yellow could “burn out” under bright light.',
+      'bd.s3.c2.h': 'Marketplace green.',
+      'bd.s3.c2.p': 'The color of growth, “buy” buttons, positive sales dynamics. May appear as an accent in infographics (growth arrows, profit indicators) but not as the primary identity color — otherwise we lose differentiation from the thousands of marketplace services.',
+      'bd.s3.c3.h': 'Telegram blue.',
+      'bd.s3.c3.p': 'The color of the outgoing-message “blue bubble” in Telegram. Allowed in cross-promo with the platform and in materials where SINTEM is embedded into bot screenshots. Not used as a primary color — we’re not a clone of the Telegram service bot and have to look distinct.'
     },
 
     fr: {
@@ -526,7 +790,129 @@
       'bd.sl6':         'Un assistant, pas un tableau de bord.',
       'bd.sl6a':        'Slogan de positionnement face aux SaaS aux back-offices lourds.',
       'bd.sl7':         'De l’essai au revenu — en une soirée.',
-      'bd.sl7a':        'Slogan timeline émotionnel : la rapidité du retour, pas les fonctions.'
+      'bd.sl7a':        'Slogan timeline émotionnel : la rapidité du retour, pas les fonctions.',
+
+      'nav.landing':    'Page d’accueil',
+
+      'chat.bot.head':  'C’est fait. J’ai trouvé 7 axes de croissance.',
+      'chat.bot.l1':    '1. Le titre n’a pas le mot-clé « automne » — vous perdez 22 % du trafic recherche.',
+      'chat.bot.l2':    '2. La photo principale est en 4ᵉ position, elle doit être la 1ʳᵉ.',
+      'chat.bot.l3':    '3. La description contient 3 tournures lourdes qui plombent le CTR. Réécrire ?',
+      'chat.user.go':   'vas-y',
+
+      'sg.cover.h1ext': 'Éléments d’identité',
+
+      'sg.lbl.safe':     'Zone de protection',
+      'sg.cap.safe':     'Zone de protection du logo',
+      'sg.lbl.bg':       'Placement sur fond',
+      'sg.cap.pat':      'Motif de marque',
+      'sg.lbl.pat':      'Motif de marque',
+      'sg.lbl.bw_inv':   'Noir et blanc — inversé',
+      'sg.lbl.bw_main':  'Noir et blanc — principal',
+      'sg.lbl.mono_inv': 'Monochrome — inversé',
+      'sg.lbl.mono_main':'Monochrome — principal',
+      'sg.lbl.font':     'Caractère',
+
+      'sg.s1.txt1': 'Sur toute composition, le logo doit conserver un espace libre autour de lui ; aucun élément graphique, ligne ou texte ne doit y entrer. Dans les rares cas où le logo est posé sur une photographie, veillez à ce que la zone sous le logo soit unie ou très peu contrastée à l’intérieur de la zone de protection.',
+      'sg.s1.txt2': 'La zone de protection vaut « X » = 1/3 de la hauteur du signe, mesuré vers l’extérieur depuis les points les plus saillants du logo.',
+      'sg.s1.txt3': 'Lorsque le logo est posé sur un fond, respectez la zone de protection minimale. Sur fond sombre, on utilise la version principale (couleur). Sur fond clair, une plaque sombre derrière le signe est admise.',
+      'sg.s1.txt4': 'Le motif est constitué de répétitions du carré arrondi avec la lettre « S », disposées en damier avec une inclinaison de −12°. Convient aux fonds, à l’emballage, aux fonds de présentation et aux applications intérieures (murs, rideaux, textile).',
+      'sg.s1.txt5': 'Sur les compositions, les éléments du motif ne doivent pas être plus grands que le signe principal. L’espacement et l’angle d’inclinaison restent fixes.',
+      'sg.s2.txt':  'La version cyrillique est utilisée pour les supports destinés au marché russe et les documents juridiques. Le signe (la lettre « S » dans la plaque) reste inchangé dans toutes les versions linguistiques — c’est l’élément d’identité principal.',
+      'sg.s3.txt':  'La version noir et blanc est destinée à l’impression mono sur supports non-couleur, fax et copies. La version monochrome convient à l’impression une seule encre, au gaufrage, à la gravure et aux objets promotionnels en jaune de marque.',
+      'sg.s4.txt':  'La couleur joue un rôle majeur dans l’expression de l’identité SINTEM. La palette s’articule autour d’un fond graphite profond et d’un accent jaune ambre — la combinaison se lit sur l’écran d’un téléphone aussi nettement qu’un indicateur de message non lu et reste reconnaissable sur les objets et environnements physiques.',
+      'sg.s4b.txt': 'Les couleurs secondaires complètent la palette principale, mais les éléments qu’elles colorent ne portent pas l’identité comme le signe lui-même. À utiliser avec parcimonie — surtout pour les blocs de fond, les flèches d’accent et les indicateurs d’infographie.',
+
+      'sg.s5.demo.tag':  'Cinq assistants. Un chat.',
+      'sg.s5.demo.lead': 'Audit de fiche, réponse aux avis, veille concurrentielle, ABC-XYZ et économie unitaire — dans Telegram, sans embaucher.',
+      'sg.s5.txt1':      '<strong>Principale : -apple-system / Segoe UI / Inter / Roboto.</strong><br>Nous utilisons les polices système — sur tout appareil, le signe SINTEM se sent natif. La police est toujours celle que l’utilisateur voit déjà dans Telegram.',
+      'sg.s5.txt2':      '<strong>Monospace : ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Pour les commandes du bot (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>), les SKU, les calculs et les tableaux.',
+      'sg.s5.txt3':      'Pour l’impression et les présentations qui exigent une cohérence, le remplacement recommandé est <strong>Inter</strong> (gratuit, OFL).',
+
+      'sg.s6.front':     'Cinq assistants.<br>Un chat.',
+      'sg.s6.cap.front': 'Recto',
+      'sg.s6.bcard.name':'Aslan Kodirov',
+      'sg.s6.bcard.role':'Fondateur',
+      'sg.s6.cap.back':  'Verso',
+      'sg.s6.folder.team':'Équipe vendeur',
+      'sg.s6.cap.folder':'Pochette de documents',
+      'sg.s6.cap.env':   'Enveloppe de marque',
+      'sg.s6.cap.bag':   'Sac / merch de marque',
+      'sg.s6.lh.meta1':  'EI Kodirov A.&nbsp;A.<br>Numéro fiscal indiqué dans les CGU<br>sintem.ru',
+      'sg.s6.lh.cap':    'Papier à en-tête A4',
+
+      'sg.s7.tag':       'Modèle de présentation',
+      'sg.s7.cover.t':   'Titre de la<br>présentation',
+      'sg.s7.cover.s':   'Préambule, devise ou court sous-titre de la présentation.',
+      'sg.s7.slide.t':   'Titre de la diapositive',
+      'sg.s7.slide.sub': 'Sous-titre',
+      'sg.s7.photo.tag': 'Diapositive avec photo',
+      'sg.s7.photo.cap': 'Légende de la photo ou liste de précisions sur le sujet de la diapositive.',
+      'sg.s7.thanks':    'Merci<br>de votre attention',
+      'sg.s7.note':      'Toutes les diapositives sont en 16:9. Fond par défaut : graphite (#0F0F0F). Le signe est en haut à droite ; le numéro de page en bas à droite.',
+
+      'sg.s8.h.facade':  'Variante d’enseigne en façade',
+      'sg.s8.cap.facade':'Sur une façade, le signe est posé sur une plaque graphite séparée. L’accent jaune fonctionne comme « la lumière à la fenêtre » — reconnaissable à toute heure.',
+      'sg.s8.h.roof':    'Variante d’enseigne en toiture',
+      'sg.s8.cap.roof':  'Sur une toiture l’enseigne se passe de plaque — la lettre et le logo se lisent contre le ciel. Le soir, la plaque de la lettre est rétroéclairée.',
+      'sg.s8.h.recept':  'Variante zone d’accueil',
+      'sg.s8.cap.recept':'Dans un accueil, la plaque jaune en biseau émerge derrière le signe sur un mur sombre. Pour le comptoir on recommande du bois sombre ou une surface graphite mate avec rétroéclairage ambre.',
+      'sg.s8.txt':       'Pour les intérieurs, préférez les formes strictes. Comme le signe SINTEM porte déjà sa propre géométrie reconnaissable (le carré arrondi), plus l’environnement est sobre, plus la marque ressort. Matériaux autorisés : métal mat, bois sombre, peinture graphite, rétroéclairage LED ambre. À éviter : surfaces brillantes avec reflets colorés, environnements bois clair chaleureux et contrastes colorés actifs autres que l’ambre.',
+
+      'sg.s9.note':      'Chaque assistant a son propre pictogramme, sur la même plaque carrée arrondie et le même contour ambre. Dans le bot Telegram, les pictogrammes apparaissent dans le menu en ligne ; dans les supports marketing, ils apparaissent sur les cartes d’assistants du site.',
+
+      'sg.s10.no1':      'Pas d’inclinaison',
+      'sg.s10.no2':      'Pas de changement de couleur',
+      'sg.s10.no3':      'Pas de plaque ronde',
+      'sg.s10.no4':      'Pas de changement de police',
+      'sg.s10.no5':      'Pas d’ombre portée',
+      'sg.s10.no6':      'Pas de changement d’espacement',
+
+      'sg.foot.year':    'Charte graphique · 2026',
+      'bd.foot.line':    'SINTEM. Bot Telegram pour vendeurs WB et Ozon.<br>Contact marque : <a href="https://t.me/sintem_support">@sintem_support</a>. Site : <a href="index.html">index.html</a>. Charte : <a href="style-guide.html">style-guide.html</a>.',
+
+      'bd.cover.eyebrow':'Marque SINTEM',
+      'bd.cover.h1main': 'Design SINTEM',
+      'bd.cover.h1sub':  'Description et&nbsp;slogans',
+
+      'bd.intro.p1': 'En concevant le signe SINTEM, nous avons cartographié les situations où notre bot se trouve réellement à côté de l’utilisateur — un vendeur de marketplace. Pas « l’IT en général » ni « l’automatisation en général », mais le chat du soir où une petite entreprise règle ses tâches opérationnelles.',
+      'bd.intro.p2': 'Parmi de nombreux attributs, nous avons retenu :',
+      'bd.intro.t1': '1. Synthèse — cinq fonctions différentes dans une seule coque',
+      'bd.intro.t2': '2. Natif Telegram — le langage reconnaissable du messager',
+      'bd.intro.t3': '3. Vitesse et action — réponse en 30 secondes',
+      'bd.intro.t4': '4. Confiance autour de l’argent — économie unitaire et revenu',
+      'bd.intro.note':'Chacun de ces attributs porte ses propres associations visuelles. En les triant, ce signe est apparu — la lettre « S » dans un carré arrondi jaune sur fond sombre.',
+
+      'bd.sym1.p1':   'Le nom « SINTEM » renvoie à la « synthèse » — réunir plusieurs choses indépendantes en un tout opérant. Cela porte la promesse principale du produit : cinq assistants IA très différents (audit de fiche, réponse aux avis, veille concurrentielle, ABC-XYZ, économie unitaire) vivent dans un seul bot Telegram, dans un seul abonnement, sans intégration entre eux.',
+      'bd.sym1.p2':   'Visuellement, c’est résolu par une lettre « S » concise — une seule forme dans laquelle deux arcs sont « collés ». C’est à la fois l’initiale de la marque et la métaphore de processus différents qui se rejoignent en un point. La plaque arrondie autour de la lettre reprend le langage des icônes iOS et Android : le signe se lit immédiatement comme « une appli sur laquelle on revient ».',
+      'bd.sym1.lbl1': 'Le chat comme conteneur',
+      'bd.sym1.lbl2': 'Un signe — cinq fonctions',
+
+      'bd.sym2.p1':   'Le vendeur WB et Ozon vit dans Telegram : ses fournisseurs, ses chats de catégorie, les discussions des marketplaces, le support des plateformes. C’est pourquoi nous ne créons pas d’application séparée — nous posons un bot dans la messagerie qu’il utilise déjà. Le signe est une icône qui ne dénote pas dans sa liste de chats : carré arrondi, couleur dense, exactement une lettre au centre, comme Telegram, WhatsApp ou les bots de service des marketplaces.',
+      'bd.sym2.p2':   'Le jaune est la couleur de la notification et du non-lu : le signal auquel l’œil du vendeur est entraîné dans sa liste de chats. Le signe SINTEM y joue alors comme un petit badge : « il y a quelque chose d’utile pour toi ici, maintenant. »',
+      'bd.sym2.lbl1': 'Parmi les chats du vendeur',
+      'bd.sym2.lbl2': 'Icône reconnaissable',
+
+      'bd.sym3.p1':   'La promesse opérationnelle centrale de SINTEM est « premier résultat en 30 secondes ». Pas « onboarding », pas « espace personnel », pas « laissez une demande, on revient vers vous » — mais une lettre, un pas, une réponse. Le signe est donc dessiné en forme monolithique sans géométrie superflue : l’œil n’a rien d’autre à accrocher que la lettre elle-même.',
+      'bd.sym3.p2':   'La « S » porte un mouvement intégré — de gauche à droite et de haut en bas. C’est la trajectoire naturelle de lecture du latin et, en même temps, une métaphore du chemin allant de la requête utilisateur à la réponse du bot. Elle n’est pas statique : l’arc supérieur « avance », l’arc inférieur « revient » — la logique du mouvement vers l’avant, de l’avancée, de la réponse.',
+      'bd.sym3.lbl1': 'Mouvement vers l’avant',
+      'bd.sym3.lbl2': 'Signe en mouvement',
+
+      'bd.sym4.p1':   'SINTEM calcule le revenu, les commissions des marketplaces, la logistique, les retours, l’unit math par SKU. C’est l’argent de l’utilisateur — et le signe doit le soutenir. Le jaune, en communication financière, renvoie de manière stable à l’or, à la mise, à la prime, à la récompense — il n’alarme pas comme le rouge, il ne refroidit pas comme le bleu, il signale la valeur.',
+      'bd.sym4.p2':   'Dans sa forme canonique, la « S » rappelle elle-même le signe du dollar ($) sans la barre verticale — le seul signe monétaire formé d’une lettre latine. Ce n’est ni un dollar ni une devise, mais un fin pont visuel vers le sujet financier qui se lit par association — exactement ce que nous voulions d’un signe concis.',
+      'bd.sym4.lbl1': 'Famille monétaire des lettres',
+      'bd.sym4.lbl2': 'Jaune chaud « argent »',
+
+      'bd.s1.lbl1': 'Sur clair',
+      'bd.s1.lbl2': 'Sur sombre (principal)',
+      'bd.s1.lbl3': 'Lockup complet',
+
+      'bd.s3.c1.h': 'Jaune ambre. Principal.',
+      'bd.s3.c1.p': 'Le jaune est la couleur de l’attention, du mouvement, de la récompense et de l’argent. Sur fond sombre, il agit comme une notification — l’œil du vendeur est entraîné à réagir à ce signal dans le fil Telegram. Le ton plus profond (#FFB930) convient aux usages en façade et en intérieur où le jaune principal pourrait « brûler » sous une lumière forte.',
+      'bd.s3.c2.h': 'Vert « marketplace ».',
+      'bd.s3.c2.p': 'La couleur de la croissance, des boutons « acheter », des dynamiques de vente positives. Peut servir d’accent en infographie (flèches de croissance, indicateurs de profit), mais pas comme couleur d’identité principale — sinon nous perdons la différenciation face à des milliers de services marketplace.',
+      'bd.s3.c3.h': 'Bleu Telegram.',
+      'bd.s3.c3.p': 'La couleur de la « bulle bleue » des messages sortants dans Telegram. Admissible en cross-promo avec la plateforme et dans les supports où SINTEM est intégré à des captures du bot. Pas en couleur principale — nous ne sommes pas un clone du bot de service Telegram et devons rester distincts.'
     },
 
     ar: {
@@ -700,7 +1086,129 @@
       'bd.sl6':         'مساعد، لا لوحة تحكّم.',
       'bd.sl6a':        'شعار تموضع: نقابل به SaaS بلوحات تحكّم ثقيلة.',
       'bd.sl7':         'من التجربة إلى الإيراد — في مساء واحد.',
-      'bd.sl7a':        'شعار خط زمني عاطفي: عن سرعة العائد لا عن الميزات.'
+      'bd.sl7a':        'شعار خط زمني عاطفي: عن سرعة العائد لا عن الميزات.',
+
+      'nav.landing':    'الصفحة الرئيسية',
+
+      'chat.bot.head':  'انتهيت. وجدت 7 نقاط للنمو.',
+      'chat.bot.l1':    '1. العنوان لا يحتوي الكلمة المفتاحية «خريفي» — تخسر 22% من حركة البحث.',
+      'chat.bot.l2':    '2. الصورة الرئيسية في المرتبة الرابعة، يجب أن تكون الأولى.',
+      'chat.bot.l3':    '3. في الوصف 3 صياغات ثقيلة تُقلّل CTR. أُعيد كتابتها؟',
+      'chat.user.go':   'هيّا',
+
+      'sg.cover.h1ext': 'عناصر التصميم المؤسسي',
+
+      'sg.lbl.safe':     'منطقة الحماية',
+      'sg.cap.safe':     'منطقة حماية الشعار',
+      'sg.lbl.bg':       'الوضع على الخلفية',
+      'sg.cap.pat':      'نمط الماركة',
+      'sg.lbl.pat':      'نمط الماركة',
+      'sg.lbl.bw_inv':   'أبيض وأسود — معكوس',
+      'sg.lbl.bw_main':  'أبيض وأسود — أساسي',
+      'sg.lbl.mono_inv': 'أحادي اللون — معكوس',
+      'sg.lbl.mono_main':'أحادي اللون — أساسي',
+      'sg.lbl.font':     'الخط',
+
+      'sg.s1.txt1': 'في كل تصميم يجب أن يحافظ الشعار على مسافة فارغة حوله؛ لا يجوز أن تدخل هذه المنطقة أي عناصر رسومية أو خطوط أو نصوص. في الحالات النادرة التي يوضع فيها الشعار فوق صورة، يجب أن تكون المنطقة تحته أحاديةَ اللون أو ضعيفةَ التباين ضمن منطقة الحماية.',
+      'sg.s1.txt2': 'منطقة الحماية تساوي «X» = ثُلث ارتفاع العلامة، تُقاس إلى الخارج من أبعد نقاط الشعار في كل اتجاه.',
+      'sg.s1.txt3': 'عند وضع الشعار على خلفية يجب احترام الحد الأدنى لمنطقة الحماية. على الخلفية الداكنة تُستخدم النسخة الأساسية الكاملة الألوان. على الخلفية الفاتحة يُسمح بلوحة داكنة خلف العلامة.',
+      'sg.s1.txt4': 'يُبنى النمط من تكرار المربع المُدوَّر بحرف «S»، مرتباً بشكل متشابك بميل −12°. مناسب للخلفيات والتعبئة وخلفيات العروض والتطبيقات الداخلية (الجدران، الستائر، الأقمشة).',
+      'sg.s1.txt5': 'في التصاميم يجب ألا تكون عناصر النمط أكبر من العلامة الأساسية. تظل المسافة بين العناصر وزاوية الميل ثابتتين.',
+      'sg.s2.txt':  'تُستخدم النسخة السيريلية في المواد الموجَّهة للسوق الروسية والوثائق القانونية. تظل العلامة (حرف «S» داخل اللوحة) دون تغيير في كل النسخ اللغوية — وهي العنصر الرئيسي للهوية.',
+      'sg.s3.txt':  'النسخة بالأبيض والأسود للطباعة الأحادية على وسائط غير ملوّنة، الفاكسات والنُسخ. النسخة أحادية اللون للطباعة بلون واحد، النقش، الحفر، والمنتجات الترويجية باللون الأصفر للماركة.',
+      'sg.s4.txt':  'يلعب اللون دوراً جوهرياً في التعبير عن هوية SINTEM. تتمحور اللوحة حول خلفية رمادية داكنة وعلامة صفراء كهرمانية — يُقرأ هذا المزيج على شاشة الهاتف بنفس وضوح مؤشّر الرسالة غير المقروءة، ويبقى مميزاً على المنتجات والبيئات المادية.',
+      'sg.s4b.txt': 'تكمّل الألوان الثانوية اللوحة الأساسية، لكن العناصر الملوّنة بها ليست حاملة هوية كالعلامة نفسها. تُستخدم بحذر — أساساً لكتل الخلفية، أسهم التشديد، ومؤشرات الإنفوجرافيك.',
+
+      'sg.s5.demo.tag':  'خمسة مساعدين. محادثة واحدة.',
+      'sg.s5.demo.lead': 'مدقّق القائمة، الرد على المراجعات، رصد المنافسين، ABC-XYZ واقتصاديات الوحدة — في تيليجرام، بدون توظيف.',
+      'sg.s5.txt1':      '<strong>الأساسي: -apple-system / Segoe UI / Inter / Roboto.</strong><br>نعتمد على خطوط النظام — على أي جهاز تبدو علامة SINTEM «أصلية». الخط هو نفسه الذي يراه المستخدم في تيليجرام.',
+      'sg.s5.txt2':      '<strong>أحادي العرض: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>لأوامر البوت (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>)، رموز SKU، الحسابات والجداول.',
+      'sg.s5.txt3':      'للطباعة والعروض التي تتطلّب اتساقاً، البديل الموصى به هو <strong>Inter</strong> (مجاني، رخصة OFL).',
+
+      'sg.s6.front':     'خمسة مساعدين.<br>محادثة واحدة.',
+      'sg.s6.cap.front': 'الوجه الأمامي',
+      'sg.s6.bcard.name':'أصلان كاديروف',
+      'sg.s6.bcard.role':'المؤسس',
+      'sg.s6.cap.back':  'الوجه الخلفي',
+      'sg.s6.folder.team':'فريق البائع',
+      'sg.s6.cap.folder':'محفظة المستندات',
+      'sg.s6.cap.env':   'مغلّف الماركة',
+      'sg.s6.cap.bag':   'كيس / منتج ترويجي',
+      'sg.s6.lh.meta1':  'منشأة فردية كاديروف أ.&nbsp;أ.<br>الرقم الضريبي يُذكر في العرض<br>sintem.ru',
+      'sg.s6.lh.cap':    'ورقة A4 رسمية',
+
+      'sg.s7.tag':       'قالب العرض التقديمي',
+      'sg.s7.cover.t':   'عنوان<br>العرض التقديمي',
+      'sg.s7.cover.s':   'مقدّمة، شعار أو عنوان فرعي قصير للعرض.',
+      'sg.s7.slide.t':   'عنوان الشريحة',
+      'sg.s7.slide.sub': 'العنوان الفرعي',
+      'sg.s7.photo.tag': 'شريحة بصورة',
+      'sg.s7.photo.cap': 'تعليق على الصورة أو قائمة قصيرة من الإيضاحات حول موضوع الشريحة.',
+      'sg.s7.thanks':    'شكراً لكم<br>على اهتمامكم',
+      'sg.s7.note':      'كل الشرائح بمقاس 16:9. الخلفية الافتراضية رمادية داكنة (#0F0F0F). العلامة في أعلى اليمين؛ رقم الصفحة في أسفل اليمين.',
+
+      'sg.s8.h.facade':  'لوحة واجهة',
+      'sg.s8.cap.facade':'على الواجهة تُوضع العلامة على لوحة رمادية منفصلة. اللون الأصفر يعمل كـ«ضوء في النافذة» — يُميَّز في كل وقت.',
+      'sg.s8.h.roof':    'لوحة على السطح',
+      'sg.s8.cap.roof':  'على السطح تعمل اللوحة بلا خلفية — يُقرأ الحرف والشعار على خلفية السماء. مساءً تُضاء لوحة الحرف من الداخل.',
+      'sg.s8.h.recept':  'منطقة الاستقبال',
+      'sg.s8.cap.recept':'في منطقة الاستقبال، تخرج لوحة صفراء على شكل وتد من خلف العلامة على جدار داكن. للمكتب يُوصى بخشب داكن أو سطح رمادي مطفأ مع إضاءة كهرمانية خلفية.',
+      'sg.s8.txt':       'في الفضاءات الداخلية فضّل الأشكال الصارمة. لأن علامة SINTEM تحمل بالفعل هندستها المميزة (المربع المُدوَّر)، فكلما كان المحيط أبسط ظهرت الماركة بقوة أكبر. مواد مسموحة: معدن مطفأ، خشب داكن، طلاء رمادي، إضاءة LED كهرمانية. تجنّب: الأسطح اللامعة بانعكاسات ملوّنة، البيئات الخشبية الفاتحة الدافئة، والتباينات اللونية النشطة بخلاف الكهرماني.',
+
+      'sg.s9.note':      'لكل مساعد رمزه الخاص، على نفس اللوحة المربعة المُدوَّرة وبنفس الإطار الكهرماني. في بوت تيليجرام تظهر الرموز في القائمة المضمَّنة؛ في المواد التسويقية تظهر في بطاقات المساعدين على الموقع.',
+
+      'sg.s10.no1':      'بدون إمالة',
+      'sg.s10.no2':      'بدون تغيير اللون',
+      'sg.s10.no3':      'بدون لوحة دائرية',
+      'sg.s10.no4':      'بدون تغيير الخط',
+      'sg.s10.no5':      'بدون ظل',
+      'sg.s10.no6':      'بدون تغيير المسافات',
+
+      'sg.foot.year':    'دليل الهوية · 2026',
+      'bd.foot.line':    'SINTEM. بوت تيليجرام لبائعي WB وOzon.<br>التواصل بشأن الماركة: <a href="https://t.me/sintem_support">@sintem_support</a>. الموقع: <a href="index.html">index.html</a>. دليل الهوية: <a href="style-guide.html">style-guide.html</a>.',
+
+      'bd.cover.eyebrow':'علامة SINTEM',
+      'bd.cover.h1main': 'تصميم SINTEM',
+      'bd.cover.h1sub':  'الوصف والشعارات',
+
+      'bd.intro.p1': 'عند تصميم علامة SINTEM رسمنا خريطة كلامية للمواقف التي يكون فيها بوتنا فعلاً إلى جانب المستخدم — بائع المتجر الإلكتروني. ليس «تكنولوجيا المعلومات بشكل عام» ولا «الأتمتة بشكل عام»، بل تحديداً تلك المحادثة المسائية التي تُحَلّ فيها المهام التشغيلية للأعمال.',
+      'bd.intro.p2': 'من قائمة طويلة من السمات اخترنا التالية:',
+      'bd.intro.t1': '1. التركيب — خمس وظائف مختلفة في غلاف واحد',
+      'bd.intro.t2': '2. أصلي لتيليجرام — لغة المسنجر المعروفة',
+      'bd.intro.t3': '3. السرعة والفعل — نُجيب في 30 ثانية',
+      'bd.intro.t4': '4. الثقة حول المال — اقتصاديات الوحدة والإيراد',
+      'bd.intro.note':'لكل من هذه السمات صور بصرية خاصة. عند المرور بها تشكّلت هذه العلامة — حرف «S» داخل مربع مُدوَّر أصفر على خلفية داكنة.',
+
+      'bd.sym1.p1':   'يُحيل الاسم «SINTEM» نفسه إلى «التركيب» (synthesis) — جمع عدة كيانات مستقلة في كلٍّ واحد عامل. وهذا يحمل وعد المنتج الرئيسي: خمسة مساعدين بالذكاء الاصطناعي مختلفون جداً (مدقّق القائمة، الرد على المراجعات، رصد المنافسين، ABC-XYZ، اقتصاديات الوحدة) يعيشون في بوت تيليجرام واحد، باشتراك واحد، بلا تكاملات بينهم.',
+      'bd.sym1.p2':   'بصرياً، الحلّ هو حرف «S» موجز — شكل واحد «مُلصق» فيه قوسان. هذا الحرف هو حرف الماركة الأول واستعارة لكيفية التقاء عمليات مختلفة في نقطة واحدة. اللوحة المربعة المُدوَّرة حول الحرف تستحضر لغة أيقونات تطبيقات iOS وAndroid: تُقرأ العلامة فوراً كـ«تطبيق نعود إليه».',
+      'bd.sym1.lbl1': 'المحادثة كحاوية',
+      'bd.sym1.lbl2': 'علامة واحدة — خمس وظائف',
+
+      'bd.sym2.p1':   'بائع WB وOzon يعيش في تيليجرام: هناك مورّدوه، ومجموعات الفئات، ونقاش تفاصيل الأسواق، ودعم المنصّات. لذلك لا نصنع تطبيقاً منفصلاً، بل نضع البوت في المسنجر الذي يستخدمه أصلاً. العلامة أيقونة لا تشذّ عن قائمة محادثاته: مربع مُدوَّر، لون كثيف، حرف واحد بالضبط في الوسط، كما تيليجرام، WhatsApp أو بوتات خدمات الأسواق.',
+      'bd.sym2.p2':   'الأصفر هو لون الإشعار وغير المقروء: الإشارة التي اعتاد عين البائع التفاعل معها في قائمة المحادثات. علامة SINTEM في هذا المعنى تعمل كشارة صغيرة: «هنا شيء مفيد لك الآن».',
+      'bd.sym2.lbl1': 'بين محادثات البائع',
+      'bd.sym2.lbl2': 'أيقونة مميزة',
+
+      'bd.sym3.p1':   'الوعد التشغيلي الأساسي لـ SINTEM هو «أول نتيجة في 30 ثانية». ليس «استقبالاً»، ولا «لوحة شخصية»، ولا «اترك طلباً وسنعاود الاتصال» — بل حرف، خطوة، ردّ. لذلك رُسم الرمز ككتلة واحدة بلا هندسة زائدة: لا شيء تتعلّق به العين سوى الحرف نفسه.',
+      'bd.sym3.p2':   'حرف «S» نفسه يحمل حركة مدمجة — من اليسار إلى اليمين ومن الأعلى إلى الأسفل. هذه هي الحركة الطبيعية لمسح النص اللاتيني، وفي الوقت نفسه استعارة لمسار طلب المستخدم وصولاً إلى ردّ البوت. ليس ساكناً: القوس العلوي «يتقدّم»، والسفلي «يرجع» — منطق الحركة إلى الأمام، التقدّم، الردّ.',
+      'bd.sym3.lbl1': 'حركة إلى الأمام',
+      'bd.sym3.lbl2': 'علامة في حركة',
+
+      'bd.sym4.p1':   'يحسب SINTEM الإيراد، عمولات الأسواق، اللوجستيك، الإرجاعات واقتصاديات الوحدة لكل SKU. يتعلّق الأمر بمال المستخدم — والعلامة يجب أن تدعم ذلك. الأصفر في التواصل المالي مرتبط ثابتاً بالذهب، الرهان، المكافأة، الجائزة — لا يُخيف كالأحمر، ولا يُبرّد كالأزرق، بل يُشير إلى القيمة.',
+      'bd.sym4.p2':   'في صورته الأصلية يُذكّر حرف «S» بعلامة الدولار ($) من دون الخط العمودي — العلامة النقدية الوحيدة المصنوعة من حرف لاتيني. ليست دولاراً ولا عملة، بل جسر بصري دقيق إلى الموضوع المالي يُقرأ ترابطياً — وهو تماماً ما أردناه من علامة موجزة.',
+      'bd.sym4.lbl1': 'أُسرة العملات من الحروف',
+      'bd.sym4.lbl2': 'أصفر «المال» الدافئ',
+
+      'bd.s1.lbl1': 'على الفاتح',
+      'bd.s1.lbl2': 'على الداكن (الأساسي)',
+      'bd.s1.lbl3': 'التركيب الكامل',
+
+      'bd.s3.c1.h': 'كهرماني أصفر. الأساسي.',
+      'bd.s3.c1.p': 'الأصفر لون الانتباه، الحركة، المكافأة والمال. على الخلفية الداكنة يعمل كإشعار — اعتاد عين البائع على التفاعل معه في قائمة تيليجرام. الدرجة الأعمق (#FFB930) تُناسب الواجهات والداخلي حيث قد «يحترق» الأصفر الأساسي تحت الإضاءة القوية.',
+      'bd.s3.c2.h': 'أخضر «الأسواق».',
+      'bd.s3.c2.p': 'لون النمو، أزرار «اشترِ»، الديناميكيات الإيجابية للمبيعات. يمكن استخدامه كتشديد في الإنفوجرافيك (أسهم النمو، مؤشرات الربح)، لكن ليس كلون الهوية الأساسي — وإلا ضاع التميّز عن آلاف خدمات الأسواق.',
+      'bd.s3.c3.h': 'أزرق تيليجرام.',
+      'bd.s3.c3.p': 'لون «الفقاعة الزرقاء» للرسالة الصادرة في تيليجرام. مسموح في الترويج المشترك مع المنصّة وفي المواد التي يُدمَج فيها SINTEM داخل لقطات شاشة البوت. لا يُستخدم كلون أساسي — لسنا نسخة من بوت خدمة تيليجرام ويجب أن نختلف بصرياً.'
     }
   };
 
