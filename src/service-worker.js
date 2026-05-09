@@ -4,7 +4,7 @@
  *
  * Стратегия: cache-first для статики, network-only для API.
  */
-const CACHE_NAME = 'grandhubai-v1.5.0';
+const CACHE_NAME = 'grandhubai-v1.6.1';
 const STATIC_ASSETS = [
   './',
   './index.html',

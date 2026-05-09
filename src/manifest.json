@@ -1,6 +1,8 @@
 {
   "name": "GrandHubAi — Multi-Agent AI Platform",
   "short_name": "GrandHubAi",
+  "version": "1.6.1",
+  "id": "grandhubai",
   "description": "Мульти-агентная ИИ-платформа на 240+ профессиональных промптов. Provider-agnostic. Работает на любом устройстве.",
   "start_url": "./index.html",
   "scope": "./",

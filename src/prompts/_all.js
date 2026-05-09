@@ -1,4 +1,4 @@
-/* GrandHubAi · Prompts Bundle (auto-generated) · v1.5.0
+/* GrandHubAi · Prompts Bundle (auto-generated) · v1.6.1
  * (c) 2026 Kagirov A-Kh A. · AGPL-3.0
  */
 
