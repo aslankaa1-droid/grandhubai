@@ -176,6 +176,11 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
 .led{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);
   margin-right:6px;box-shadow:0 0 8px var(--success);animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn.recording{
+  background:var(--danger,#ef4444)!important;color:#fff!important;
+  border-color:var(--danger,#ef4444)!important;
+  animation:pulse 1s infinite;
+}
 
 /* CONTROL BAR */
 .control-bar{
@@ -858,7 +863,7 @@ python -m http.server 8080</pre>
 </div>
 
 <!-- AGENT REGISTRY: bundled (один HTTP-запрос вместо 31, defer = параллельная загрузка) -->
-<script>window.AGENTS = window.AGENTS || {}; window.AGENTS_BY_DOMAIN = window.AGENTS_BY_DOMAIN || {};</script>
+<script>window.AGENTS = window.AGENTS || {};</script>
 <script src="prompts/_all.js" defer></script>
 
 <script>
@@ -1064,7 +1069,6 @@ const THEME_LABELS = {
   contrast:'⚡ Высокий контраст', solarized:'🌊 Solarized', nord:'❄️ Nord',
   dracula:'🦇 Dracula', auto:'🌗 Авто'
 };
-const BEIGE_LABELS = THEME_LABELS; // alias for theme button
 
 /* ====== INDEXED DB STORAGE ====== */
 const DB = (() => {
@@ -2076,7 +2080,7 @@ function buildTaskWithAttachments(task){
     }
   }
   if(imageFiles.length){
-    text += `\n\n— Изображения (vision-API будет в v1.3) —\nПрикреплены: ${imageFiles.map(f => f.name).join(', ')}.\n`
+    text += `\n\n— Изображения (vision-API в roadmap) —\nПрикреплены: ${imageFiles.map(f => f.name).join(', ')}.\n`
          +  `В текущей версии модель не видит содержимое изображений. Опишите в тексте, что на них.`;
   }
   return text;
@@ -2524,7 +2528,10 @@ async function init(){
   $('voiceBtn').addEventListener('click', () => {
     if(!voice){ addActivity('Голос', 'Не поддерживается', 'error'); return; }
     try{ voice.start(); $('voiceBtn').classList.add('recording'); }
-    catch(e){ addActivity('Голос', e.message, 'error'); }
+    catch(e){
+      $('voiceBtn').classList.remove('recording');
+      addActivity('Голос', e.message, 'error');
+    }
   });
 
   $('exportTxtBtn').addEventListener('click', exportTXT);
@@ -2576,7 +2583,7 @@ async function init(){
     state.settings.theme = next;
     applyTheme();
     persistState();
-    addActivity('Система', `Тема: ${BEIGE_LABELS[next] || next}`, 'system');
+    addActivity('Система', `Тема: ${THEME_LABELS[next] || next}`, 'system');
   });
 
   // file:// баннер handlers

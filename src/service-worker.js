@@ -8,6 +8,7 @@ const CACHE_NAME = 'grandhubai-v1.6.1';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './pricing.html',
   './manifest.json',
   './prompts/_all.js',
 ];
