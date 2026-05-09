@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0F0F0F">
+<meta name="color-scheme" content="dark">
+<title>SINTEM — Политика обработки данных</title>
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F0F0F'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-family='-apple-system,sans-serif' font-size='34' font-weight='700' fill='%23FFCD3C'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<style>
+.doc{max-width:760px;margin:0 auto;padding:48px 20px 80px}
+.doc h1{font-size:clamp(24px,4vw,36px);margin:0 0 28px;font-weight:700;letter-spacing:-.01em}
+.doc h2{font-size:18px;margin:32px 0 12px;font-weight:700;color:var(--accent)}
+.doc p,.doc li{color:var(--fg-dim);line-height:1.65;margin:0 0 10px}
+.doc ul{padding-left:22px}
+.doc .meta{color:var(--muted);font-size:13px;margin-bottom:24px;letter-spacing:.04em}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap site-head"><a class="brand" href="index.html"><span class="brand-mark">S</span><span>SINTEM</span></a></div></header>
+<main class="doc">
+  <p class="meta">Действует с 10 мая 2026 года</p>
+  <h1>Политика обработки данных</h1>
+  <p>Эта страница описывает, какие данные SINTEM получает от пользователей Telegram-бота <a href="https://t.me/sintem_bot">@sintem_bot</a>, как мы их храним и кому передаём. Документ написан простым языком, без юридического жаргона; в случае конфликта с публичной офертой приоритет за офертой.</p>
+
+  <h2>Какие данные мы получаем</h2>
+  <ul>
+    <li>Идентификатор пользователя Telegram (ID и username) — для авторизации и привязки тарифа.</li>
+    <li>Тексты ваших запросов к боту: ссылки на карточки маркетплейсов, тексты отзывов, выгрузки продаж в виде таблиц/файлов.</li>
+    <li>Ответы бота, сгенерированные AI-агентами.</li>
+    <li>Метаданные платежей от платёжных провайдеров (NowPayments, CryptoCloud) — для подтверждения оплаты тарифа.</li>
+  </ul>
+
+  <h2>Как храним</h2>
+  <ul>
+    <li>Запросы и ответы хранятся 90 дней в зашифрованном виде на инфраструктуре Cloudflare. Через 90 дней удаляются автоматически.</li>
+    <li>Удалить раньше — командой <code>/forget</code> в боте.</li>
+    <li>Платёжные данные (номер карты, реквизиты счёта) у нас не хранятся — они обрабатываются провайдером оплаты.</li>
+  </ul>
+
+  <h2>Кому передаём</h2>
+  <ul>
+    <li>Тексты запросов передаются провайдерам LLM (OpenRouter и аналогичные) для генерации ответа. Они работают по модели «без хранения» (не используют данные для обучения).</li>
+    <li>Маркетинговым партнёрам, рекламным сетям, аналитическим сервисам — <strong>не передаём</strong>.</li>
+    <li>Третьим лицам — только по обоснованному запросу уполномоченных органов в рамках действующего законодательства РФ.</li>
+  </ul>
+
+  <h2>Cookies и трекинг</h2>
+  <p>Сайт <code>sintem.ru</code> не использует cookies для трекинга и не подключает внешние аналитические системы (Google Analytics, Yandex.Metrica и т.п.). Браузер запоминает только выбранный вами язык интерфейса (localStorage, ключ <code>sintem.lang</code>).</p>
+
+  <h2>Ваши права</h2>
+  <ul>
+    <li>Получить копию ваших данных — напишите в <a href="https://t.me/sintem_support">@sintem_support</a>, ответ в течение 30 дней.</li>
+    <li>Удалить все свои данные — командой <code>/forget</code> в боте или по запросу в поддержку.</li>
+    <li>Отозвать согласие на обработку — через отмену подписки командой <code>/cancel</code>.</li>
+  </ul>
+
+  <h2>Контакты</h2>
+  <p>Поддержка: <a href="https://t.me/sintem_support">@sintem_support</a><br>Email для официальных запросов: будет указан в финальной редакции оферты.</p>
+</main>
+<footer class="site-foot"><div class="wrap foot-grid"><p class="muted small">© 2026 SINTEM. <a href="index.html">На главную</a></p></div></footer>
+</body>
+</html>
