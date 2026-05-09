@@ -45,17 +45,35 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
   if (user?.is_banned === 1) return;
 
   if (text.startsWith('/start')) {
-    await ensureFreeTrial(env, userId);
-    await sendMessage(
-      env,
-      chatId,
-      `Здравствуйте, ${escapeHtml(msg.from.first_name)}.\n\n` +
-        `<b>SINTEM</b> — 5 AI-сотрудников для селлеров WB и Ozon.\n` +
-        `Активирован пробный период: 5 запросов на агента в день, 7 дней.\n\n` +
-        `Выбрать агента: /agents\n` +
-        `Тарифы: /pay\n` +
-        `Помощь: /help`,
-    );
+    // Параметр deep-link `?start=ref_<userid>` — реферальный, фиксируем при первом /start.
+    const startArg = text.split(/\s+/)[1] ?? '';
+    if (startArg.startsWith('ref_')) {
+      const refBy = parseInt(startArg.slice(4), 10);
+      if (refBy && refBy !== userId) {
+        await env.DB.prepare(`UPDATE users SET utm_source = ? WHERE tg_user_id = ? AND (utm_source IS NULL OR utm_source = '')`)
+          .bind(`ref_${refBy}`, userId)
+          .run();
+      }
+    }
+    const isNew = await ensureFreeTrial(env, userId);
+    if (isNew) {
+      // welcome_short вариант B — теплее, с обращением по имени (см. bot_dialogues.md §1)
+      await sendMessage(
+        env,
+        chatId,
+        `Здравствуйте, ${escapeHtml(msg.from.first_name)}. Это <b>SINTEM</b>.\n\n` +
+          `Помогаем продавцам WB и Ozon: разбираем карточки, отвечаем на отзывы, считаем юнит-экономику и сравниваем с конкурентами. Все ответы — от профильных AI-помощников.\n\n` +
+          `Первые 5 запросов к каждому помощнику бесплатны. Регистрация не нужна.`,
+        { reply_markup: agentsKeyboard() },
+      );
+    } else {
+      await sendMessage(
+        env,
+        chatId,
+        'С возвращением. Выберите помощника или откройте /me, чтобы посмотреть остаток запросов.',
+        { reply_markup: agentsKeyboard() },
+      );
+    }
     return;
   }
 
@@ -65,17 +83,22 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
   }
 
   if (text.startsWith('/agents')) {
-    await sendMessage(env, chatId, 'Выберите агента:', { reply_markup: agentsKeyboard() });
+    await sendMessage(env, chatId, 'Пять рабочих помощников. Выберите:', { reply_markup: agentsKeyboard() });
     return;
   }
 
   if (text.startsWith('/pay')) {
-    await sendMessage(env, chatId, 'Выберите тариф:', { reply_markup: plansKeyboard() });
+    await sendMessage(env, chatId, payIntroText(), { reply_markup: plansKeyboard() });
     return;
   }
 
-  if (text.startsWith('/me')) {
+  if (text.startsWith('/me') || text.startsWith('/profile')) {
     await sendMessage(env, chatId, await renderMe(env, userId));
+    return;
+  }
+
+  if (text.startsWith('/about')) {
+    await sendMessage(env, chatId, aboutText());
     return;
   }
 
@@ -117,7 +140,14 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
     if (quota.reason === 'no_active_plan') {
       await sendMessage(env, chatId, 'Подписка не активна. Оплатите тариф: /pay');
     } else if (quota.reason === 'daily_quota') {
-      await sendMessage(env, chatId, 'Квота на сегодня исчерпана. Повышение тарифа: /pay');
+      // trial_exhausted_<agent> — конкретный текст по агенту (bot_dialogues.md §3)
+      const label = AGENT_LABELS[agentId as (typeof WEDGE_AGENTS)[number]] ?? agentId;
+      await sendMessage(
+        env,
+        chatId,
+        `Бесплатные 5 запросов к «${escapeHtml(label)}» на сегодня закончились. Завтра в 00:00 счётчик обнулится.\n\n` +
+          `Если работаете каждый день — посмотрите тарифы, на любом из них лимит кратно больше: /pay`,
+      );
     }
     // flood — silent
     return;
@@ -272,15 +302,20 @@ async function upsertUser(env: Env, u: TgUser): Promise<void> {
     .run();
 }
 
-async function ensureFreeTrial(env: Env, userId: number): Promise<void> {
+async function ensureFreeTrial(env: Env, userId: number): Promise<boolean> {
+  // Возвращает true, если только что создали trial; false — если уже был у этого user'а.
+  const existed = await env.DB.prepare(`SELECT 1 FROM subscriptions WHERE tg_user_id = ? LIMIT 1`)
+    .bind(userId)
+    .first<{ 1: number }>();
+  if (existed) return false;
   const expiresAt = Math.floor(Date.now() / 1000) + 7 * 86400;
   await env.DB.prepare(
     `INSERT INTO subscriptions (tg_user_id, plan, is_active, expires_at, source)
-     SELECT ?, 'free_trial', 1, ?, 'trial_auto'
-     WHERE NOT EXISTS (SELECT 1 FROM subscriptions WHERE tg_user_id = ?)`,
+     VALUES (?, 'free_trial', 1, ?, 'trial_auto')`,
   )
-    .bind(userId, expiresAt, userId)
+    .bind(userId, expiresAt)
     .run();
+  return true;
 }
 
 async function checkAndIncrementQuota(env: Env, userId: number, agentId: string): Promise<QuotaResult> {
@@ -354,13 +389,44 @@ function plansKeyboard() {
 }
 
 function helpText(): string {
+  // bot_dialogues.md §2 `help`
   return (
-    '<b>SINTEM</b> — AI-сотрудники для селлеров WB и Ozon.\n\n' +
-    '/agents — выбрать агента\n' +
-    '/pay — тарифы и оплата\n' +
-    '/me — мой план и квота\n' +
-    '/cancel — отключить авто-продление\n\n' +
+    '<b>SINTEM</b>. Что внутри.\n\n' +
+    'Помощники:\n' +
+    '— 🩺 Карточка-доктор: разбор карточки WB/Ozon\n' +
+    '— 💬 Ответ на отзыв: три варианта ответа\n' +
+    '— 🔭 Скаут конкурентов: сравнение с 5–7 конкурентами\n' +
+    '— 📊 ABC/XYZ: чистка ассортимента\n' +
+    '— 💰 Юнит-экономика: маржа и точка безубытка\n\n' +
+    'Команды:\n' +
+    '/start — начало работы\n' +
+    '/agents — список помощников\n' +
+    '/me — тариф и остаток запросов\n' +
+    '/pay — оплатить или продлить тариф\n' +
+    '/cancel — отключить авто-продление\n' +
+    '/about — о сервисе и оферта\n\n' +
     'Поддержка: @sintem_support'
+  );
+}
+
+function aboutText(): string {
+  // bot_dialogues.md §2 `about`
+  return (
+    '<b>SINTEM</b> — информационный сервис для селлеров маркетплейсов. Помогает разобрать карточку, ответить на отзыв, посчитать юнит-экономику, сравнить с конкурентами.\n\n' +
+    'Оплата принимается в криптовалюте через NowPayments и CryptoCloud. Чек по запросу.\n\n' +
+    'Сервис не заменяет профильного специалиста и не даёт юридических, налоговых или медицинских консультаций. Все рекомендации — информационные.\n\n' +
+    'Контакт: @sintem_support'
+  );
+}
+
+function payIntroText(): string {
+  // bot_dialogues.md §3 `pay_intro`
+  return (
+    '<b>Тарифы SINTEM.</b>\n\n' +
+    `Старт — ${PLAN_CONFIG.starter.price_rub} ₽/мес, ${PLAN_CONFIG.starter.daily_quota_per_agent} запросов в день на агента\n` +
+    `Рост — ${PLAN_CONFIG.pro.price_rub} ₽/мес, ${PLAN_CONFIG.pro.daily_quota_per_agent} запросов, приоритет очереди\n` +
+    `Бизнес — ${PLAN_CONFIG.business.price_rub} ₽/мес, ${PLAN_CONFIG.business.daily_quota_per_agent} запросов, приоритет, экспорт CSV\n\n` +
+    'Оплата криптовалютой. Без подписки — каждый месяц отдельным платежом. Выберите тариф.'
   );
 }
 
