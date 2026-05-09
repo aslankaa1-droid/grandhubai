@@ -2396,8 +2396,14 @@ async function handleSend(){
         // Аида передаёт оркестратору
         const brief = decision.orchestration_brief || task;
         if(decision.text){
-          // Промежуточное сообщение клиенту перед оркестрацией
-          appendSystemMessage('💼 Аида: ' + decision.text);
+          // Промежуточное сообщение клиенту перед оркестрацией — через agent-канал, чтобы получить .agent-disclaimer
+          const orchMsg = createMessageElement('agent', 'Аида 💼');
+          orchMsg.contentEl.innerHTML = renderMd(decision.text);
+          state.conversation.push({
+            role: 'agent', sender: 'Аида 💼',
+            text: decision.text, time: new Date().toISOString()
+          });
+          persistState();
         }
         addActivity('Аида 💼', '🤝 Передала задачу команде специалистов', 'system');
         const result = await orchestrate(brief, state.inflight.signal);
@@ -2405,8 +2411,15 @@ async function handleSend(){
         // Здесь оркестратор уже отдал свой синтез — Аида не оборачивает повторно чтобы не дублировать
         addActivity('Аида 💼', '✓ Передала результат клиенту', 'success');
       } else {
-        // неизвестное действие — fallback
-        appendSystemMessage('💼 Аида: ' + (decision.text || 'Не удалось разобрать запрос. Передаю команде.'));
+        // неизвестное действие — fallback (тоже через agent-канал, с disclaimer)
+        const fallbackText = decision.text || 'Не удалось разобрать запрос. Передаю команде.';
+        const fbMsg = createMessageElement('agent', 'Аида 💼');
+        fbMsg.contentEl.innerHTML = renderMd(fallbackText);
+        state.conversation.push({
+          role: 'agent', sender: 'Аида 💼',
+          text: fallbackText, time: new Date().toISOString()
+        });
+        persistState();
         await orchestrate(task, state.inflight.signal);
       }
     } else {
