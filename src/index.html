@@ -863,7 +863,16 @@ python -m http.server 8080</pre>
 </div>
 
 <!-- AGENT REGISTRY: bundled (один HTTP-запрос вместо 31, defer = параллельная загрузка) -->
-<script>window.AGENTS = window.AGENTS || {};</script>
+<script>
+window.AGENTS = window.AGENTS || {};
+/* SINTEM week-1 wedge — список доменов, разрешённых для запуска Telegram-бота продавцов
+ * WB/Ozon. В HTML-приложении (этот файл) НЕ применяется как enforcement: пользователи
+ * с собственным API-ключом видят все домены. Константа предназначена для backend-фильтра
+ * в Cloudflare Workers (см. sprint/week3_backend/), который будет проверять каждый
+ * запрос бота на домен агента и отклонять с медицины/права/инвестиций до прохождения
+ * 30-дневного чекпойнта. Изменения тут — без перезапуска backend'а — не влияют на бот. */
+window.SINTEM_WEEK1_DOMAINS = ['Бизнес и финансы', 'Маркетплейсы (WB / Ozon)', 'Координация'];
+</script>
 <script src="prompts/_all.js" defer></script>
 
 <script>
