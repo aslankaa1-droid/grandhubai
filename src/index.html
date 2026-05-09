@@ -2330,6 +2330,41 @@ function autoGrow(textarea){
 }
 
 /* ====== MAIN ACTIONS ====== */
+/* Compliance pre-LLM hook: суицид/самоповреждение и острые мед-флаги.
+ * Срабатывает ДО любого вызова LLM. Если триггер — добавляет в чат блок с горячими
+ * линиями (8-800-2000-122 / 112 / 103) и НЕ блокирует дальнейший flow. Текст блока
+ * соответствует §8 safe_phrasing_library.md (SINTEM week 1 compliance). */
+const CRISIS_PATTERNS = [
+  {
+    re: /(суицид|убить\s+себя|не\s+хочу\s+жить|самоповрежден|резать\s+себя|таблетки\s+чтобы\s+(уснуть|умереть)|покончить\s+с\s+собой|свести\s+счёты)/i,
+    name: 'Кризисная помощь 🚨',
+    text: 'Я слышу, что вам сейчас очень тяжело. Пожалуйста, прямо сейчас позвоните: **8-800-2000-122** (бесплатно, круглосуточно — для подростков и взрослых) или **112 / 103**. Это не «слабость» — это правильный шаг. Я не врач и не могу заменить живого специалиста. Если рядом есть близкий человек — попросите его побыть рядом, пока вы звоните.'
+  },
+  {
+    re: /(боль\s+в\s+груди|острая\s+одышка|потерял\s+сознание|онемение\s+половины\s+тела|перекосило\s+лицо|искривление\s+лица|инсульт)/i,
+    name: 'Экстренная помощь 🚨',
+    text: 'Это могут быть симптомы экстренного состояния. Пожалуйста, позвоните **103 или 112 НЕМЕДЛЕННО** — не продолжайте разговор с ботом. Каждая минута может иметь значение.'
+  }
+];
+
+function checkCrisisTriggers(text){
+  if(!text) return false;
+  for(const trig of CRISIS_PATTERNS){
+    if(trig.re.test(text)){
+      const { contentEl } = createMessageElement('agent', trig.name);
+      contentEl.innerHTML = renderMd(trig.text);
+      state.conversation.push({
+        role: 'agent', sender: trig.name,
+        text: trig.text, time: new Date().toISOString()
+      });
+      addActivity(trig.name, '⚠ Сработал кризисный фильтр', 'error');
+      persistState();
+      return true;
+    }
+  }
+  return false;
+}
+
 async function handleSend(){
   const ti = $('taskInput');
   const rawTask = ti.value.trim();
@@ -2344,6 +2379,8 @@ async function handleSend(){
     displayMsg += (displayMsg ? '\n\n' : '') + '📎 ' + state.attachments.map(a => a.name).join(', ');
   }
   appendUserMessage(displayMsg);
+  // Compliance pre-LLM hook — выдаём контакты экстренной помощи ДО запроса к модели
+  checkCrisisTriggers(rawTask);
   // После отправки очищаем прикрепления
   clearAttachments();
 
