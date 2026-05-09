@@ -3,6 +3,7 @@
 import { log } from '../lib/log';
 import { recheckPendingPayments } from './payments';
 import { drainRetryQueue } from './retry';
+import { runRetentionNudges } from './retention';
 import type { Env } from '../types';
 
 export async function handleCron(env: Env, ctx: ExecutionContext): Promise<void> {
@@ -42,6 +43,9 @@ export async function handleCron(env: Env, ctx: ExecutionContext): Promise<void>
         .run()
         .then(() => undefined),
     );
+
+    // 3d. Retention nudges (week 4): day1/2/4/7 + sub-expiring + silence-7d
+    ctx.waitUntil(runRetentionNudges(env, ctx));
 
     log({ event: 'cron_daily_done' });
   }
