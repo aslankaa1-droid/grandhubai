@@ -78,16 +78,23 @@ export const PLAN_CONFIG: Record<Plan, PlanConfig> = {
   business: { daily_quota_per_agent: 1000, price_rub: 7900, duration_days: 30 },
 };
 
-// Реальные id и system-prompts из sprint/week3_agents/ — сидируются в KV PROMPTS при деплое.
-export const WEDGE_AGENTS = ['wb_pricer', 'wb_reviews', 'oz_listings', 'wb_ads', 'oz_unit_economics'] as const;
+// 5 wedge-агентов SINTEM week 3. System-prompts живут в KV PROMPTS под ключами prompt:<id>,
+// исходники в sintem/backend/prompts/<id>.md (засеиваются через scripts/seed-prompts.mjs).
+export const WEDGE_AGENTS = [
+  'mp_card_doctor',
+  'mp_review_responder',
+  'mp_competitor_scout',
+  'mp_abc_xyz_analyst',
+  'mp_unit_economics',
+] as const;
 export type WedgeAgentId = (typeof WEDGE_AGENTS)[number];
 
 export const AGENT_LABELS: Record<WedgeAgentId, string> = {
-  wb_pricer: 'WB · Цены и юнит-экономика',
-  wb_reviews: 'WB · Отзывы и Q&A',
-  oz_listings: 'Ozon · Карточки и SEO',
-  wb_ads: 'WB · Рекламные кампании',
-  oz_unit_economics: 'Ozon · Юнит-экономика',
+  mp_card_doctor: '🩺 Доктор карточки WB/Ozon',
+  mp_review_responder: '💬 Ответы на отзывы и Q&A',
+  mp_competitor_scout: '🔭 Скаут конкурентов',
+  mp_abc_xyz_analyst: '📊 ABC/XYZ-анализ ассортимента',
+  mp_unit_economics: '💰 Юнит-экономика SKU',
 };
 
 export interface RetryQueueItem {
