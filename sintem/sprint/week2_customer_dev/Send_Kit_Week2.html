@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Send-Kit — неделя 2 SINTEM · 12 custdev-интервью селлеров WB/Ozon</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #11161d;
+    --panel2: #161c25;
+    --line: #1f2733;
+    --text: #e6edf3;
+    --muted: #8b96a5;
+    --accent: #ffcd3c;
+    --accent-2: #ffb000;
+    --green: #3fb950;
+    --red: #f85149;
+    --blue: #58a6ff;
+    --purple: #b083f0;
+    --warn: #f0b429;
+    --warn-bg: #2a2010;
+    --code-bg: #0d1117;
+    --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--text); font-family: var(--sans); margin: 0; line-height: 1.55; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
+
+  header { padding: 12px 0 18px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: rgba(255,205,60,.12); color: var(--accent); border: 1px solid rgba(255,205,60,.3); }
+  h1 { margin: 12px 0 6px; font-size: 1.85rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: .96rem; max-width: 800px; }
+  .sub b { color: var(--text); }
+
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0 28px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .stat .num { font-size: 1.7rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; font-family: var(--mono); }
+  .stat .lbl { font-size: .76rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 720px) { .summary { grid-template-columns: repeat(2, 1fr); } }
+
+  .meter { display: flex; gap: 10px; align-items: center; margin: 16px 0 22px; font-size: 13px; color: var(--muted); }
+  .meter .bar { flex: 1; height: 10px; background: var(--panel2); border-radius: 6px; overflow: hidden; max-width: 420px; border: 1px solid var(--line); }
+  .meter .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent-2), var(--accent)); width: 0%; transition: width 240ms ease; }
+
+  .section { margin: 36px 0 0; }
+  .section > h2 { margin: 0 0 14px; font-size: 1.25rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; }
+  .section > h2 .badge { font-family: var(--mono); font-size: 0.78rem; padding: 2px 8px; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-weight: 400; }
+  .section > .desc { color: var(--muted); font-size: .9rem; margin: 0 0 18px; }
+
+  details.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  details.card[open] { border-color: rgba(255,205,60,.3); }
+  details.card summary {
+    cursor: pointer;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    list-style: none;
+    user-select: none;
+  }
+  details.card summary::-webkit-details-marker { display: none; }
+  details.card summary .arrow { color: var(--muted); transition: transform 160ms ease; font-size: 14px; }
+  details.card[open] summary .arrow { transform: rotate(90deg); }
+  details.card summary .num {
+    flex: 0 0 36px; height: 36px; border-radius: 6px;
+    background: var(--panel2); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; font-family: var(--mono);
+  }
+  details.card summary h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+  details.card summary .meta { margin-left: auto; font-size: .78rem; color: var(--muted); display: flex; gap: 14px; align-items: center; }
+  .pill-mini { display: inline-block; font-size: 10.5px; padding: 2px 7px; border-radius: 999px; background: var(--panel2); color: var(--muted); border: 1px solid var(--line); }
+  .pill-mini.warn { color: var(--warn); border-color: rgba(240,180,41,.3); background: rgba(240,180,41,.08); }
+  .pill-mini.done { color: var(--green); border-color: rgba(63,185,80,.3); background: rgba(63,185,80,.08); }
+  .pill-mini.chat { color: var(--blue); border-color: rgba(88,166,255,.3); background: rgba(88,166,255,.08); }
+  .pill-mini.dm { color: var(--purple); border-color: rgba(176,131,240,.3); background: rgba(176,131,240,.08); }
+
+  .body { padding: 0 18px 18px 68px; }
+  .body p { color: #c9d1d9; line-height: 1.6; font-size: .92rem; margin: 6px 0 10px; }
+  .body p.muted { color: var(--muted); font-size: .86rem; }
+  .body ul { padding-left: 18px; color: #c9d1d9; font-size: .9rem; margin: 6px 0; }
+
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+  .field .val {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text);
+    word-break: break-word;
+    white-space: pre-wrap;
+    line-height: 1.55;
+  }
+
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  button.btn, a.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--text);
+    font: 500 12.5px var(--sans);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  button.btn:hover, a.btn:hover { border-color: rgba(255,205,60,.4); background: var(--panel2); }
+  button.btn.primary, a.btn.primary { background: var(--accent-2); border-color: var(--accent-2); color: #0b0f14; font-weight: 600; }
+  button.btn.primary:hover, a.btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn .copied { color: var(--green); font-size: 11px; }
+
+  /* Channels grid */
+  .ch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 10px; }
+  .ch-card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .ch-name { font-size: .92rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .ch-meta { font-size: .76rem; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
+  .ch-search { font-family: var(--mono); font-size: 11.5px; color: #c9d1d9; background: var(--code-bg); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--line); }
+  .ch-risk { font-size: .78rem; color: var(--warn); }
+  .ch-checks { display: flex; flex-direction: column; gap: 4px; font-size: .82rem; color: var(--muted); }
+  .ch-checks label { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+  .ch-checks input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; }
+
+  /* Tracker table */
+  .tracker { width: 100%; border-collapse: collapse; font-size: .82rem; margin-top: 8px; }
+  .tracker th, .tracker td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+  .tracker th { background: var(--panel2); color: var(--muted); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; }
+  .tracker td input, .tracker td select, .tracker td textarea { width: 100%; box-sizing: border-box; background: var(--code-bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 5px 7px; font-family: var(--sans); font-size: .82rem; resize: vertical; }
+  .tracker td textarea { min-height: 36px; max-height: 120px; }
+  .tracker td.idx { text-align: center; color: var(--muted); font-family: var(--mono); width: 28px; }
+
+  /* Pain summary */
+  .pains { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: 12px; }
+  .pains th, .pains td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .pains th { background: var(--panel2); color: var(--muted); font-weight: 600; font-size: .8rem; }
+  .pains td.num { font-family: var(--mono); text-align: center; color: var(--accent); font-weight: 600; font-size: .96rem; }
+  .pains tr.met { background: rgba(63,185,80,.04); }
+  .pains tr.met td.num { color: var(--green); }
+
+  .verdict { padding: 16px 20px; border-radius: 8px; margin-top: 14px; border-left: 4px solid var(--muted); background: var(--panel); }
+  .verdict.go { border-left-color: var(--green); background: rgba(63,185,80,.06); }
+  .verdict.go h4 { color: var(--green); }
+  .verdict.partial { border-left-color: var(--warn); background: rgba(240,180,41,.06); }
+  .verdict.partial h4 { color: var(--warn); }
+  .verdict.no { border-left-color: var(--red); background: rgba(248,81,73,.06); }
+  .verdict.no h4 { color: var(--red); }
+  .verdict h4 { margin: 0 0 6px; font-size: .95rem; }
+  .verdict p { margin: 0; font-size: .87rem; color: #c9d1d9; }
+
+  /* Checklist */
+  .check-list { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; }
+  .check-list h4 { margin: 0 0 8px; font-size: .98rem; color: var(--accent); }
+  .check-list ul { padding-left: 20px; color: #c9d1d9; font-size: .9rem; margin: 6px 0; }
+  .check-list ul li { margin-bottom: 4px; }
+  .check-list .dont { color: #f0a097; }
+
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; text-align: center; line-height: 1.7; }
+  footer .repo { font-family: var(--mono); color: var(--text); }
+
+  /* Toast for copy notification */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--accent); color: #0b0f14; padding: 10px 16px;
+    border-radius: 8px; font-weight: 600; font-size: .85rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,.5);
+    transform: translateY(80px); opacity: 0;
+    transition: transform .25s, opacity .25s; pointer-events: none;
+    z-index: 1000;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Reset button */
+  .reset-tracker { font-size: .78rem; color: var(--red); background: transparent; border: 1px solid rgba(248,81,73,.3); padding: 4px 10px; border-radius: 4px; cursor: pointer; margin-left: auto; }
+  .reset-tracker:hover { background: rgba(248,81,73,.08); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="pill">SINTEM · Week 2 · Custdev · 13–22.05.2026</span>
+  <h1>Send-Kit недели 2: рекрут 12 интервью продавцов WB/Ozon</h1>
+  <p class="sub">
+    Воронка: <b>200 показов → 50–60 откликов → 30 назначенных → 12 проведённых</b>.
+    Ожидаемое окно: <b>5 дней рекрута + 5 дней проведения</b> с люфтом на no-show 25–35%.
+    Не продавать. Подарок — отчёт по 12 интервью, и только.
+    Все шаблоны и трекер автосохраняются в браузере (localStorage).
+  </p>
+  <div class="meter">
+    <span>Прогресс рекрута:</span>
+    <div class="bar"><i id="bar-recruit"></i></div>
+    <span id="bar-recruit-text">0 / 12 интервью проведено</span>
+  </div>
+</header>
+
+<section class="summary">
+  <div class="stat"><div class="num">12</div><div class="lbl">Целевых интервью</div></div>
+  <div class="stat"><div class="num">7</div><div class="lbl">Outreach-шаблонов</div></div>
+  <div class="stat"><div class="num">22</div><div class="lbl">Канала рекрута</div></div>
+  <div class="stat"><div class="num">5</div><div class="lbl">Болей к проверке</div></div>
+</section>
+
+<!-- ==================== СЕКЦИЯ A: OUTREACH ШАБЛОНЫ ==================== -->
+<section class="section">
+  <h2>А. Outreach-шаблоны <span class="badge">copy-paste, без эмодзи и капса</span></h2>
+  <p class="desc">Перед использованием замени <code>@asland_username</code> на свой реальный TG-handle (отредактируй один раз и сохрани).</p>
+
+  <details class="card" open>
+    <summary><span class="arrow">▶</span><span class="num">1</span><h3>Пост в чате — 200 знаков (короткий, для жёстких чатов)</h3><span class="meta"><span class="pill-mini chat">чат</span><span class="pill-mini">~0.1–0.3% отклик</span></span></summary>
+    <div class="body">
+      <p class="muted">Когда: чат с жёсткой модерацией, банят за длину и коммерцию. Ожидание: 1–3 отклика на 1k участников.</p>
+      <div class="field">
+        <label>Текст поста</label>
+        <div class="val" id="tpl-1">Привет. Делаю исследование по WB/Ozon. Ищу 12 продавцов на 30 минут разговора. Не продаю. Взамен — отчёт по индустрии. Кому интересно — в личку. @asland_username</div>
+      </div>
+      <div class="actions"><button class="btn primary" data-copy="tpl-1">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">2</span><h3>Пост в чате — 500 знаков (основной рабочий вариант)</h3><span class="meta"><span class="pill-mini chat">чат</span><span class="pill-mini">~0.3–0.7% отклик</span></span></summary>
+    <div class="body">
+      <p class="muted">Когда: открытые чаты с лояльной модерацией, регионалки. Ожидание: 3–7 откликов на 1k участников.</p>
+      <div class="field">
+        <label>Текст поста</label>
+        <div class="val" id="tpl-2">Привет. Я Аслан, делаю research по тому, как устроен ежедневный труд продавца на Wildberries и Ozon. Не продаю и не предлагаю купить.
+
+Прошу 30 минут разговора в Telegram-аудио или звонком. Расскажешь, что отнимает время, на что тратишь деньги, что бесит в карточках, отзывах, рекламе.
+
+Взамен пришлю отчёт по 12 интервью — увидишь, как у других устроено то же самое.
+
+Готов на этой неделе? Пиши в личку: @asland_username</div>
+      </div>
+      <div class="actions"><button class="btn primary" data-copy="tpl-2">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">3</span><h3>Пост в чате — 800 знаков (длинный, для лояльных и закрытых)</h3><span class="meta"><span class="pill-mini chat">чат</span><span class="pill-mini">~0.8–1.5% отклик</span></span></summary>
+    <div class="body">
+      <p class="muted">Когда: закрытые чаты, где ценится развёрнутость. Ожидание: 5–10 откликов на 500 человек.</p>
+      <div class="field">
+        <label>Текст поста</label>
+        <div class="val" id="tpl-3">Привет. Я Аслан, делаю проект для продавцов маркетплейсов. Собираю данные по тому, как устроен день селлера на WB и Ozon в РФ.
+
+Ищу 12 человек на 30 минут разговора. Цель — понять:
+— на что уходит больше всего времени за день
+— куда уходят деньги помимо закупки и комиссий
+— что в карточках, отзывах, рекламе, бухгалтерии бесит больше всего
+— что пробовал делегировать или автоматизировать и что вышло
+
+Не продаю, не предлагаю продукт. По итогам соберу обезличенный отчёт по отрасли и пришлю каждому участнику.
+
+Оборот 200k+ в месяц, есть полчаса на этой неделе — пиши в личку: @asland_username</div>
+      </div>
+      <div class="actions"><button class="btn primary" data-copy="tpl-3">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">4</span><h3>DM, тёплый знакомый (через реферала)</h3><span class="meta"><span class="pill-mini dm">DM</span><span class="pill-mini done">~50–70% согласие</span></span></summary>
+    <div class="body">
+      <p class="muted">Контакт пришёл от другого респондента. Сначала короткое сообщение, после согласия — длинное.</p>
+      <div class="field">
+        <label>Первое сообщение</label>
+        <div class="val" id="tpl-4a">Привет, [имя]. [Имя реферала] сказал, что ты крутишь магазин на WB. Не продаю, но если есть 30 минут на этой неделе — хочу поговорить про твой день в магазине, готовлю research. Удобно?</div>
+        <div class="actions" style="margin-top:6px"><button class="btn" data-copy="tpl-4a">📋 Копировать</button></div>
+      </div>
+      <div class="field">
+        <label>Второе сообщение (после согласия)</label>
+        <div class="val" id="tpl-4b">Спасибо. Я Аслан, делаю проект для продавцов маркетплейсов. Собираю 12 разговоров — что болит в день, куда уходят деньги, что бесит в карточках, отзывах, рекламе. По итогам пришлю общий отчёт.
+
+Когда удобно: завтра или послезавтра, после 18:00 или утром? Telegram-звонок, 30 минут.</div>
+        <div class="actions" style="margin-top:6px"><button class="btn" data-copy="tpl-4b">📋 Копировать</button></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">5</span><h3>DM, холодный (никаких связей)</h3><span class="meta"><span class="pill-mini dm">DM</span><span class="pill-mini warn">~10–20% согласие · ≤5/день</span></span></summary>
+    <div class="body">
+      <p class="muted">Респондент написал релевантный пост или в профиле селлер. Не больше 5 сообщений в день с одного аккаунта (иначе шадоу-бан TG).</p>
+      <div class="field">
+        <label>Текст DM</label>
+        <div class="val" id="tpl-5">Привет. Видел твой [пост / профиль] про WB. Я Аслан, делаю research по продавцам маркетплейсов. Не продаю, не предлагаю продукт.
+
+Прошу 30 минут разговора — что отнимает время, на что тратишь деньги, что бесит в работе. Взамен — отчёт по 12 разговорам.
+
+Если ок — назови день и время на этой неделе.</div>
+      </div>
+      <div class="actions"><button class="btn primary" data-copy="tpl-5">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">6</span><h3>DM follow-up через 3 дня (если первый не ответил)</h3><span class="meta"><span class="pill-mini dm">DM</span><span class="pill-mini">+15–25% согласий</span></span></summary>
+    <div class="body">
+      <p class="muted">Ровно один follow-up через 72 часа. Дальше не давить — это сжигает доверие.</p>
+      <div class="field">
+        <label>Текст follow-up</label>
+        <div class="val" id="tpl-6">Привет, [имя]. Понимаю, мог потеряться в чатах. Если совсем не интересно — скажи, не буду беспокоить. Если просто не до этого — напиши, через неделю напомню.</div>
+      </div>
+      <div class="actions"><button class="btn primary" data-copy="tpl-6">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">7</span><h3>Письмо «друзей друзей» (LinkedIn / e-mail) — запрос реферала</h3><span class="meta"><span class="pill-mini">~1 реферал на 5 запросов</span></span></summary>
+    <div class="body">
+      <p class="muted">Просим не интервью у адресата, а контакт его знакомого селлера. Конверсия ~20%.</p>
+      <div class="field">
+        <label>Тема</label>
+        <div class="val" id="tpl-7s">research по продавцам WB/Ozon, нужен 1 контакт</div>
+        <div class="actions" style="margin-top:6px"><button class="btn" data-copy="tpl-7s">📋 Копировать тему</button></div>
+      </div>
+      <div class="field">
+        <label>Текст</label>
+        <div class="val" id="tpl-7b">[Имя], привет. Делаю исследование по тому, как устроен день продавца на WB и Ozon в РФ. Собираю 12 интервью на этой неделе.
+
+Не продаю — нужны живые разговоры. По итогам сделаю обезличенный отчёт, поделюсь с тобой и участниками.
+
+У тебя есть 1–2 человека, кто крутит магазин на WB или Ozon с оборотом от 200k в месяц? Буду благодарен за интро или контакт.
+
+Спасибо.
+Аслан</div>
+        <div class="actions" style="margin-top:6px"><button class="btn primary" data-copy="tpl-7b">📋 Копировать письмо</button></div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== СЕКЦИЯ B: КАНАЛЫ ==================== -->
+<section class="section">
+  <h2>Б. 22 канала рекрута <span class="badge">правило: 1 чат — 1 пост — 1 день</span></h2>
+  <p class="desc">Прогресс по каждому каналу автосохраняется. Перед первым постом: прочитать закреп → если «реклама запрещена» — спросить админа в личку → постить в нерабочее время (вечер пятницы, утро субботы).</p>
+  <div class="ch-grid" id="channels"></div>
+</section>
+
+<!-- ==================== СЕКЦИЯ C: ЧЕК-ЛИСТ ЗВОНКА ==================== -->
+<section class="section">
+  <h2>В. Чек-лист звонка <span class="badge">30 минут, не больше</span></h2>
+  <div class="check-list">
+    <h4>Открытие (60 сек)</h4>
+    <p style="font-style:italic;color:#c9d1d9;font-size:.92rem">«Привет, [имя]. Меня зовут Аслан, я строю проект для продавцов на Wildberries и Ozon. Я сегодня ничего не продаю и не предлагаю купить. Мне нужно 25–30 минут твоего времени, чтобы понять, как реально устроена твоя ежедневная работа: что отнимает больше всего времени, на что ты тратишь деньги. По итогам пришлю тебе короткий отчёт по индустрии, который соберу из 12 таких разговоров. Можно записать звонок?»</p>
+    <h4 style="margin-top:14px">7 ключевых вопросов</h4>
+    <ul>
+      <li><b>1.</b> Расскажи, как прошёл вчерашний или последний рабочий день в магазине, по часам.</li>
+      <li><b>2.</b> Какие три задачи делегировал бы прямо сейчас, если бы был лишний человек на полставки?</li>
+      <li><b>3.</b> На что ушли деньги за последний месяц помимо закупки и комиссий?</li>
+      <li><b>4.</b> Как сейчас работаешь с карточками: описания, фото, инфографика, SEO?</li>
+      <li><b>5.</b> Как следишь за отзывами и Q&A покупателей? Кто отвечает, как быстро?</li>
+      <li><b>6.</b> Как разбираешься с рекламой WB/Ozon, аналитикой, отчётами? Какие сервисы?</li>
+      <li><b>7.</b> Последняя ситуация, когда срочно нужен был ответ и не знал, к кому обратиться?</li>
+    </ul>
+    <h4 style="margin-top:14px;color:var(--red)" class="dont">⛔ Что нельзя говорить</h4>
+    <ul class="dont">
+      <li>«Представь, что у тебя есть бот, который...» — гипотезы обнуляют ответ.</li>
+      <li>«Будете платить за такой сервис?» — спрашивай, что платил раньше и кому.</li>
+      <li>«У нас есть продукт» — если спросят, «расскажу в конце, сначала твои дела».</li>
+      <li>Не предлагать решения по ходу. Кивай, записывай, иди дальше.</li>
+      <li>Не подсказывать варианты ответов («то есть тебе сложно с отзывами, да?»).</li>
+      <li>Не превращать звонок в 60 минут. Уважение времени = больше рефералов.</li>
+    </ul>
+    <h4 style="margin-top:14px">Закрытие (3–4 мин)</h4>
+    <p style="font-style:italic;color:#c9d1d9;font-size:.92rem">«Спасибо, очень помог. Отчёт пришлю в течение 10 дней. У тебя в окружении есть 1–2 продавца, которым ты доверяешь и кому могло быть интересно? Только если ты сам не против дать контакт».</p>
+    <p class="muted" style="margin-top:10px;font-size:.85rem"><b>После звонка (10 минут, не откладывать):</b> заполнить строку трекера, выписать 1 цитату дословно, скинуть респонденту короткое «Спасибо, записал. Отчёт пришлю до [дата]».</p>
+  </div>
+</section>
+
+<!-- ==================== СЕКЦИЯ D: ТРЕКЕР ==================== -->
+<section class="section">
+  <h2>
+    Г. Трекер 12 интервью
+    <span class="badge">автосохранение в браузере</span>
+    <button class="reset-tracker" onclick="resetTracker()">Сбросить трекер</button>
+  </h2>
+  <p class="desc">Заполнять сразу после каждого звонка, не откладывать. Цитата строго дословная, в кавычках, на языке респондента. Срок жизни памяти — 4 часа.</p>
+  <div style="overflow-x:auto;margin-top:12px">
+    <table class="tracker" id="tracker"></table>
+  </div>
+
+  <h3 style="margin:28px 0 10px;font-size:1.05rem">Сводная таблица болей (только тех, кто назвал сам, без подсказки)</h3>
+  <table class="pains" id="pains">
+    <thead><tr><th>Боль</th><th style="width:130px">Назвали сами</th><th style="width:160px">Платят за решение</th><th>Топ-цитата</th></tr></thead>
+    <tbody>
+      <tr data-pain="content"><td>Контент карточек, описания, SEO, инфографика</td><td class="num">0/12</td><td class="num">0/12</td><td><textarea rows="1" placeholder="Самая яркая цитата по этой боли"></textarea></td></tr>
+      <tr data-pain="reviews"><td>Отзывы и Q&A: модерация, ответы</td><td class="num">0/12</td><td class="num">0/12</td><td><textarea rows="1" placeholder="..."></textarea></td></tr>
+      <tr data-pain="analytics"><td>Аналитика конкурентов и ниш</td><td class="num">0/12</td><td class="num">0/12</td><td><textarea rows="1" placeholder="..."></textarea></td></tr>
+      <tr data-pain="ads"><td>Рекламные кампании внутри WB/Ozon</td><td class="num">0/12</td><td class="num">0/12</td><td><textarea rows="1" placeholder="..."></textarea></td></tr>
+      <tr data-pain="accounting"><td>Бухгалтерия, налоги, самозанятость/ИП/ООО</td><td class="num">0/12</td><td class="num">0/12</td><td><textarea rows="1" placeholder="..."></textarea></td></tr>
+    </tbody>
+  </table>
+
+  <div id="verdict" class="verdict">
+    <h4>Вердикт wedge'а — пока не определён</h4>
+    <p>Заполни трекер, чтобы автосчёт показал результат. <b>Wedge подтверждён</b>, если 7+/12 называют одну боль в топ-3 без подсказки <b>и</b> 4+/12 описывают конкретный платёж за её решение (≥3 000 ₽/мес).</p>
+  </div>
+</section>
+
+<footer>
+  <p>Source: <span class="repo">E:\Проекты Аслана\SINTEM\sprint\week2_customer_dev\</span></p>
+  <p>Связанные файлы: <a href="interview_script.md">interview_script.md</a> · <a href="target_channels.md">target_channels.md</a> · <a href="outreach_templates.md">outreach_templates.md</a> · <a href="interview_tracker.md">interview_tracker.md</a></p>
+  <p>SINTEM week 2 · 13–22.05.2026 · Сгенерировано 2026-05-09 для Аслана</p>
+</footer>
+
+<div id="toast">Скопировано</div>
+
+<script>
+/* ======== Channels data ======== */
+const CHANNELS = [
+  {n:"WB для поставщиков (офиц.)",size:"100k+",type:"новостной",keys:"wildberries поставщики официальный",risk:"Реклама запрещена — только мониторинг"},
+  {n:"Ozon для продавцов (офиц.)",size:"80k+",type:"новостной",keys:"ozon seller официальный",risk:"То же"},
+  {n:"MPStats / Маяк (новости)",size:"30–60k",type:"новостной",keys:"mpstats новости, маяк аналитика",risk:"Платная реклама — договариваться"},
+  {n:"Чат продавцов Wildberries",size:"5–20k",type:"чат",keys:"чат wildberries продавцы, wb селлеры чат",risk:"Бан за коммерцию — research-формулировка"},
+  {n:"Чат продавцов Ozon",size:"5–15k",type:"чат",keys:"ozon продавцы чат, озон селлеры",risk:"То же"},
+  {n:"Маркетплейсы РФ (общий)",size:"3–10k",type:"чат",keys:"маркетплейсы чат селлеров",risk:"То же"},
+  {n:"Чат начинающих селлеров WB",size:"5–10k",type:"чат",keys:"wildberries новички чат",risk:"Шум, отвечают не сразу"},
+  {n:"Чат опытных селлеров (закр.)",size:"500–2k",type:"закрытый",keys:"pro селлеры закрытый",risk:"Нужна рекомендация для входа"},
+  {n:"Логистика и фулфилмент",size:"3–8k",type:"чат",keys:"фулфилмент чат селлеров",risk:"Косвенная боль"},
+  {n:"Контент и карточки WB",size:"2–5k",type:"чат",keys:"карточки wildberries чат, инфографика селлеры",risk:"Маленький, но горячий"},
+  {n:"Реклама на маркетплейсах",size:"3–7k",type:"чат",keys:"реклама wb ozon чат",risk:"B-сегмент искать"},
+  {n:"1С + маркетплейсы",size:"2–5k",type:"чат",keys:"1с wildberries, 1с ozon чат",risk:"Узкая, качественная"},
+  {n:"Самозанятые на МП",size:"3–8k",type:"чат",keys:"самозанятые wb, нпд маркетплейсы",risk:"Готовность платить ниже"},
+  {n:"Регион. чат селлеров (Мск/СПб/Юг)",size:"500–3k каждый",type:"чат",keys:"селлеры [город] чат",risk:"Локально замкнут"},
+  {n:"Маркетинг и реклама (madtea/texterra)",size:"30k+",type:"новостной",keys:"madtea, texterra",risk:"Платный пост 5–30k ₽"},
+  {n:"Бизнес на маркетплейсах",size:"10–50k",type:"новостной",keys:"бизнес маркетплейсы канал",risk:"Платный — торговаться"},
+  {n:"VC.ru, тег маркетплейсы",size:"сайт",type:"публикация",keys:"vc.ru/marketplace",risk:"Бесплатно — писать пост"},
+  {n:"Habr, хаб E-commerce",size:"сайт",type:"публикация",keys:"habr.com e-commerce",risk:"Технические селлеры"},
+  {n:"Налоги и ИП для селлеров",size:"2–5k",type:"чат",keys:"налоги селлеры, ип маркетплейсы",risk:"Узкая (боль №5)"},
+  {n:"Закуп из Китая для WB",size:"5–15k",type:"чат",keys:"китай wildberries, 1688 селлеры",risk:"Косвенная боль"},
+  {n:"Школа селлеров (Like Centre/Гаврилюк)",size:"1–5k",type:"закрытый",keys:"like centre selers, гаврилюк выпускники",risk:"Через куратора"},
+  {n:"AI для бизнеса РФ",size:"5–15k",type:"чат",keys:"ai бизнес чат, нейросети предприниматели",risk:"Фильтровать селлеров"},
+];
+
+const grid = document.getElementById('channels');
+CHANNELS.forEach((c, i) => {
+  const id = 'ch-' + i;
+  const card = document.createElement('div');
+  card.className = 'ch-card';
+  const tgSearch = encodeURIComponent(c.keys.split(',')[0].trim());
+  card.innerHTML = `
+    <div class="ch-name">${c.n}</div>
+    <div class="ch-meta">
+      <span class="pill-mini ${c.type === 'чат' ? 'chat' : c.type === 'закрытый' ? 'dm' : ''}">${c.type}</span>
+      <span class="pill-mini">${c.size}</span>
+    </div>
+    <div class="ch-search">${c.keys}</div>
+    <div class="ch-risk">⚠ ${c.risk}</div>
+    <div class="ch-checks">
+      <label><input type="checkbox" data-ch="${id}-read"> закреп прочитан</label>
+      <label><input type="checkbox" data-ch="${id}-asked"> админ согласовал</label>
+      <label><input type="checkbox" data-ch="${id}-posted"> пост размещён</label>
+      <label><input type="checkbox" data-ch="${id}-replies"> отклики получены</label>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+/* ======== Tracker table ======== */
+const TR_COLS = [
+  {k:'date', label:'Дата', type:'text', w:'68px'},
+  {k:'name', label:'Респондент / @ник', type:'text', w:'160px'},
+  {k:'channel', label:'Канал', type:'text', w:'130px'},
+  {k:'rev', label:'Оборот ₽/мес', type:'text', w:'95px'},
+  {k:'wb_oz', label:'WB / Ozon %', type:'text', w:'80px'},
+  {k:'team', label:'Команда', type:'text', w:'90px'},
+  {k:'pays', label:'Платит за (₽/мес, где)', type:'textarea', w:'180px'},
+  {k:'pain1', label:'Боль (top-1)', type:'select', opts:['','content','reviews','analytics','ads','accounting','other'], w:'105px'},
+  {k:'pain2', label:'Боль (top-2)', type:'select', opts:['','content','reviews','analytics','ads','accounting','other'], w:'105px'},
+  {k:'pain3', label:'Боль (top-3)', type:'select', opts:['','content','reviews','analytics','ads','accounting','other'], w:'105px'},
+  {k:'paid_for', label:'Платил за боль', type:'select', opts:['','content','reviews','analytics','ads','accounting','none'], w:'105px'},
+  {k:'paid_amount', label:'₽/мес', type:'text', w:'70px'},
+  {k:'quote', label:'Дословная цитата', type:'textarea', w:'220px'},
+  {k:'status', label:'Статус', type:'select', opts:['запланировано','проведено','no-show','отказ','перенёс'], w:'120px'},
+  {k:'referral', label:'Реферал', type:'text', w:'120px'},
+];
+
+const PAIN_LABELS = {content:'Контент', reviews:'Отзывы', analytics:'Аналитика', ads:'Реклама', accounting:'Бухгалтерия', other:'Другое', none:'—'};
+
+const tbl = document.getElementById('tracker');
+let html = '<thead><tr><th>#</th>';
+TR_COLS.forEach(c => html += `<th style="min-width:${c.w}">${c.label}</th>`);
+html += '</tr></thead><tbody>';
+for (let i = 1; i <= 12; i++) {
+  html += `<tr><td class="idx">${i}</td>`;
+  TR_COLS.forEach(c => {
+    const id = `tr-${i}-${c.k}`;
+    if (c.type === 'select') {
+      html += `<td><select data-tr="${id}">` + c.opts.map(o => `<option value="${o}">${o ? (PAIN_LABELS[o] || o) : '—'}</option>`).join('') + `</select></td>`;
+    } else if (c.type === 'textarea') {
+      html += `<td><textarea data-tr="${id}" rows="1"></textarea></td>`;
+    } else {
+      html += `<td><input type="text" data-tr="${id}"></td>`;
+    }
+  });
+  html += '</tr>';
+}
+html += '</tbody>';
+tbl.innerHTML = html;
+
+/* ======== Persistence + recompute ======== */
+const KEY = 'sintem-week2-sendkit-v1';
+
+function loadAll() {
+  const raw = localStorage.getItem(KEY);
+  if (!raw) return;
+  let data;
+  try { data = JSON.parse(raw); } catch { return; }
+  Object.entries(data.checks || {}).forEach(([k, v]) => {
+    const el = document.querySelector(`[data-ch="${k}"]`);
+    if (el) el.checked = v;
+  });
+  Object.entries(data.tracker || {}).forEach(([k, v]) => {
+    const el = document.querySelector(`[data-tr="${k}"]`);
+    if (el) el.value = v;
+  });
+  Object.entries(data.painQuotes || {}).forEach(([k, v]) => {
+    const el = document.querySelector(`tr[data-pain="${k}"] textarea`);
+    if (el) el.value = v;
+  });
+}
+
+function saveAll() {
+  const data = { checks: {}, tracker: {}, painQuotes: {} };
+  document.querySelectorAll('[data-ch]').forEach(el => data.checks[el.dataset.ch] = el.checked);
+  document.querySelectorAll('[data-tr]').forEach(el => { if (el.value) data.tracker[el.dataset.tr] = el.value; });
+  document.querySelectorAll('tr[data-pain] textarea').forEach(el => {
+    const p = el.closest('tr').dataset.pain;
+    if (el.value) data.painQuotes[p] = el.value;
+  });
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+
+function recompute() {
+  const counts = { content:{named:0,paid:0}, reviews:{named:0,paid:0}, analytics:{named:0,paid:0}, ads:{named:0,paid:0}, accounting:{named:0,paid:0} };
+  let done = 0;
+  for (let i = 1; i <= 12; i++) {
+    const status = (document.querySelector(`[data-tr="tr-${i}-status"]`) || {}).value;
+    if (status === 'проведено') done++;
+    const pains = ['pain1','pain2','pain3'].map(k => (document.querySelector(`[data-tr="tr-${i}-${k}"]`) || {}).value).filter(p => p && p !== 'other');
+    pains.forEach(p => { if (counts[p]) counts[p].named++; });
+    const paidFor = (document.querySelector(`[data-tr="tr-${i}-paid_for"]`) || {}).value;
+    const amount = parseInt((document.querySelector(`[data-tr="tr-${i}-paid_amount"]`) || {}).value || '0', 10);
+    if (paidFor && paidFor !== 'none' && amount >= 3000 && counts[paidFor]) counts[paidFor].paid++;
+  }
+  // Update progress bar
+  document.getElementById('bar-recruit').style.width = (done / 12 * 100) + '%';
+  document.getElementById('bar-recruit-text').textContent = done + ' / 12 интервью проведено';
+
+  // Update pains table
+  document.querySelectorAll('tr[data-pain]').forEach(row => {
+    const p = row.dataset.pain;
+    const tds = row.querySelectorAll('td.num');
+    const named = counts[p]?.named || 0;
+    const paid = counts[p]?.paid || 0;
+    tds[0].textContent = `${named}/12`;
+    tds[1].textContent = `${paid}/12`;
+    row.classList.toggle('met', named >= 7 && paid >= 4);
+  });
+
+  // Update verdict
+  const verdict = document.getElementById('verdict');
+  const wedges = Object.entries(counts).filter(([_, v]) => v.named >= 7 && v.paid >= 4);
+  const partial = Object.entries(counts).filter(([_, v]) => (v.named >= 7) !== (v.paid >= 4));
+  if (wedges.length > 0) {
+    const names = wedges.map(([k]) => PAIN_LABELS[k]).join(', ');
+    verdict.className = 'verdict go';
+    verdict.innerHTML = `<h4>✅ Wedge подтверждён: ${names}</h4><p>Эта боль(и) выполняет оба критерия (7+/12 называют сами, 4+/12 платят ≥3 000 ₽/мес). Закладывай в неделю 3, остальные 4 боли отложи. Пора собирать MVP под этот wedge в <code>sprint/week3_agents/</code>.</p>`;
+  } else if (done >= 12 && partial.length > 0) {
+    const names = partial.map(([k, v]) => `${PAIN_LABELS[k]} (${v.named}/12 назвали, ${v.paid}/12 платят)`).join('; ');
+    verdict.className = 'verdict partial';
+    verdict.innerHTML = `<h4>⚠ Wedge не подтверждён, но есть кандидаты</h4><p>Частично: ${names}. Возможные причины: боль закрывают бесплатно/костылями (цена в нише = 0) или формулировка разнится между респондентами. Действие: догнать ещё 3 интервью с переформулированным вопросом.</p>`;
+  } else if (done >= 12) {
+    verdict.className = 'verdict no';
+    verdict.innerHTML = `<h4>❌ Wedge не найден</h4><p>Ни одна боль не выполнила оба критерия. Действие: разобрать дословные цитаты, искать общую боль в формулировке, которую не предположили заранее. Если и там пусто — пересмотреть сценарий продукта, не идти в неделю 3 с этим набором болей.</p>`;
+  } else {
+    verdict.className = 'verdict';
+    verdict.innerHTML = `<h4>Вердикт wedge'а — ${done}/12 интервью проведено</h4><p>Заполни трекер до 12 интервью. <b>Wedge подтверждён</b>, если 7+/12 называют одну боль в топ-3 без подсказки <b>и</b> 4+/12 описывают платёж за её решение (≥3 000 ₽/мес).</p>`;
+  }
+}
+
+document.body.addEventListener('input', () => { saveAll(); recompute(); });
+document.body.addEventListener('change', () => { saveAll(); recompute(); });
+
+/* ======== Copy buttons ======== */
+const toast = document.getElementById('toast');
+let toastT;
+document.body.addEventListener('click', e => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  const txt = document.getElementById(btn.dataset.copy)?.innerText || '';
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(() => {
+    toast.textContent = '📋 Скопировано (' + txt.length + ' симв.)';
+    toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => toast.classList.remove('show'), 1800);
+  });
+});
+
+/* ======== Reset tracker ======== */
+function resetTracker() {
+  if (!confirm('Сбросить трекер 12 интервью и все галки по каналам? Outreach-шаблоны останутся.')) return;
+  document.querySelectorAll('[data-tr]').forEach(el => el.value = '');
+  document.querySelectorAll('[data-ch]').forEach(el => el.checked = false);
+  document.querySelectorAll('tr[data-pain] textarea').forEach(el => el.value = '');
+  saveAll();
+  recompute();
+}
+
+loadAll();
+recompute();
+</script>
+
+</div>
+</body>
+</html>
