@@ -2442,11 +2442,19 @@ function handleStop(){
   addActivity('Система', '⏹ Остановлено пользователем', 'system');
 }
 
+function clearLogsOnly(){
+  if(!confirm('Очистить лог активности? Чат и история диалога останутся.')) return;
+  state.activityLogs = [];
+  $('activityLog').innerHTML = '<div class="activity-item system"><span class="msg">Лог очищен.</span></div>';
+  persistState();
+}
+
 function clearHistory(){
   if(!confirm('Очистить весь диалог и логи?')) return;
   state.conversation = [];
   state.activityLogs = [];
-  $('chatMessages').innerHTML = `<div class="message agent"><strong>Oracle 🧠</strong>История очищена. Начните новую сессию.${AGENT_DISCLAIMER_HTML}</div>`;
+  const greeter = state.settings.useConcierge ? 'Аида 💼' : 'Oracle 🧠';
+  $('chatMessages').innerHTML = `<div class="message agent"><strong>${greeter}</strong>История очищена. Начните новую сессию.${AGENT_DISCLAIMER_HTML}</div>`;
   $('activityLog').innerHTML = '<div class="activity-item system"><span class="msg">История очищена.</span></div>';
   persistState();
 }
@@ -2571,7 +2579,7 @@ async function init(){
   $('settingsBtn').addEventListener('click', () => showModal('settingsModal'));
   $('saveSettingsBtn').addEventListener('click', saveSettingsFromUI);
   $('clearAllBtn').addEventListener('click', clearAll);
-  $('clearLogsBtn').addEventListener('click', clearHistory);
+  $('clearLogsBtn').addEventListener('click', clearLogsOnly);
 
   $('providerSelect').addEventListener('change', applyProviderHints);
 
