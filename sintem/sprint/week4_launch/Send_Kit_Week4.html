@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Send-Kit — неделя 4 SINTEM · Запуск 04.06.2026</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #11161d;
+    --panel2: #161c25;
+    --line: #1f2733;
+    --text: #e6edf3;
+    --muted: #8b96a5;
+    --accent: #ffcd3c;
+    --accent-2: #ffb000;
+    --green: #3fb950;
+    --red: #f85149;
+    --blue: #58a6ff;
+    --purple: #b083f0;
+    --warn: #f0b429;
+    --code-bg: #0d1117;
+    --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--text); font-family: var(--sans); margin: 0; line-height: 1.55; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
+
+  header { padding: 12px 0 18px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: rgba(255,205,60,.12); color: var(--accent); border: 1px solid rgba(255,205,60,.3); }
+  h1 { margin: 12px 0 6px; font-size: 1.85rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: .96rem; max-width: 800px; }
+  .sub b { color: var(--text); }
+
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0 28px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .stat .num { font-size: 1.7rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; font-family: var(--mono); }
+  .stat .lbl { font-size: .76rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 720px) { .summary { grid-template-columns: repeat(2, 1fr); } }
+
+  .meter { display: flex; gap: 10px; align-items: center; margin: 16px 0 22px; font-size: 13px; color: var(--muted); }
+  .meter .bar { flex: 1; height: 10px; background: var(--panel2); border-radius: 6px; overflow: hidden; max-width: 420px; border: 1px solid var(--line); }
+  .meter .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent-2), var(--accent)); width: 0%; transition: width 240ms ease; }
+
+  .section { margin: 36px 0 0; }
+  .section > h2 { margin: 0 0 14px; font-size: 1.25rem; font-weight: 600; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .section > h2 .badge { font-family: var(--mono); font-size: 0.78rem; padding: 2px 8px; background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-weight: 400; }
+  .section > .desc { color: var(--muted); font-size: .9rem; margin: 0 0 18px; }
+
+  details.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  details.card[open] { border-color: rgba(255,205,60,.3); }
+  details.card summary {
+    cursor: pointer;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    list-style: none;
+    user-select: none;
+  }
+  details.card summary::-webkit-details-marker { display: none; }
+  details.card summary .arrow { color: var(--muted); transition: transform 160ms ease; font-size: 14px; }
+  details.card[open] summary .arrow { transform: rotate(90deg); }
+  details.card summary .num {
+    flex: 0 0 38px; height: 38px; border-radius: 6px;
+    background: var(--panel2); color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; font-family: var(--mono); text-align: center; line-height: 1.1;
+  }
+  details.card summary h3 { margin: 0; font-size: 1rem; font-weight: 600; flex: 1; min-width: 0; }
+  details.card summary .meta { margin-left: auto; font-size: .78rem; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .pill-mini { display: inline-block; font-size: 10.5px; padding: 2px 7px; border-radius: 999px; background: var(--panel2); color: var(--muted); border: 1px solid var(--line); white-space: nowrap; }
+  .pill-mini.warn { color: var(--warn); border-color: rgba(240,180,41,.3); background: rgba(240,180,41,.08); }
+  .pill-mini.done { color: var(--green); border-color: rgba(63,185,80,.3); background: rgba(63,185,80,.08); }
+  .pill-mini.short { color: var(--blue); border-color: rgba(88,166,255,.3); background: rgba(88,166,255,.08); }
+  .pill-mini.long { color: var(--purple); border-color: rgba(176,131,240,.3); background: rgba(176,131,240,.08); }
+  .pill-mini.launch { color: var(--accent); border-color: rgba(255,205,60,.4); background: rgba(255,205,60,.12); font-weight: 700; }
+
+  .body { padding: 0 18px 18px 70px; }
+  .body p { color: #c9d1d9; line-height: 1.6; font-size: .92rem; margin: 6px 0 10px; }
+  .body p.muted { color: var(--muted); font-size: .86rem; }
+  .body ul { padding-left: 18px; color: #c9d1d9; font-size: .9rem; margin: 6px 0; }
+
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+  .field .val {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text);
+    word-break: break-word;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  button.btn, a.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--text);
+    font: 500 12.5px var(--sans);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  button.btn:hover, a.btn:hover { border-color: rgba(255,205,60,.4); background: var(--panel2); }
+  button.btn.primary, a.btn.primary { background: var(--accent-2); border-color: var(--accent-2); color: #0b0f14; font-weight: 600; }
+  button.btn.primary:hover, a.btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+  /* Calendar */
+  .calendar { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 14px; }
+  .day { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+  .day.launch { border-color: rgba(255,205,60,.4); background: linear-gradient(180deg, rgba(255,205,60,.06) 0%, var(--panel) 100%); }
+  .day .date { font-family: var(--mono); font-size: .82rem; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .day .weekday { font-size: .76rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+  .day .post { font-size: .88rem; color: var(--text); margin-bottom: 6px; }
+  .day .label-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .day label { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: .78rem; color: var(--muted); }
+  .day input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; }
+
+  /* Objections */
+  .obj-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .obj { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; }
+  .obj .q { font-weight: 600; color: var(--accent); font-size: .94rem; margin-bottom: 6px; }
+  .obj .a { color: #c9d1d9; font-size: .9rem; line-height: 1.6; }
+
+  /* D-day timeline */
+  .timeline { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-top: 14px; }
+  .timeline h4 { margin: 12px 0 6px; font-size: .98rem; color: var(--accent); }
+  .timeline h4:first-child { margin-top: 0; }
+  .timeline ul { padding-left: 20px; color: #c9d1d9; font-size: .9rem; margin: 4px 0 8px; }
+  .timeline li { margin-bottom: 3px; }
+  .timeline .time { font-family: var(--mono); color: var(--muted); font-size: .8rem; margin-right: 6px; }
+
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; text-align: center; line-height: 1.7; }
+  footer .repo { font-family: var(--mono); color: var(--text); }
+  footer a { color: var(--blue); }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--accent); color: #0b0f14; padding: 10px 16px;
+    border-radius: 8px; font-weight: 600; font-size: .85rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,.5);
+    transform: translateY(80px); opacity: 0;
+    transition: transform .25s, opacity .25s; pointer-events: none;
+    z-index: 1000;
+  }
+  #toast.show { transform: translateY(0); opacity: 1; }
+
+  .reset-btn { font-size: .78rem; color: var(--red); background: transparent; border: 1px solid rgba(248,81,73,.3); padding: 4px 10px; border-radius: 4px; cursor: pointer; margin-left: auto; }
+  .reset-btn:hover { background: rgba(248,81,73,.08); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="pill">SINTEM · Week 4 · Запуск · 27.05–04.06.2026</span>
+  <h1>Send-Kit недели 4: prelaunch-кампания + D-day 04.06</h1>
+  <p class="sub">
+    7 prelaunch-постов с copy-кнопками + календарь публикаций 27.05–04.06 + 12 типовых возражений как FAQ + почасовой план D-day. Тон <b>«один селлер другому»</b>: без эмодзи, без капса, без хайпа, без «нейросеть нового поколения». Прогресс публикаций сохраняется в браузере (localStorage).
+  </p>
+  <div class="meter">
+    <span>Прогресс публикаций:</span>
+    <div class="bar"><i id="bar-posts"></i></div>
+    <span id="bar-posts-text">0 / 7 постов опубликовано</span>
+  </div>
+</header>
+
+<section class="summary">
+  <div class="stat"><div class="num">7</div><div class="lbl">Prelaunch-постов</div></div>
+  <div class="stat"><div class="num">9</div><div class="lbl">Дней кампании</div></div>
+  <div class="stat"><div class="num">12</div><div class="lbl">Типовых возражений</div></div>
+  <div class="stat"><div class="num">04.06</div><div class="lbl">D-day, 10:00 МСК</div></div>
+</section>
+
+<!-- ==================== СЕКЦИЯ A: КАЛЕНДАРЬ ==================== -->
+<section class="section">
+  <h2>А. Календарь публикаций <span class="badge">отметка отслеживается в браузере</span></h2>
+  <div class="calendar" id="calendar">
+    <div class="day"><div class="date">27.05.2026</div><div class="weekday">понедельник</div><div class="post">Пост 1 — анонс бота, 5 помощников, ₽1500</div><div class="label-row"><span class="pill-mini">≈700 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d27"> опубликовано</label></div></div>
+    <div class="day"><div class="date">29.05.2026</div><div class="weekday">среда</div><div class="post">Пост 2 — early access на 50 человек</div><div class="label-row"><span class="pill-mini short">≈350 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d29"> опубликовано</label></div></div>
+    <div class="day"><div class="date">31.05.2026</div><div class="weekday">пятница</div><div class="post">Пост 3 — кейс mp_card_doctor (термобельё)</div><div class="label-row"><span class="pill-mini long">≈1500 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d31"> опубликовано</label></div></div>
+    <div class="day"><div class="date">02.06.2026</div><div class="weekday">воскресенье</div><div class="post">Пост 4 — опрос 6-го агента у аудитории</div><div class="label-row"><span class="pill-mini">≈800 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d02"> опубликовано</label></div></div>
+    <div class="day"><div class="date">03.06.2026</div><div class="weekday">понедельник</div><div class="post">Пост 5 — FAQ: данные, ошибки, отмена</div><div class="label-row"><span class="pill-mini">≈600 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d03"> опубликовано</label></div></div>
+    <div class="day launch"><div class="date">04.06.2026 · 10:00</div><div class="weekday">вторник · D-DAY</div><div class="post">Пост 6 — запуск бота</div><div class="label-row"><span class="pill-mini launch">ЗАПУСК</span><span class="pill-mini short">≈400 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d04m"> опубликовано</label></div></div>
+    <div class="day launch"><div class="date">04.06.2026 · вечер</div><div class="weekday">вторник · D-DAY</div><div class="post">Пост 7 — Reels/short 30 сек: 30 отзывов за 8 минут</div><div class="label-row"><span class="pill-mini launch">REELS</span><span class="pill-mini long">≈1200 знаков</span></div><div class="label-row"><label><input type="checkbox" data-post="d04e"> опубликовано</label></div></div>
+  </div>
+</section>
+
+<!-- ==================== СЕКЦИЯ B: 7 POSTS ==================== -->
+<section class="section">
+  <h2>Б. 7 prelaunch-постов <span class="badge">copy-paste, перед публикацией заменить @sintem_bot / @sintem_support</span></h2>
+
+  <details class="card" open>
+    <summary><span class="arrow">▶</span><span class="num">Пн<br>27.05</span><h3>Пост 1 — анонс бота, 5 помощников, ₽1500</h3><span class="meta"><span class="pill-mini">≈700 знаков</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: рассказать о боте, посеять идею. Тон: один селлер другому, без хайпа.</p>
+      <div class="field"><label>Текст</label><div class="val" id="p1">Через неделю запускаю штуку, которую сам бы хотел иметь два года назад,
+когда начинал на WB.
+
+Это Telegram-бот для селлеров. Внутри пять помощников:
+
+— разбирает карточку и говорит, что переписать в заголовке и фото;
+— пишет ответы на отзывы в вашем тоне, негативные с попыткой удержать
+  клиента;
+— раз в день собирает сводку по топ-10 конкурентов в нише: цены, скидки,
+  обновления карточек;
+— делает ABC-XYZ по выгрузке продаж за минуту;
+— считает юнитку с актуальными комиссиями WB и Ozon, по каждому SKU.
+
+Не очередной курс «как зарабатывать на маркетплейсах». Конкретный
+инструмент, который снимает с вас часов 12 в неделю.
+
+04.06 пускаю по тарифу ₽1500. Если интересно — пишите в личку, скину
+ссылку первым.</div></div>
+      <div class="actions"><button class="btn primary" data-copy="p1">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">Ср<br>29.05</span><h3>Пост 2 — early access на 50 человек</h3><span class="meta"><span class="pill-mini short">≈350 знаков</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: собрать 50 early access. Что обещаем: месяц «Рост» бесплатно за честную обратную связь.</p>
+      <div class="field"><label>Текст</label><div class="val" id="p2">Собираю 50 человек в early access на бот SINTEM. Запуск 04.06.
+
+Что получите. Месяц «Рост» (₽3900) бесплатно, прямой канал ко мне в
+личку, влияние на следующих агентов в боте.
+
+Что прошу взамен. Реально пользоваться 30 дней и в конце дать честную
+обратную связь — две строки про что зашло, что нет.
+
+Кто хочет — плюс в комментах, скину ссылку.</div></div>
+      <div class="actions"><button class="btn primary" data-copy="p2">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">Пт<br>31.05</span><h3>Пост 3 — кейс mp_card_doctor (термобельё)</h3><span class="meta"><span class="pill-mini long">≈1500 знаков</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: показать конкретный кейс. Длинный детальный пост с примером реального разбора.</p>
+      <div class="field"><label>Текст</label><div class="val" id="p3">Покажу, как работает один из пяти агентов в боте SINTEM, которого
+запускаю 04.06.
+
+Агент «Карточка-доктор». Кидаешь ему ссылку на свой товар на WB или
+Ozon, он за 30 секунд разбирает по 18 параметрам и говорит, что менять
+в порядке приоритета.
+
+Тестировал на своём знакомом, продаёт термобельё. Кинули ссылку,
+вернулось такое:
+
+1. В заголовке нет ключа «мужское» — теряете 18% поискового трафика
+   по этой нише.
+2. Главное фото идёт 4-й позицией, должно быть 1-е. Анализ топ-20
+   ниши: у 17 из 20 1-е фото — товар на модели.
+3. В описании 4 канцелярских оборота, которые снижают CTR. Конкретно:
+   «является», «осуществляется», «представляет собой», «обладает
+   характеристиками».
+4. У 6 конкурентов в видео есть размерная сетка крупным планом, у вас
+   её нет.
+5. И ещё 14 пунктов помельче.
+
+На переписывание карточки по этим пунктам у знакомого ушёл вечер.
+Через 9 дней позиция в выдаче +14, заказы выросли на треть.
+
+Раньше за такой разбор он платил фрилансеру ₽3000 и ждал 2–3 дня.
+В боте — 30 секунд и в составе тарифа ₽1500.
+
+04.06 запуск. Кто хочет в early access (месяц бесплатно за обратную
+связь) — плюс в комменты или в личку.</div></div>
+      <div class="actions"><button class="btn primary" data-copy="p3">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">Вс<br>02.06</span><h3>Пост 4 — опрос 6-го агента у аудитории</h3><span class="meta"><span class="pill-mini">≈800 знаков</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: вовлечение, проверка гипотез. Если 5+ голосов за тему — добавим 6-го агента в первый месяц.</p>
+      <div class="field"><label>Текст</label><div class="val" id="p4">Вопрос селлерам перед запуском бота 04.06.
+
+В SINTEM пять агентов: карточка-доктор, ответ на отзывы, скаут
+конкурентов, ABC-XYZ, юнит-экономика. Этот выбор сделал по 12
+интервью с селлерами в мае.
+
+Но интервью — это всегда срез. Хочу проверить.
+
+Что из этих пяти задач у вас сейчас отнимает больше всего часов в
+неделю? И есть ли шестая, которую я пропустил, но которая болит
+постоянно?
+
+Напишите в комменты одной строкой. Если соберём 5+ голосов за одну
+тему — добавлю шестого агента в первый месяц после запуска.
+
+Пишите как есть, без причёсывания.</div></div>
+      <div class="actions"><button class="btn primary" data-copy="p4">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num">Пн<br>03.06</span><h3>Пост 5 — FAQ: данные, ошибки, отмена</h3><span class="meta"><span class="pill-mini">≈600 знаков</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: снять три типичных возражения за день до запуска (хранение данных, ошибки бота, отмена подписки).</p>
+      <div class="field"><label>Текст</label><div class="val" id="p5">Завтра запускаю SINTEM. До этого — три частых вопроса, которые задали
+в личке за последнюю неделю.
+
+«А мои данные у вас останутся?» Хранятся 30 дней, чтобы можно было
+вернуться к истории. Дальше удаляются. Никому не передаются. Удалить
+раньше — команда /forget в боте.
+
+«Что если бот ошибётся в юнитке?» Все расчёты показываем с разбивкой
+по статьям. Видите ошибку — пишете в поддержку, разбираю лично.
+Внутри не чёрный ящик.
+
+«Можно отменить подписку?» В один клик командой /cancel. Деньги за
+оплаченный период не сгорают, пользуетесь до конца месяца. Никаких
+автосписаний после отмены.
+
+Завтра в 10:00 запуск. Ссылку выложу здесь.</div></div>
+      <div class="actions"><button class="btn primary" data-copy="p5">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num" style="background:rgba(255,205,60,.2)">Вт<br>04.06<br>10:00</span><h3>Пост 6 — ЗАПУСК</h3><span class="meta"><span class="pill-mini launch">D-DAY</span><span class="pill-mini short">≈400 знаков</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: запуск, призыв в бот. Никаких списаний, free-trial 5 запросов на агента.</p>
+      <div class="field"><label>Текст</label><div class="val" id="p6">SINTEM открыт.
+
+@sintem_bot в Telegram. Жмёте «Старт», получаете 5 бесплатных запросов
+на каждого из пяти агентов. Без карты. Без регистрации.
+
+Понравится — оплатите от ₽1500 в месяц. Не понравится — закроете и
+забудете, никто ничего не списывает.
+
+Если что-то не работает — пишите в @sintem_support, отвечаю до 4
+часов в рабочие дни.
+
+Поехали.</div></div>
+      <div class="actions"><button class="btn primary" data-copy="p6">📋 Копировать</button></div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="arrow">▶</span><span class="num" style="background:rgba(255,205,60,.2)">Вт<br>04.06<br>веч</span><h3>Пост 7 — Reels/short 30 сек + текст под видео</h3><span class="meta"><span class="pill-mini launch">REELS</span><span class="pill-mini long">сценарий</span></span></summary>
+    <div class="body">
+      <p class="muted">Цель: показать продукт в действии за 30 секунд. Сценарий по секундам + текст под видео.</p>
+      <div class="field"><label>Сценарий 30 сек (для съёмки)</label><div class="val" id="p7s">0:00–0:03  План. Стол. Открытый ноутбук с Wildberries-кабинетом. На
+           экране — список из 30 непрочитанных отзывов. Голос за
+           кадром: «У меня 30 отзывов и вечер пятницы. Раньше это
+           было 1.5 часа жизни».
+
+0:03–0:08  Переход. Telegram на телефоне, открыт @sintem_bot.
+           Пересылаю один отзыв в бот (на экране видно текст:
+           «Кофта пришла не того цвета, очень расстроена»).
+           Подпись на экране: «Пересылаю отзыв в бот».
+
+0:08–0:14  Ответ бота на экране. Видно как печатается ответ за
+           4 секунды. Подпись: «4 секунды. Тон выдержан, попытка
+           удержать клиента».
+
+0:14–0:20  Быстрый монтаж. 6 отзывов подряд пересылаю и получаю
+           ответы. Таймер на экране: 0:14, 0:16, 0:18, 0:19, 0:20.
+           Подпись: «6 отзывов за 6 секунд».
+
+0:20–0:25  Возврат к ноутбуку. Все 30 отзывов отвечены. Время на
+           часах: прошло 8 минут от начала. Подпись: «30 отзывов
+           за 8 минут вместо 1.5 часов. Час двадцать на ужин с
+           детьми».
+
+0:25–0:30  Финальный кадр. Логотип SINTEM, текст: «@sintem_bot.
+           ₽1500/мес. Триал бесплатно». Голос за кадром: «Один
+           бот в Telegram, 5 помощников. Ссылка в шапке».</div>
+      <div class="actions" style="margin-top:6px"><button class="btn" data-copy="p7s">📋 Копировать сценарий</button></div></div>
+      <div class="field"><label>Текст под видео при публикации</label><div class="val" id="p7t">30 отзывов за 8 минут вместо 1.5 часов. И это один из пяти агентов в
+боте.
+
+@sintem_bot — Telegram-бот для селлеров WB и Ozon. Тариф от ₽1500.
+Первые 5 запросов на каждого агента бесплатно, без карты.
+
+Запустился сегодня. Пишите в комменты — что показать в следующем
+видео.</div>
+      <div class="actions" style="margin-top:6px"><button class="btn primary" data-copy="p7t">📋 Копировать текст под видео</button></div></div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== СЕКЦИЯ C: D-DAY PLAN ==================== -->
+<section class="section">
+  <h2>В. Почасовой план D-day · вторник 04.06.2026</h2>
+  <div class="timeline">
+    <h4>Перед запуском</h4>
+    <ul>
+      <li><span class="time">T-7d (28.05)</span>финальный smoke-test бота: /start → /agents → выбор → диалог → 6-й запрос упирается в квоту → /pay → invoice → активация подписки в sandbox</li>
+      <li><span class="time">T-3d (01.06)</span>code freeze, бэкап D1 (`wrangler d1 export sintem_db --remote --output=backup-pre-launch.sql`), перевод секретов на production-ключи NowPayments + CryptoCloud</li>
+      <li><span class="time">T-1d (03.06)</span>опубликовать пост 5 (FAQ), проверить @sintem_support (Telegram), оплата сервисов на 3 мес вперёд</li>
+    </ul>
+
+    <h4>День Х · 04.06.2026</h4>
+    <ul>
+      <li><span class="time">09:00</span>проверка `/health` worker'а (curl), wrangler tail в фоне, открыть `/admin stats` — baseline до запуска</li>
+      <li><span class="time">09:30</span>финальная проверка: setWebhook → getWebhookInfo (ожидаем pending=0, last_error=null), `wrangler d1 execute "SELECT COUNT(*) FROM users"` (smoke)</li>
+      <li><span class="time">10:00</span><b>D-day publish</b>: пост 6 во все каналы (личный TG, чаты селлеров где есть согласование с админом), параллельно DM по списку early-access из поста 2</li>
+      <li><span class="time">10:30–11:30</span>мониторинг: tail в одном окне, `/admin stats` каждые 15 мин (DAU должен расти), отвечать в @sintem_support до 4 часов SLA</li>
+      <li><span class="time">12:00</span>первый чек-поинт: сколько /start, сколько прошли A1 (первый запрос), есть ли ошибки groq_failed_enqueue в tail</li>
+      <li><span class="time">15:00</span>второй чек-поинт + опубликовать пост 7 (Reels/short в Instagram + Telegram + VK Clips)</li>
+      <li><span class="time">18:00</span>третий чек-поинт + ответы на DM с возражениями (использовать секцию Г этого Send-Kit)</li>
+      <li><span class="time">22:00</span>финальный итог дня: total /start, A1, A2, Activated, ошибки в tail; пост в личный канал «итоги первого дня»</li>
+    </ul>
+
+    <h4>D+1 · среда 05.06</h4>
+    <ul>
+      <li><span class="time">09:00</span>`/admin stats`: проверить overnight-метрики, ошибки за ночь</li>
+      <li><span class="time">10:00–11:00</span>персональные DM каждому из 50 early-access кто оплатил (или не оплатил — ручной outreach с вопросом «что не зашло»)</li>
+      <li><span class="time">14:00</span>обработать поддержку, починить топ-3 жалобы если есть pattern</li>
+    </ul>
+
+    <h4>Контингент-сценарии</h4>
+    <ul>
+      <li><b>Если worker лёг</b> → `wrangler rollback` на предыдущий deployment, в @sintem_support текст «Сервис временно перегружен, починим за 30 мин»</li>
+      <li><b>Если NowPayments down</b> → fallback на CryptoCloud уже встроен в `createInvoice()`; если оба упали — `/admin activate user_id starter 30` вручную для оплативших по личным реквизитам</li>
+      <li><b>Если Telegram банит бот</b> → `disaster_recovery.md` сценарий 1 (`sprint/ops/`); пока бан длится — DM по списку «извини, технические проблемы, верну подписку через X»</li>
+      <li><b>Если массовая жалоба на качество ответов</b> → отключить проблемного агента флагом, переписать промпт за 1 день, не отменять запуск</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== СЕКЦИЯ D: 12 ВОЗРАЖЕНИЙ ==================== -->
+<section class="section">
+  <h2>Г. 12 типовых возражений селлера <span class="badge">для DM, комментов, поддержки</span></h2>
+  <p class="desc">Использовать как есть в личке. Не давить, не оправдываться, не сравниваться с конкурентами. Если возражение не из списка — записать в @sintem_support, пополнить.</p>
+  <div class="obj-grid">
+    <div class="obj"><div class="q">1. Дорого. ₽1500 в месяц — это лишние расходы.</div><div class="a">Один час разбора карточки у фрилансера стоит ₽3000, один разбор юнитки у аналитика — ₽15000. Тариф ₽1500 — это в 2 раза дешевле одного фриланс-разбора и в 10 раз дешевле одной консультации аналитика, и работает весь месяц без ограничений на типы запросов.</div></div>
+    <div class="obj"><div class="q">2. А мой бухгалтер уже считает юнитку.</div><div class="a">Бухгалтер считает её раз в квартал и общим котлом, а юнитка по каждому SKU нужна раз в неделю — иначе вы не видите, что половина ассортимента работает в минус. Бот не заменяет бухгалтера, он закрывает другую задачу: операционные решения по цене и ассортименту в моменте.</div></div>
+    <div class="obj"><div class="q">3. А ChatGPT тоже умеет, зачем платить вам.</div><div class="a">ChatGPT не знает актуальных комиссий WB и Ozon, не разбирает выдачу маркетплейса по топ-20 и не считает по российскому УСН. У SINTEM формулы и данные зашиты под две конкретные площадки и обновляются — это разница между «текстовой моделью» и «инструментом под задачу».</div></div>
+    <div class="obj"><div class="q">4. Не доверяю ИИ, он галлюцинирует.</div><div class="a">Все расчёты юнитки и ABC-XYZ показываем с разбивкой по статьям, а тексты ответов и рекомендации можно править перед отправкой. Бот не действует за вас — он выдаёт черновик, вы решаете применять или нет.</div></div>
+    <div class="obj"><div class="q">5. У меня уже слишком много инструментов. MPSTATS, Seller Up, MoneyPlace — добавлять ещё один не хочу.</div><div class="a">SINTEM не дублирует аналитику, он закрывает ежедневные текстовые задачи: ответы на отзывы, разбор карточек, переписка по поставщикам. Если у вас уже есть сильная аналитическая платформа — берите тариф «Старт» за ₽1500, чтобы только закрыть текстовый блок.</div></div>
+    <div class="obj"><div class="q">6. Не хочу платить криптой, я в это не лезу.</div><div class="a">Через NowPayments и CryptoCloud можно оплатить картой МИР (внутренняя конвертация в крипту на их стороне). С точки зрения селлера это платёж картой, никаких кошельков заводить не нужно. Если совсем не хочется — напишите в @sintem_support, оформим оплату по реквизитам ИП.</div></div>
+    <div class="obj"><div class="q">7. Я думал, это работает только с одеждой, а у меня электроника.</div><div class="a">Все 5 агентов работают по любой нише на WB и Ozon. Скаут конкурентов и карточка-доктор разбирают вашу выдачу — что у вас в нише, то и анализируется. Тестировали на одежде, электронике, дом и быт, БАДах, инструментах.</div></div>
+    <div class="obj"><div class="q">8. У меня свой шаблон ответов на отзывы, я не хочу терять голос бренда.</div><div class="a">Бот выдаёт три варианта ответа в разном тоне — формальный, тёплый, краткий. Вы выбираете и правите перед отправкой. Свой голос бренда не теряете, бот предлагает черновик.</div></div>
+    <div class="obj"><div class="q">9. Бесплатный триал 5 запросов на агента — это мало, я не успею понять.</div><div class="a">5 запросов на каждого из 5 агентов — это 25 бесплатных запросов суммарно, хватает на полноценное тестирование одного дня работы. Если по итогу нужно ещё — напишите в @sintem_support, накину 10 дополнительных запросов на разбор сложного случая.</div></div>
+    <div class="obj"><div class="q">10. Я уже плачу за курсы по WB, у меня там и шаблоны, и чаты.</div><div class="a">Курсы дают знания и шаблоны на статичной точке времени, бот делает работу за вас в моменте по актуальным данным. Это не конкуренты, это разные слои: учиться продолжайте, а отзывы и юнитку отдайте боту, чтобы курс окупался быстрее.</div></div>
+    <div class="obj"><div class="q">11. А если завтра вы закроетесь, мои данные пропадут?</div><div class="a">Если проект закрывается — за 30 дней до этого в боте приходит уведомление с командой выгрузить всю историю запросов в файл. Платежи помесячные, никаких годовых предоплат, рисков потерять оплаченное вперёд нет.</div></div>
+    <div class="obj"><div class="q">12. Я работаю один, у меня всего 20 SKU — мне это не нужно.</div><div class="a">Если у вас 20 SKU и оборот ниже ₽300k в месяц — вы правы, пока не нужен. Возвращайтесь, когда будет 30+ SKU или оборот вырастет — в этой точке час в неделю уже ощутимая экономия, а тариф ₽1500 окупается с одного спасённого возврата.</div></div>
+  </div>
+</section>
+
+<footer>
+  <p>Source: <span class="repo">E:\Проекты Аслана\SINTEM\sprint\week4_launch\</span></p>
+  <p>Связанные файлы: <a href="prelaunch_posts.md">prelaunch_posts.md</a> · <a href="bot_dialogues.md">bot_dialogues.md</a> · <a href="objections_handler.md">objections_handler.md</a> · <a href="retention_playbook.md">retention_playbook.md</a> · <a href="bot_spec.md">bot_spec.md</a></p>
+  <p><button class="reset-btn" onclick="resetAll()">Сбросить отметки публикаций</button></p>
+  <p>SINTEM week 4 · 27.05–04.06.2026 · Сгенерировано 2026-05-09 для Аслана</p>
+</footer>
+
+<div id="toast">Скопировано</div>
+
+<script>
+const KEY = 'sintem-week4-sendkit-v1';
+
+function loadState() {
+  const raw = localStorage.getItem(KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    Object.entries(data.posts || {}).forEach(([k, v]) => {
+      const el = document.querySelector(`[data-post="${k}"]`);
+      if (el) el.checked = v;
+    });
+  } catch {}
+}
+
+function saveState() {
+  const data = { posts: {} };
+  document.querySelectorAll('[data-post]').forEach(el => data.posts[el.dataset.post] = el.checked);
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+
+function recompute() {
+  const total = document.querySelectorAll('[data-post]').length;
+  const done = document.querySelectorAll('[data-post]:checked').length;
+  document.getElementById('bar-posts').style.width = (done / total * 100) + '%';
+  document.getElementById('bar-posts-text').textContent = `${done} / ${total} постов опубликовано`;
+}
+
+document.body.addEventListener('change', e => {
+  if (e.target.matches('[data-post]')) {
+    saveState();
+    recompute();
+  }
+});
+
+const toast = document.getElementById('toast');
+let toastT;
+document.body.addEventListener('click', e => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  const txt = document.getElementById(btn.dataset.copy)?.innerText || '';
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(() => {
+    toast.textContent = `📋 Скопировано (${txt.length} симв.)`;
+    toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => toast.classList.remove('show'), 1800);
+  });
+});
+
+function resetAll() {
+  if (!confirm('Сбросить отметки публикаций? Тексты постов и возражения останутся.')) return;
+  document.querySelectorAll('[data-post]').forEach(el => el.checked = false);
+  saveState();
+  recompute();
+}
+
+loadState();
+recompute();
+</script>
+
+</div>
+</body>
+</html>
