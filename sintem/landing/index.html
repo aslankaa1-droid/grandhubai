@@ -13,7 +13,10 @@
 <meta property="og:type" content="website">
 <meta property="og:title" data-i18n="og.title" content="SINTEM. Пять помощников для селлера WB и Ozon">
 <meta property="og:description" data-i18n="og.desc" content="Закрывает за вечер то, на что у вас уходит 12 часов в неделю. Один бот в Telegram, ₽1 500/мес.">
-<meta property="og:image" content="og.jpg">
+<meta property="og:image" content="og.svg">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:url" content="https://sintem.ru/">
 <meta property="og:locale" content="ru_RU">
 <link rel="canonical" href="https://sintem.ru/">
@@ -21,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" data-i18n="og.title" content="SINTEM. Пять помощников для селлера WB и Ozon">
 <meta name="twitter:description" data-i18n="og.desc" content="Закрывает за вечер то, на что у вас уходит 12 часов в неделю. Один бот в Telegram.">
-<meta name="twitter:image" content="og.jpg">
+<meta name="twitter:image" content="og.svg">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F0F0F'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-family='-apple-system,sans-serif' font-size='34' font-weight='700' fill='%23FFCD3C'%3ES%3C/text%3E%3C/svg%3E">
 
@@ -52,11 +55,18 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
     </a>
     <div class="site-head-right">
       <nav aria-label="Основная навигация" class="nav">
-        <a href="#agents" data-i18n="nav.agents">Агенты</a>
+        <a href="#agents" data-i18n="nav.agents">Помощники</a>
         <a href="#how" data-i18n="nav.how">Как это работает</a>
         <a href="#pricing" data-i18n="nav.pricing">Тарифы</a>
         <a href="#faq" data-i18n="nav.faq">FAQ</a>
       </nav>
+
+      <!-- Mobile burger: показывается только на <768px, выдвигает .nav-drawer -->
+      <button type="button" class="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav-drawer" data-burger>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
 
       <div class="lang-menu" data-lang-menu>
         <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false" data-i18n-attr="aria-label:nav.lang">
@@ -68,9 +78,11 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
         </button>
         <div class="lang-pop" role="menu" aria-hidden="true">
           <button type="button" role="menuitem" data-lang-option="ru"><span class="lang-code">RU</span><span class="lang-name">Русский</span></button>
+          <!-- EN/FR/AR временно скрыты до первых платящих в РФ. Файлы и i18n-ключи сохранены, для возврата раскомментировать.
           <button type="button" role="menuitem" data-lang-option="en"><span class="lang-code">EN</span><span class="lang-name">English</span></button>
           <button type="button" role="menuitem" data-lang-option="fr"><span class="lang-code">FR</span><span class="lang-name">Français</span></button>
           <button type="button" role="menuitem" data-lang-option="ar"><span class="lang-code">AR</span><span class="lang-name">العربية</span></button>
+          -->
         </div>
       </div>
 
@@ -119,6 +131,18 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
   </div>
 </header>
 
+<!-- Mobile nav drawer. Виден только когда .nav-drawer[data-open]. На десктопе скрыт через CSS. -->
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Меню навигации" aria-hidden="true" data-nav-drawer>
+  <nav class="nav-drawer-list" aria-label="Мобильная навигация">
+    <a href="#agents" data-nav-close data-i18n="nav.agents">Помощники</a>
+    <a href="#how" data-nav-close data-i18n="nav.how">Как это работает</a>
+    <a href="#pricing" data-nav-close data-i18n="nav.pricing">Тарифы</a>
+    <a href="#faq" data-nav-close data-i18n="nav.faq">FAQ</a>
+    <a href="style-guide.html" data-nav-close data-i18n="foot.bb">Брендбук</a>
+    <a href="brand-description.html" data-nav-close data-i18n="foot.bd">Описание и слоганы</a>
+  </nav>
+</div>
+
 <main>
 
   <section class="hero">
@@ -131,7 +155,7 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
           <span data-i18n="hero.cta">Открыть бота и попробовать бесплатно</span>
           <span aria-hidden="true">&rarr;</span>
         </a>
-        <span class="cta-note" data-i18n="hero.note">5 запросов на каждого агента, без карты, без срока годности.</span>
+        <span class="cta-note" data-i18n="hero.note">5 запросов на каждого помощника, без карты, без срока годности.</span>
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="chat">
@@ -150,8 +174,8 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
 
   <section id="agents" class="section">
     <div class="wrap">
-      <h2 class="h2" data-i18n="agents.h2">Что внутри. Пять агентов</h2>
-      <p class="section-lead" data-i18n="agents.lead">Каждый агент = одна задача, которую вы сейчас делаете руками. Все пять — в одной подписке, без отдельных оплат и интеграций.</p>
+      <h2 class="h2" data-i18n="agents.h2">Что внутри. Пять помощников</h2>
+      <p class="section-lead" data-i18n="agents.lead">Каждый помощник = одна задача, которую вы сейчас делаете руками. Все пять — в одной подписке, без отдельных оплат и интеграций.</p>
 
       <div class="grid agents">
         <article class="card">
@@ -230,10 +254,11 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
     </div>
   </section>
 
+  <!-- TODO: после consult с Асланом — рассмотреть тарифную сетку 1990/3900/9900 + годовой план -20% (рекомендация аудитора 11.05.2026, отчёт SINTEM/Экспертиза_Универсальный_промт_2026-05-11.md, раздел E5). Сейчас оставлены текущие 1500/3900/7900 как утверждённые. -->
   <section id="pricing" class="section">
     <div class="wrap">
       <h2 class="h2" data-i18n="price.h2">Тарифы</h2>
-      <p class="section-lead" data-i18n="price.lead">В каждом тарифе все 5 агентов без ограничений по типам. Лимит общий по запросам в месяц. Триал: 5 запросов на каждого агента бесплатно, без карты, без срока годности.</p>
+      <p class="section-lead" data-i18n="price.lead">В каждом тарифе все 5 помощников без ограничений по типам. Лимит общий по запросам в месяц. Триал: 5 запросов на каждого помощника бесплатно, без карты, без срока годности.</p>
 
       <div class="grid pricing">
         <article class="plan">
@@ -242,7 +267,7 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
           <p class="plan-for" data-i18n="p1.for">Один селлер, до 30 SKU, тестирует подход.</p>
           <ul class="plan-feat">
             <li data-i18n="p1.f1">200 запросов в месяц</li>
-            <li data-i18n="p1.f2">Все 5 агентов</li>
+            <li data-i18n="p1.f2">Все 5 помощников</li>
             <li data-i18n="p1.f3">Поддержка в Telegram</li>
           </ul>
           <a class="cta cta-ghost" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot" data-i18n="p1.cta">Начать со «Старт»</a>
@@ -255,7 +280,7 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
           <p class="plan-for" data-i18n="p2.for">Селлер с 30–150 SKU, 1–2 категории, активный рост.</p>
           <ul class="plan-feat">
             <li data-i18n="p2.f1">800 запросов в месяц</li>
-            <li data-i18n="p2.f2">Все 5 агентов без ограничений</li>
+            <li data-i18n="p2.f2">Все 5 помощников без ограничений</li>
             <li data-i18n="p2.f3">Обучение тона бренда (<code>/style</code>)</li>
             <li data-i18n="p2.f4">Приоритетная поддержка</li>
           </ul>
@@ -316,15 +341,15 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
         </details>
         <details>
           <summary data-i18n="faq.q6">Работает ли с Ozon?</summary>
-          <p data-i18n="faq.a6">Да. Все 5 агентов работают и с WB, и с Ozon. Юнит-экономика учитывает разные комиссионные сетки обеих площадок. Скаут конкурентов работает по обеим выдачам.</p>
+          <p data-i18n="faq.a6">Да. Все 5 помощников работают и с WB, и с Ozon. Юнит-экономика учитывает разные комиссионные сетки обеих площадок. Скаут конкурентов работает по обеим выдачам.</p>
         </details>
         <details>
           <summary data-i18n="faq.q7">Можно ли обучить бота под мой бренд и тон?</summary>
-          <p data-i18n="faq.a7">Да, для агента «Ответ на отзывы». Командой <code>/style</code> один раз присылаете 5–10 примеров своих ответов клиентам, бот запоминает голос бренда и дальше пишет в нём. Перенастроить можно когда угодно.</p>
+          <p data-i18n="faq.a7">Да, для помощника «Ответ на отзывы». Командой <code>/style</code> один раз присылаете 5–10 примеров своих ответов клиентам, бот запоминает голос бренда и дальше пишет в нём. Перенастроить можно когда угодно.</p>
         </details>
         <details>
           <summary data-i18n="faq.q8">Какая поддержка?</summary>
-          <p data-i18n="faq.a8">Поддержка в Telegram, <code>@sintem_support</code>. Время ответа в рабочие дни — до 4 часов. Сложные кейсы (баг в расчётах, спорный ответ агента) разбирает лично основатель.</p>
+          <p data-i18n="faq.a8">Поддержка в Telegram, <code>@sintem_support</code>. Время ответа в рабочие дни — до 4 часов. Сложные кейсы (баг в расчётах, спорный ответ помощника) разбирает лично основатель.</p>
         </details>
       </div>
     </div>
@@ -333,13 +358,13 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
   <section id="final-cta" class="section final">
     <div class="wrap">
       <h2 class="h2" data-i18n="final.h2">Хватит сидеть с отзывами по вечерам и считать юнитку в Excel по выходным.</h2>
-      <p class="final-lead" data-i18n="final.lead">Откройте бота, попробуйте 5 запросов на каждого агента бесплатно, и если за вечер сэкономите час — оплатите тариф. Если нет — закроете и забудете, никто не списывает деньги без вашего действия.</p>
+      <p class="final-lead" data-i18n="final.lead">Откройте бота, попробуйте 5 запросов на каждого помощника бесплатно, и если за вечер сэкономите час — оплатите тариф. Если нет — закроете и забудете, никто не списывает деньги без вашего действия.</p>
       <div class="cta-row">
         <a class="cta cta-lg" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot">
           <span data-i18n="final.cta">Открыть @sintem_bot в Telegram</span>
           <span aria-hidden="true">&rarr;</span>
         </a>
-        <span class="cta-note" data-i18n="hero.note">5 запросов на каждого агента, без карты, без срока годности.</span>
+        <span class="cta-note" data-i18n="hero.note">5 запросов на каждого помощника, без карты, без срока годности.</span>
       </div>
     </div>
   </section>
@@ -375,7 +400,7 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
     {"@type":"Question","name":"Безопасно ли это?","acceptedAnswer":{"@type":"Answer","text":"Бот не публикует ваши данные и не передаёт третьим лицам. Выгрузки и артикулы используются только для ответа на ваш конкретный запрос."}},
     {"@type":"Question","name":"Что происходит с моими данными после ответа?","acceptedAnswer":{"@type":"Answer","text":"Хранятся 90 дней, потом удаляются автоматически. Раньше — командой /forget."}},
     {"@type":"Question","name":"Можно ли отменить подписку?","acceptedAnswer":{"@type":"Answer","text":"Да, в один клик через /cancel. Деньги за оставшийся период не сгорают."}},
-    {"@type":"Question","name":"Работает ли с Ozon?","acceptedAnswer":{"@type":"Answer","text":"Да. Все 5 агентов работают и с WB, и с Ozon."}}
+    {"@type":"Question","name":"Работает ли с Ozon?","acceptedAnswer":{"@type":"Answer","text":"Да. Все 5 помощников работают и с WB, и с Ozon."}}
   ]
 }
 </script>
@@ -413,6 +438,37 @@ header.site{padding:18px 0;border-bottom:1px solid var(--line)}
   }
   bindMenu(document.querySelector('[data-brand-menu]'));
   var langSet = bindMenu(document.querySelector('[data-lang-menu]'));
+
+  // Burger / mobile nav drawer
+  var burger  = document.querySelector('[data-burger]');
+  var drawer  = document.querySelector('[data-nav-drawer]');
+  function setDrawer(open){
+    if(!burger || !drawer) return;
+    if(open){
+      drawer.setAttribute('data-open','');
+      drawer.setAttribute('aria-hidden','false');
+      burger.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawer.removeAttribute('data-open');
+      drawer.setAttribute('aria-hidden','true');
+      burger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+  }
+  if(burger){
+    burger.addEventListener('click', function(){
+      setDrawer(!drawer.hasAttribute('data-open'));
+    });
+  }
+  if(drawer){
+    drawer.querySelectorAll('[data-nav-close]').forEach(function(a){
+      a.addEventListener('click', function(){ setDrawer(false); });
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') setDrawer(false);
+  });
 
   // Language switching
   document.querySelectorAll('[data-lang-option]').forEach(function(b){

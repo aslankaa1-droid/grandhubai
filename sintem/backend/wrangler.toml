@@ -79,6 +79,11 @@ NOWPAYMENTS_API_BASE = "https://api.nowpayments.io/v1"
 CRYPTOCLOUD_API_BASE = "https://api.cryptocloud.plus/v2"
 GROQ_API_BASE = "https://api.groq.com/openai/v1"
 GROQ_MODEL = "llama-3.3-70b-versatile"
+OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
+OPENROUTER_MODEL = "qwen/qwen3.6-plus"
+OPENROUTER_MODEL_FALLBACK = "qwen/qwen-2.5-72b-instruct"
+YANDEX_API_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+YANDEX_MODEL = "yandexgpt/latest"
 PUBLIC_BASE_URL = "https://bot.sintem.example.com"
 
 # ============================================================
@@ -88,6 +93,9 @@ PUBLIC_BASE_URL = "https://bot.sintem.example.com"
 #   wrangler secret put TELEGRAM_BOT_TOKEN
 #   wrangler secret put TELEGRAM_WEBHOOK_SECRET
 #   wrangler secret put GROQ_API_KEY
+#   wrangler secret put OPENROUTER_API_KEY
+#   wrangler secret put YANDEX_API_KEY
+#   wrangler secret put YANDEX_FOLDER_ID
 #   wrangler secret put NOWPAYMENTS_API_KEY
 #   wrangler secret put NOWPAYMENTS_IPN_SECRET
 #   wrangler secret put CRYPTOCLOUD_API_KEY
@@ -116,3 +124,8 @@ NOWPAYMENTS_API_BASE = "https://api-sandbox.nowpayments.io/v1"
 CRYPTOCLOUD_API_BASE = "https://api.cryptocloud.plus/v2"
 GROQ_API_BASE = "https://api.groq.com/openai/v1"
 GROQ_MODEL = "llama-3.3-70b-versatile"
+OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
+OPENROUTER_MODEL = "qwen/qwen3.6-plus"
+OPENROUTER_MODEL_FALLBACK = "qwen/qwen-2.5-72b-instruct"
+YANDEX_API_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+YANDEX_MODEL = "yandexgpt/latest"

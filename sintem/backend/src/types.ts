@@ -12,6 +12,9 @@ export interface Env {
   TELEGRAM_BOT_TOKEN: string;
   TELEGRAM_WEBHOOK_SECRET: string;
   GROQ_API_KEY: string;
+  OPENROUTER_API_KEY: string;
+  YANDEX_API_KEY: string;
+  YANDEX_FOLDER_ID: string;
   NOWPAYMENTS_API_KEY: string;
   NOWPAYMENTS_IPN_SECRET: string;
   CRYPTOCLOUD_API_KEY: string;
@@ -25,6 +28,11 @@ export interface Env {
   CRYPTOCLOUD_API_BASE: string;
   GROQ_API_BASE: string;
   GROQ_MODEL: string;
+  OPENROUTER_API_BASE: string;
+  OPENROUTER_MODEL: string;
+  OPENROUTER_MODEL_FALLBACK: string;
+  YANDEX_API_BASE: string;
+  YANDEX_MODEL: string;
 }
 
 export interface TgUser {

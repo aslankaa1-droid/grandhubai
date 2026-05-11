@@ -2,7 +2,7 @@
 
 import { log } from '../lib/log';
 import { sendMessage, sendChatAction, answerCallback, escapeHtml } from '../lib/tg';
-import { callGroq, groqCostUsdE4, type GroqMessage } from '../lib/groq';
+import { callLLM, llmCostUsdE4, type LlmMessage } from '../lib/llm';
 import { createInvoice } from './payments';
 import { handleAdmin } from './admin';
 import { enqueueRetry } from './retry';
@@ -22,8 +22,14 @@ import {
 interface QuotaResult {
   allowed: boolean;
   remaining: number;
-  reason?: 'no_active_plan' | 'daily_quota' | 'flood';
+  reason?: 'no_active_plan' | 'daily_quota' | 'flood' | 'free_minute' | 'free_daily';
 }
+
+// Anti-abuse: бесплатный тариф (free_trial) — 1 запрос/мин, 20/день суммарно по всем агентам.
+// Платные — 30/мин flood-guard (старое поведение), per-agent суточная квота сохраняется.
+const FREE_PER_MIN = 1;
+const FREE_PER_DAY = 20;
+const PAID_FLOOD_PER_MIN = 30;
 
 export async function handleTelegramUpdate(env: Env, ctx: ExecutionContext, update: TgUpdate): Promise<void> {
   if (update.message?.text) return handleMessage(env, ctx, update.message);
@@ -87,7 +93,7 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
     return;
   }
 
-  if (text.startsWith('/pay')) {
+  if (text.startsWith('/pay') || text.startsWith('/plans')) {
     await sendMessage(env, chatId, payIntroText(), { reply_markup: plansKeyboard() });
     return;
   }
@@ -139,8 +145,9 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
   if (!quota.allowed) {
     if (quota.reason === 'no_active_plan') {
       await sendMessage(env, chatId, 'Подписка не активна. Оплатите тариф: /pay');
+    } else if (quota.reason === 'free_minute' || quota.reason === 'free_daily') {
+      await sendMessage(env, chatId, 'Лимит бесплатного тарифа исчерпан. Обновите подписку: /plans');
     } else if (quota.reason === 'daily_quota') {
-      // trial_exhausted_<agent> — конкретный текст по агенту (bot_dialogues.md §3)
       const label = AGENT_LABELS[agentId as (typeof WEDGE_AGENTS)[number]] ?? agentId;
       await sendMessage(
         env,
@@ -157,18 +164,18 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
 
   const systemPrompt = (await env.PROMPTS.get(`prompt:${agentId}`)) ??
     'You are a helpful WB/Ozon seller assistant. Answer concisely in Russian.';
-  const history: GroqMessage[] = JSON.parse(session.context_window || '[]');
-  const messages: GroqMessage[] = [
+  const history: LlmMessage[] = JSON.parse(session.context_window || '[]');
+  const messages: LlmMessage[] = [
     { role: 'system', content: systemPrompt },
-    ...history.slice(-8), // sliding window 4 пары
+    ...history.slice(-8),
     { role: 'user', content: text },
   ];
 
-  let groqResult;
+  let llmResult;
   try {
-    groqResult = await callGroq(env, messages);
+    llmResult = await callLLM(env, messages);
   } catch (e) {
-    log({ event: 'groq_failed_enqueue', level: 'error', user_id: userId, agent_id: agentId, error: (e as Error).message });
+    log({ event: 'llm_failed_enqueue', level: 'error', user_id: userId, agent_id: agentId, error: (e as Error).message });
     await enqueueRetry(env, {
       user_id: userId,
       chat_id: chatId,
@@ -178,20 +185,19 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
       enqueued_at: Math.floor(Date.now() / 1000),
       original_msg_id: msg.message_id,
     });
-    await sendMessage(env, chatId, '⏳ Сервис AI временно перегружен. Ответ придёт автоматически в течение 5 минут.');
+    await sendMessage(env, chatId, 'Сервис AI временно перегружен. Ответ придёт автоматически в течение 5 минут.');
     return;
   }
 
-  // Persist invocation + messages
   const invStmt = env.DB.prepare(
     `INSERT INTO agent_invocations
      (tg_user_id, agent_id, model, provider, input_tokens, output_tokens, latency_ms, status, cost_usd_e4)
      VALUES (?,?,?,?,?,?,?,?,?)`,
   ).bind(
-    userId, agentId, env.GROQ_MODEL, 'groq',
-    groqResult.input_tokens, groqResult.output_tokens, groqResult.latency_ms,
+    userId, agentId, llmResult.model, llmResult.provider,
+    llmResult.input_tokens, llmResult.output_tokens, llmResult.latency_ms,
     'success',
-    groqCostUsdE4(groqResult.input_tokens, groqResult.output_tokens),
+    llmCostUsdE4(llmResult.provider, llmResult.model, llmResult.input_tokens, llmResult.output_tokens),
   );
   const userMsgStmt = env.DB.prepare(
     `INSERT INTO messages (tg_user_id, agent_id, role, content, tg_message_id)
@@ -199,15 +205,14 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
   ).bind(userId, agentId, 'user', text, msg.message_id);
   const asstMsgStmt = env.DB.prepare(
     `INSERT INTO messages (tg_user_id, agent_id, role, content) VALUES (?,?,?,?)`,
-  ).bind(userId, agentId, 'assistant', groqResult.content);
+  ).bind(userId, agentId, 'assistant', llmResult.content);
 
   ctx.waitUntil(env.DB.batch([invStmt, userMsgStmt, asstMsgStmt]).then(() => undefined));
 
-  // Update session context window
   const newHistory = [
     ...history.slice(-6),
     { role: 'user' as const, content: text },
-    { role: 'assistant' as const, content: groqResult.content },
+    { role: 'assistant' as const, content: llmResult.content },
   ];
   ctx.waitUntil(
     env.DB.prepare(
@@ -219,14 +224,16 @@ async function handleMessage(env: Env, ctx: ExecutionContext, msg: TgMessage): P
       .then(() => undefined),
   );
 
-  await sendMessage(env, chatId, groqResult.content);
+  await sendMessage(env, chatId, llmResult.content);
   log({
     event: 'msg_handled',
     user_id: userId,
     agent_id: agentId,
-    latency_ms: groqResult.latency_ms,
-    in_tokens: groqResult.input_tokens,
-    out_tokens: groqResult.output_tokens,
+    provider: llmResult.provider,
+    model: llmResult.model,
+    latency_ms: llmResult.latency_ms,
+    in_tokens: llmResult.input_tokens,
+    out_tokens: llmResult.output_tokens,
   });
 }
 
@@ -319,13 +326,6 @@ async function ensureFreeTrial(env: Env, userId: number): Promise<boolean> {
 }
 
 async function checkAndIncrementQuota(env: Env, userId: number, agentId: string): Promise<QuotaResult> {
-  // Flood protection (60s window): KV counter, drop if > 30/min
-  const floodKey = `flood:${userId}`;
-  const floodCount = parseInt((await env.RATE_LIMITS.get(floodKey)) ?? '0', 10) + 1;
-  await env.RATE_LIMITS.put(floodKey, String(floodCount), { expirationTtl: 60 });
-  if (floodCount > 30) return { allowed: false, remaining: 0, reason: 'flood' };
-
-  // Read active subscription (cached in KV 5 min)
   const cacheKey = `sub:${userId}`;
   let sub = await env.BILLING_CACHE.get<{ plan: Plan; expires_at: number }>(cacheKey, 'json');
   if (!sub) {
@@ -344,6 +344,26 @@ async function checkAndIncrementQuota(env: Env, userId: number, agentId: string)
   if (sub.expires_at < Math.floor(Date.now() / 1000)) {
     return { allowed: false, remaining: 0, reason: 'no_active_plan' };
   }
+
+  const isFree = sub.plan === 'free_trial';
+  const floodLimit = isFree ? FREE_PER_MIN : PAID_FLOOD_PER_MIN;
+  const floodKey = `flood:${userId}`;
+  const floodCount = parseInt((await env.RATE_LIMITS.get(floodKey)) ?? '0', 10) + 1;
+  await env.RATE_LIMITS.put(floodKey, String(floodCount), { expirationTtl: 60 });
+  if (floodCount > floodLimit) {
+    return { allowed: false, remaining: 0, reason: isFree ? 'free_minute' : 'flood' };
+  }
+
+  if (isFree) {
+    const dayKey = `free_day:${userId}:${new Date().toISOString().slice(0, 10)}`;
+    const dayCount = parseInt((await env.RATE_LIMITS.get(dayKey)) ?? '0', 10) + 1;
+    await env.RATE_LIMITS.put(dayKey, String(dayCount), { expirationTtl: 86400 });
+    if (dayCount > FREE_PER_DAY) {
+      return { allowed: false, remaining: 0, reason: 'free_daily' };
+    }
+  }
+
+  await detectMultiAccount(env, userId);
 
   const limit = PLAN_CONFIG[sub.plan].daily_quota_per_agent;
   const today = parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''), 10);
@@ -372,6 +392,22 @@ async function checkAndIncrementQuota(env: Env, userId: number, agentId: string)
     return { allowed: false, remaining: 0, reason: 'daily_quota' };
   }
   return { allowed: true, remaining: limit - used };
+}
+
+async function detectMultiAccount(env: Env, userId: number): Promise<void> {
+  // Логирующая метка без блокировки. >=2 подписок за 30 дней у одного tg_user_id — повод проверить.
+  const flag = await env.RATE_LIMITS.get(`mac:${userId}`);
+  if (flag) return;
+  const row = await env.DB.prepare(
+    `SELECT COUNT(*) AS n FROM subscriptions
+     WHERE tg_user_id = ? AND created_at > strftime('%s','now') - 30*86400`,
+  )
+    .bind(userId)
+    .first<{ n: number }>();
+  if ((row?.n ?? 0) >= 2) {
+    log({ event: 'multi_account_suspected', level: 'warn', user_id: userId, subs_30d: row?.n });
+  }
+  await env.RATE_LIMITS.put(`mac:${userId}`, '1', { expirationTtl: 3600 });
 }
 
 function agentsKeyboard() {

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- SINTEM open-graph image. Создано 2026-05-11. Размер 1200x630, фирменные цвета. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F0F0F"/>
+      <stop offset="60%" stop-color="#0F0F0F"/>
+      <stop offset="100%" stop-color="#1A1505"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFCD3C"/>
+      <stop offset="100%" stop-color="#FFB930"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- subtle corner dots pattern -->
+  <g fill="#262626">
+    <circle cx="60"   cy="60"  r="2"/>
+    <circle cx="120"  cy="60"  r="2"/>
+    <circle cx="60"   cy="120" r="2"/>
+    <circle cx="1140" cy="510" r="2"/>
+    <circle cx="1080" cy="510" r="2"/>
+    <circle cx="1140" cy="570" r="2"/>
+  </g>
+
+  <!-- mark plate (rounded square with S) -->
+  <g transform="translate(80,170)">
+    <rect width="220" height="220" rx="48" fill="url(#mark)"/>
+    <text x="110" y="170" text-anchor="middle"
+          font-family="-apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif"
+          font-size="170" font-weight="800" fill="#1A1305">S</text>
+  </g>
+
+  <!-- wordmark + headline -->
+  <g font-family="-apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif" fill="#F5F5F5">
+    <text x="340" y="232" font-size="64" font-weight="800" letter-spacing="2">SINTEM</text>
+    <text x="340" y="318" font-size="40" font-weight="700" fill="#FFCD3C">AI-помощники маркетплейсов</text>
+    <text x="340" y="372" font-size="28" font-weight="500" fill="#D6D6D6">Карточка-доктор, ответ на отзывы, скаут конкурентов,</text>
+    <text x="340" y="410" font-size="28" font-weight="500" fill="#D6D6D6">ABC-XYZ и юнит-экономика. Один Telegram-бот.</text>
+  </g>
+
+  <!-- accent footer line -->
+  <rect x="80" y="540" width="1040" height="2" fill="#262626"/>
+  <g font-family="-apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif" font-size="24">
+    <text x="80"   y="586" fill="#A8A8A8">sintem.ru</text>
+    <text x="1120" y="586" text-anchor="end" fill="#FFCD3C" font-weight="700">@sintem_bot</text>
+  </g>
+</svg>

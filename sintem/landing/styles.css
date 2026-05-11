@@ -208,6 +208,80 @@ html[dir="rtl"] body { font-family: "Segoe UI", "Tahoma", -apple-system, BlinkMa
   .lang-pop button { justify-content: center; }
 }
 
+/* BURGER + MOBILE NAV DRAWER — добавлено 2026-05-11 (sticky header терял навигацию на <768px) */
+.burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+}
+.burger:hover, .burger:focus-visible,
+.burger[aria-expanded="true"] {
+  border-color: var(--accent);
+  background: rgba(255,205,60,.06);
+  outline: none;
+}
+.burger-bar {
+  display: block;
+  width: 18px; height: 2px;
+  background: var(--fg-dim);
+  border-radius: 2px;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.burger[aria-expanded="true"] .burger-bar { background: var(--accent); }
+.burger[aria-expanded="true"] .burger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] .burger-bar:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] .burger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-drawer {
+  position: fixed;
+  inset: 64px 0 0 0;
+  background: rgba(15,15,15,0.98);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  z-index: 90;
+  padding: 24px 20px 32px;
+  display: none;
+  overflow-y: auto;
+}
+.nav-drawer[data-open] { display: block; }
+.nav-drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.nav-drawer-list a {
+  display: block;
+  padding: 16px 18px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg-2);
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.nav-drawer-list a:hover, .nav-drawer-list a:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(255,205,60,.06);
+  outline: none;
+}
+/* На десктопе бургер и drawer не нужны */
+@media (min-width: 768px) {
+  .burger { display: none; }
+  .nav-drawer { display: none !important; }
+}
+
 /* HERO */
 .eyebrow {
   display: inline-block;

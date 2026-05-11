@@ -1,7 +1,7 @@
 // RETRY_QUEUE: failed Groq calls are enqueued in KV, drained by cron every 5 min.
 
 import { log } from '../lib/log';
-import { callGroq, groqCostUsdE4, type GroqMessage } from '../lib/groq';
+import { callLLM, llmCostUsdE4, type LlmMessage } from '../lib/llm';
 import { sendMessage } from '../lib/tg';
 import type { Env, RetryQueueItem } from '../types';
 
@@ -35,18 +35,17 @@ async function processRetry(env: Env, key: string): Promise<void> {
   await env.RETRY_QUEUE.delete(key);
 
   try {
-    const res = await callGroq(env, item.messages as GroqMessage[]);
-    // Запись в БД как retried_ok
+    const res = await callLLM(env, item.messages as LlmMessage[]);
     await env.DB.prepare(
       `INSERT INTO agent_invocations
        (tg_user_id, agent_id, model, provider, input_tokens, output_tokens, latency_ms, status, cost_usd_e4)
        VALUES (?,?,?,?,?,?,?,?,?)`,
     )
       .bind(
-        item.user_id, item.agent_id, env.GROQ_MODEL, 'groq',
+        item.user_id, item.agent_id, res.model, res.provider,
         res.input_tokens, res.output_tokens, res.latency_ms,
         'retried_ok',
-        groqCostUsdE4(res.input_tokens, res.output_tokens),
+        llmCostUsdE4(res.provider, res.model, res.input_tokens, res.output_tokens),
       )
       .run();
     await env.DB.prepare(
@@ -54,7 +53,7 @@ async function processRetry(env: Env, key: string): Promise<void> {
     )
       .bind(item.user_id, item.agent_id, 'assistant', res.content)
       .run();
-    await sendMessage(env, item.chat_id, `🔁 Ответ готов (повторная попытка):\n\n${res.content}`);
+    await sendMessage(env, item.chat_id, `Ответ готов (повторная попытка):\n\n${res.content}`);
     log({ event: 'retry_ok', user_id: item.user_id, agent_id: item.agent_id, attempts: item.attempts });
   } catch (e) {
     item.attempts += 1;
@@ -70,7 +69,7 @@ async function processRetry(env: Env, key: string): Promise<void> {
       await sendMessage(
         env,
         item.chat_id,
-        `❌ Не удалось получить ответ после ${MAX_ATTEMPTS} попыток. Запрос не учтён в квоте — попробуйте позже или напишите в поддержку.`,
+        `Не удалось получить ответ после ${MAX_ATTEMPTS} попыток. Запрос не учтён в квоте — попробуйте позже или напишите в поддержку.`,
       );
       log({ event: 'retry_giveup', level: 'error', user_id: item.user_id, agent_id: item.agent_id, error: (e as Error).message });
     } else {
