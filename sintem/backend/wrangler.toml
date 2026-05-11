@@ -13,13 +13,13 @@ compatibility_flags = ["nodejs_compat"]
 # Workers Paid plan нужен с ~1k MAU; до этого free хватает.
 # В free-плане cron triggers тоже работают, но CPU limit 50ms — для нашего worker мало,
 # Groq call съедает почти весь budget. Поэтому MVP сразу на Paid ($5/мес).
-workers_dev = false
+workers_dev = true
 
 # Production route на собственный домен; для MVP можно использовать workers.dev URL,
 # главное чтобы Telegram setWebhook принял (только https + non-IP host).
-[[routes]]
-pattern = "bot.sintem.example.com/*"
-zone_name = "sintem.example.com"
+# [[routes]] — disabled by bootstrap; using workers.dev URL for MVP
+# pattern = "bot.sintem.example.com/*"
+# zone_name = "sintem.example.com"
 
 # ============================================================
 # D1 database binding
@@ -30,8 +30,8 @@ zone_name = "sintem.example.com"
 [[d1_databases]]
 binding = "DB"
 database_name = "sintem_db"
-database_id = "REPLACE_WITH_REAL_D1_ID"
-preview_database_id = "REPLACE_WITH_REAL_D1_ID"
+database_id = "4bbd0d18-4644-4a81-a5d0-36734a123c4c"
+preview_database_id = "4bbd0d18-4644-4a81-a5d0-36734a123c4c"
 migrations_dir = "migrations"
 
 # ============================================================
@@ -44,23 +44,23 @@ migrations_dir = "migrations"
 #   wrangler kv:namespace create RETRY_QUEUE
 [[kv_namespaces]]
 binding = "PROMPTS"
-id = "REPLACE_WITH_REAL_KV_ID_PROMPTS"
-preview_id = "REPLACE_WITH_REAL_KV_ID_PROMPTS_PREVIEW"
+id = "2f39fba3badf479892b45feaf0580991"
+preview_id = "ebc8087f40cb4605be7cbad8cba234cd"
 
 [[kv_namespaces]]
 binding = "RATE_LIMITS"
-id = "REPLACE_WITH_REAL_KV_ID_RL"
-preview_id = "REPLACE_WITH_REAL_KV_ID_RL_PREVIEW"
+id = "655329242214431ca6a269959a099363"
+preview_id = "063924c796ff430eb756f33a57f4e036"
 
 [[kv_namespaces]]
 binding = "BILLING_CACHE"
-id = "REPLACE_WITH_REAL_KV_ID_BILLING"
-preview_id = "REPLACE_WITH_REAL_KV_ID_BILLING_PREVIEW"
+id = "cd5261f77328460daf50d4cd8cf36e97"
+preview_id = "fe45f629348843e9b59b4f6686f5a5a9"
 
 [[kv_namespaces]]
 binding = "RETRY_QUEUE"
-id = "REPLACE_WITH_REAL_KV_ID_RETRY"
-preview_id = "REPLACE_WITH_REAL_KV_ID_RETRY_PREVIEW"
+id = "f6a3151161b1477da261b590d468d850"
+preview_id = "3703dbd7d6ed47e0baa6ddcf3c8d3503"
 
 # ============================================================
 # Cron triggers
@@ -84,7 +84,7 @@ OPENROUTER_MODEL = "qwen/qwen3.6-plus"
 OPENROUTER_MODEL_FALLBACK = "qwen/qwen-2.5-72b-instruct"
 YANDEX_API_BASE = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
 YANDEX_MODEL = "yandexgpt/latest"
-PUBLIC_BASE_URL = "https://bot.sintem.example.com"
+PUBLIC_BASE_URL = "https://sintem-bot.<your-cf-subdomain>.workers.dev"  # FILL after first deploy
 
 # ============================================================
 # Secrets (не пишем сюда! Ставим командой `wrangler secret put`)
