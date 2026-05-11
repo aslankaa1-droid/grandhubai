@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GrandHubAi — тарифные планы. От бесплатного Новичка до безлимитного Бриллианта. Оплата USD/EUR/USDT.">
+<title>Тарифы · GrandHubAi</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --panel-2:#1c232d; --line:#2a313c;
+    --text:#e6edf3; --muted:#9aa6b2;
+    --accent:#7c5cff; --accent-2:#22c55e;
+    --bronze:#cd7f32; --silver:#c0c8d2; --gold:#d4af37;
+    --plat:#9ec5fe; --diam:#a5f3fc;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.55}
+  a{color:#a5b4fc}
+  .top{position:sticky;top:0;z-index:10;background:rgba(14,17,22,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .row{max-width:1280px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+  .top .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+  .top .brand .logo{font-size:22px}
+  .top .brand h1{font-size:17px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .top .nav{display:flex;gap:10px;flex-wrap:wrap}
+  .top .nav a{padding:8px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--text);font-size:13px;transition:.15s}
+  .top .nav a:hover{background:var(--panel)}
+  .top .nav a.cta{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .top .nav a.cta:hover{background:#6a4dff}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:48px 24px 96px}
+  .hero{padding:48px 36px;border-radius:24px;background:radial-gradient(1200px 400px at 10% -10%,rgba(124,92,255,.25),transparent),radial-gradient(800px 300px at 90% 10%,rgba(34,197,94,.18),transparent),var(--panel);border:1px solid var(--line);margin-bottom:48px}
+  .hero .eyebrow{color:var(--muted);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+  .hero h2{font-size:42px;line-height:1.15;margin:14px 0 12px;font-weight:800;letter-spacing:-.02em}
+  .hero p{font-size:18px;color:var(--muted);max-width:820px;margin:0}
+  .hero .meta{margin-top:20px;color:var(--muted);font-size:13px}
+
+  h3.section{font-size:26px;letter-spacing:-.01em;margin:56px 0 8px;font-weight:800}
+  h3.section .num{color:var(--accent);font-weight:800;margin-right:10px}
+  p.section-lead{color:var(--muted);margin:0 0 24px;max-width:920px}
+
+  .tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+  @media (max-width:1200px){.tiers{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:680px){.tiers{grid-template-columns:1fr}}
+  .tier{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px;position:relative}
+  .tier.featured{border-color:rgba(124,92,255,.6);box-shadow:0 0 0 1px rgba(124,92,255,.4) inset, 0 24px 60px -30px rgba(124,92,255,.6)}
+  .tier .featured-badge{position:absolute;top:-12px;right:14px;background:var(--accent);color:#fff;border-radius:999px;padding:4px 10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .tier .icon{font-size:32px}
+  .tier h4{margin:0;font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .tier .price{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .tier .price small{display:block;font-size:13px;color:var(--muted);font-weight:500;margin-top:2px}
+  .tier ul{margin:6px 0 0;padding-left:18px;font-size:13.5px;color:#dbe2ea}
+  .tier ul li{margin:4px 0}
+  .tier .cta{margin-top:auto;display:block;text-align:center;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);text-decoration:none;font-weight:700;font-size:14px;transition:.15s}
+  .tier .cta:hover{background:#252e3a}
+  .tier.featured .cta{background:var(--accent);border-color:var(--accent);color:#fff}
+  .tier.featured .cta:hover{background:#6a4dff}
+
+  .currency-toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0}
+  .currency-toggle button{background:transparent;color:var(--muted);border:none;padding:8px 16px;cursor:pointer;font-weight:700;font-size:13px;transition:.15s}
+  .currency-toggle button.active{background:var(--accent);color:#fff}
+
+  table.matrix{width:100%;border-collapse:separate;border-spacing:0;margin-top:14px;font-size:14px}
+  table.matrix th, table.matrix td{padding:14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  table.matrix thead th{background:var(--panel-2);color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  table.matrix thead th:first-child{border-top-left-radius:12px}
+  table.matrix thead th:last-child{border-top-right-radius:12px}
+  table.matrix tr:last-child td{border-bottom:none}
+  table.matrix td.num{font-variant-numeric:tabular-nums;font-weight:600}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+  .pill.ok{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.4)}
+  .pill.paid{background:rgba(124,92,255,.15);color:#c4b5fd;border:1px solid rgba(124,92,255,.4)}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .card + .card{margin-top:18px}
+  .card h4{margin:0 0 8px;font-size:17px}
+  .card p{margin:0;color:#dbe2ea;font-size:14.5px;line-height:1.6}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:880px){.twocol{grid-template-columns:1fr}}
+
+  .api{background:linear-gradient(135deg,rgba(34,197,94,.10),rgba(124,92,255,.10));border:1px solid rgba(34,197,94,.3);border-radius:18px;padding:24px}
+  .api h4{margin:0 0 8px}
+  .api .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  @media (max-width:880px){.api .opts{grid-template-columns:1fr}}
+  .api .opt{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .api .opt b{color:var(--text)}
+  .api .opt p{color:var(--muted);font-size:13.5px;margin:6px 0 0}
+
+  .faq summary{cursor:pointer;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;font-weight:700;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:after{content:"+";float:right;font-weight:400;color:var(--muted)}
+  .faq details[open] summary:after{content:"−"}
+  .faq details{margin-bottom:10px}
+  .faq details[open]{border-radius:12px}
+  .faq .answer{padding:14px 18px;color:#dbe2ea;font-size:14px;line-height:1.65;border:1px solid var(--line);border-top:none;border-radius:0 0 12px 12px;background:var(--panel-2)}
+
+  .footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+
+  .legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-size:12px;color:var(--muted)}
+
+  /* Payment modal */
+  button.cta{cursor:pointer;font-family:inherit;width:100%}
+  .pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .pay-overlay.active{display:flex}
+  .pay-modal{background:var(--panel);border:1px solid var(--line);border-radius:18px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:28px}
+  .pay-modal h3{margin:0 0 6px;font-size:22px}
+  .pay-modal .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+  .pay-modal .close-x{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:4px 10px}
+  .pay-modal .options{display:grid;gap:12px}
+  .pay-opt{display:flex;align-items:flex-start;gap:14px;padding:18px;background:var(--panel-2);border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--text);transition:.15s}
+  .pay-opt:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .pay-opt .flag{font-size:28px;line-height:1}
+  .pay-opt .body{flex:1;min-width:0}
+  .pay-opt .body b{display:block;font-size:15px;margin-bottom:4px}
+  .pay-opt .body span{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+  .pay-opt .arrow{color:var(--accent);font-size:20px;align-self:center}
+  .pay-disabled{opacity:.6;cursor:not-allowed;pointer-events:none}
+  .pay-note{background:rgba(249,115,22,.10);border:1px solid rgba(249,115,22,.35);border-radius:12px;padding:12px 14px;color:#fdba74;font-size:12.5px;line-height:1.5;margin-top:14px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="row">
+    <a href="index.html" class="brand" style="text-decoration:none;color:inherit">
+      <span class="logo">🧠</span>
+      <h1>GrandHubAi</h1>
+    </a>
+    <nav class="nav">
+      <a href="index.html">← В приложение</a>
+      <a href="https://grandhubai.com" target="_blank" rel="noopener">grandhubai.com</a>
+      <a class="cta" href="#contact">Связаться</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Тарифные планы</div>
+    <h2>5 уровней. От бесплатного знакомства до корпоративного безлимита.</h2>
+    <p>Чем выше уровень — тем больше профильных ИИ-агентов работает над вашей задачей. Аида (модератор первой линии) НЕ привлекает агентов сама — количество строго определяется тарифом. На уровне Бриллиант — выбираете вы.</p>
+    <div class="meta">Оплата: <b>USD</b> · <b>EUR</b> · <b>USDT</b> (TRC-20 / TON / ERC-20). Возврат в течение 7 дней при использовании менее 10% месячной квоты.</div>
+  </section>
+
+  <h3 class="section"><span class="num">01</span>Сравнение тарифов</h3>
+  <p class="section-lead">Состав команды на одной задаче: <b>Аида + N профильных агентов</b>. На уровне Бриллиант N выбираете вы.</p>
+
+  <div class="currency-toggle" role="tablist">
+    <button data-cur="USD" class="active">$ USD</button>
+    <button data-cur="EUR">€ EUR</button>
+    <button data-cur="USDT">₮ USDT</button>
+  </div>
+
+  <div class="tiers">
+    <div class="tier">
+      <span class="icon">🥉</span>
+      <h4>Новичок</h4>
+      <div class="price"><span data-price-novice>$0</span><small>навсегда</small></div>
+      <ul>
+        <li>Аида + <b>1</b> профильный агент</li>
+        <li>100 000 токенов в день</li>
+        <li>Ваш собственный API-ключ (BYO)</li>
+        <li>Все 244 агента доступны на выбор</li>
+        <li>Базовая поддержка (FAQ + чат)</li>
+      </ul>
+      <a class="cta" href="index.html?tier=novice">Начать бесплатно</a>
+    </div>
+
+    <div class="tier">
+      <span class="icon">🥈</span>
+      <h4>Серебряный</h4>
+      <div class="price"><span data-price-silver>$0</span><small>условно-бесплатно</small></div>
+      <ul>
+        <li>Аида + <b>2</b> агента</li>
+        <li><b>1M</b> токенов в месяц</li>
+        <li>Платформенный API-ключ включён</li>
+        <li>Soft-stop при исчерпании → апгрейд</li>
+        <li>Email-поддержка</li>
+      </ul>
+      <a class="cta" href="index.html?tier=silver">Активировать</a>
+    </div>
+
+    <div class="tier featured">
+      <span class="featured-badge">Популярный</span>
+      <span class="icon">🥇</span>
+      <h4>Золотой</h4>
+      <div class="price"><span data-price-gold>$0</span><small>условно-бесплатно</small></div>
+      <ul>
+        <li>Аида + <b>3</b> агента</li>
+        <li><b>5M</b> токенов в месяц</li>
+        <li>Приоритетная очередь над Серебром</li>
+        <li>Расширенный лог истории</li>
+        <li>Email + чат-поддержка</li>
+      </ul>
+      <a class="cta" href="index.html?tier=gold">Перейти на Золото</a>
+    </div>
+
+    <div class="tier">
+      <span class="icon">💎</span>
+      <h4>Платиновый</h4>
+      <div class="price"><span data-price-platinum>$49</span><small>в месяц</small></div>
+      <ul>
+        <li>Аида + <b>4</b> агента</li>
+        <li><b>15M</b> токенов в месяц</li>
+        <li>Докупка по <span data-buy-1m>$4</span>/1M токенов</li>
+        <li>SLA отклика 99,5%</li>
+        <li>Приоритетная поддержка</li>
+      </ul>
+      <button class="cta" data-pay="platinum" data-pay-monthly>Оплатить Платину</button>
+    </div>
+
+    <div class="tier">
+      <span class="icon">💠</span>
+      <h4>Бриллиантовый</h4>
+      <div class="price"><span data-price-diamond>$199</span><small>в месяц</small></div>
+      <ul>
+        <li>Аида + <b>любое число агентов</b> на ваш выбор</li>
+        <li>Безлимит токенов (fair-use 75M)</li>
+        <li>Выделенный канал и менеджер</li>
+        <li>Приоритет на всех очередях</li>
+        <li>Поддержка 24/7</li>
+      </ul>
+      <button class="cta" data-pay="diamond" data-pay-monthly>Оплатить Бриллиант</button>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><b>«Условно-бесплатно»</b> — доступ без оплаты до исчерпания месячного пула токенов.</span>
+    <span><b>«Только платно»</b> — открывается после оплаты тарифа.</span>
+    <span><b>«Безлимит»</b> — нет жёсткого ограничения токенов; действует политика fair-use.</span>
+  </div>
+
+  <h3 class="section"><span class="num">02</span>Дополнительные позиции</h3>
+  <p class="section-lead">Применяются ко всем тарифам.</p>
+
+  <div class="card">
+    <table class="matrix">
+      <thead>
+        <tr><th>Позиция</th><th>USD</th><th>EUR</th><th>USDT</th><th>Назначение</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Докупка токенов</b> (1M)</td><td class="num">$4</td><td class="num">€3,7</td><td class="num">4 ₮</td><td>Платина — расширение лимита внутри месяца</td></tr>
+        <tr><td><b>Годовая подписка</b></td><td class="num">−20%</td><td class="num">−20%</td><td class="num">−20%</td><td>Стандартная скидка за предоплату</td></tr>
+        <tr><td><b>Команда (5 мест)</b></td><td class="num">×4 от базы</td><td class="num">×4 от базы</td><td class="num">×4 от базы</td><td>Платина и Бриллиант — мульти-сит, общий пул токенов</td></tr>
+        <tr><td><b>BYO API-ключ</b></td><td class="num">−30% от тарифа</td><td class="num">−30%</td><td class="num">−30%</td><td>Клиент использует свой ключ Groq/OpenRouter — платит провайдеру напрямую</td></tr>
+        <tr><td><b>White-label / OEM</b></td><td class="num">от $999/мес</td><td class="num">от €929/мес</td><td class="num">от 999 ₮/мес</td><td>Корпоративная лицензия, ваш бренд поверх GrandHubAi</td></tr>
+        <tr><td><b>Дополнительный домен агентов</b></td><td class="num">$29 разово</td><td class="num">€27 разово</td><td class="num">29 ₮ разово</td><td>Активация специализированного домена сверх стандартного набора</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="section"><span class="num">03</span>API-ключи: как это работает</h3>
+  <p class="section-lead">Платформа поддерживает два режима оплаты LLM-вычислений.</p>
+
+  <div class="api">
+    <h4>🔑 Два режима ключей</h4>
+    <p>GrandHubAi не «прячет» провайдеров — вы видите, через какой ИИ работаете и сколько он стоит. Контроль над расходами на ИИ — на вашей стороне.</p>
+
+    <div class="opts">
+      <div class="opt">
+        <b>① Платформенный ключ (по умолчанию)</b>
+        <p>На уровнях Серебро / Золото / Платина / Бриллиант доступ к LLM включён в подписку. Все вычисления идут через ключ платформы; вы платите только GrandHubAi. Подходит большинству — никакой регистрации у внешних провайдеров.</p>
+      </div>
+      <div class="opt">
+        <b>② Свой API-ключ (BYO)</b>
+        <p>На любом тарифе можно подключить свой ключ Groq, OpenRouter, Anthropic, Ollama. Платформа берёт только за оркестрацию (−30% от базовой цены тарифа). Подходит тем, у кого уже есть корпоративные ключи или нужны специфичные модели.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:14px"><b>Уровень Новичок — только BYO-ключ.</b> Бесплатный доступ к Аиде и одному агенту, но LLM-вычисления вы оплачиваете сами через своего провайдера (например, бесплатный Groq).</p>
+    <p><b>Безопасность:</b> ключи хранятся в вашем браузере (IndexedDB), при включённом шифровании — AES-256-GCM с master-паролем. Никуда не отправляются, кроме самого провайдера.</p>
+  </div>
+
+  <h3 class="section"><span class="num">04</span>Главное правило платформы</h3>
+  <div class="card">
+    <h4>Аида не подключает ИИ-агентов сама</h4>
+    <p>Это закон GrandHubAi. Аида — модератор первой линии: встречает клиента, уточняет задачу, формулирует бриф. Но <b>сколько и каких агентов привлечь</b> — решает не она, а биллинг-слой по тарифу клиента. Это страхует от двух сценариев: (1) клиент платит за уровень и получает обещанное, не больше и не меньше; (2) Аида не «потратит» лишние токены клиента из «лучших побуждений».</p>
+    <p style="margin-top:10px;color:var(--muted);font-size:13px">Подробнее в файлах <a href="#">TIERS.md</a> и <a href="#">BILLING.md</a> репозитория.</p>
+  </div>
+
+  <h3 class="section"><span class="num">05</span>Часто задаваемые вопросы</h3>
+  <div class="faq">
+    <details>
+      <summary>Можно ли начать бесплатно?</summary>
+      <div class="answer">Да. Уровень Новичок — бесплатно навсегда. Вам нужен только свой API-ключ Groq (тоже бесплатный, выдаётся за минуту на console.groq.com).</div>
+    </details>
+    <details>
+      <summary>Что произойдёт, если кончатся токены на Серебре или Золоте?</summary>
+      <div class="answer">Появится предложение перейти на следующий уровень. Аида продолжит отвечать на простые вопросы (приветствия, уточнения), но не сможет привлекать профильных агентов до сброса лимита (1-го числа месяца) или апгрейда.</div>
+    </details>
+    <details>
+      <summary>Чем Бриллиант отличается от Платины?</summary>
+      <div class="answer">На Платине — 4 агента, фиксированный лимит токенов. На Бриллианте — вы сами выбираете сколько агентов привлечь (хоть 12 — для глубоких исследований), безлимитный пул токенов, выделенный менеджер.</div>
+    </details>
+    <details>
+      <summary>USDT — в какой сети?</summary>
+      <div class="answer">Принимаем TRC-20 (Tron), TON и ERC-20 (Ethereum). После оплаты подписка активируется автоматически по подтверждению транзакции (3 блока подтверждения).</div>
+    </details>
+    <details>
+      <summary>Что такое fair-use на Бриллианте?</summary>
+      <div class="answer">75 млн токенов в месяц — это эквивалент 30 000+ страниц текста. Если вы достигаете этого порога стабильно — мы свяжемся и предложим Enterprise-договор с честным расчётом по объёму.</div>
+    </details>
+    <details>
+      <summary>Можно ли вернуть деньги?</summary>
+      <div class="answer">Да. Возврат в течение 7 дней с момента оплаты, если использовано менее 10% месячной квоты. Заявка — на aslankaa@yandex.ru.</div>
+    </details>
+  </div>
+
+  <h3 class="section" id="contact"><span class="num">06</span>Связаться</h3>
+  <div class="twocol">
+    <div class="card">
+      <h4>Оплата и подписка</h4>
+      <p>📧 <a href="mailto:aslankaa@yandex.ru">aslankaa@yandex.ru</a><br>
+      📞 +7 (969) 795-55-55, +7 (925) 203-77-77<br>
+      🌐 <a href="https://www.aslankaa.com" target="_blank" rel="noopener">aslankaa.com</a></p>
+    </div>
+    <div class="card">
+      <h4>Для бизнеса (White-label, OEM, Enterprise)</h4>
+      <p>Индивидуальные условия для холдингов, агентств и образовательных учреждений. Лицензирование по <a href="LICENSE_COMMERCIAL.md">LICENSE_COMMERCIAL.md</a>. Пишите на email — отвечаем в течение рабочего дня.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>© 2026 Кагиров Абдул-Хаким Ахмадович · GrandHubAi™ · grandhubai.com</div>
+    <div>Версия тарифной сетки: 1.0 (Вариант B «Рынок»). Цены могут пересматриваться раз в квартал с уведомлением.</div>
+  </div>
+
+</div>
+
+<!-- ============ PAYMENT MODAL ============ -->
+<div class="pay-overlay" id="payOverlay" role="dialog" aria-modal="true" aria-labelledby="payTitle">
+  <div class="pay-modal" style="position:relative">
+    <button class="close-x" id="payClose" aria-label="Закрыть">×</button>
+    <h3 id="payTitle">Способ оплаты</h3>
+    <p class="sub" id="paySub">Выберите удобный способ оплаты тарифа.</p>
+
+    <div class="options">
+      <a class="pay-opt" id="payIntl" href="#" target="_blank" rel="noopener">
+        <span class="flag">🌍</span>
+        <span class="body">
+          <b>Международная оплата (NowPayments)</b>
+          <span>Карты USD/EUR · 300+ криптовалют · авто-конверсия в USDT на наш кошелёк. Комиссия 0,5%.</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="pay-opt" id="payRu" href="#" target="_blank" rel="noopener">
+        <span class="flag">🇷🇺</span>
+        <span class="body">
+          <b>Россия (CryptoCloud)</b>
+          <span>Карты МИР / Visa / MasterCard · СБП · крипто. Авто-перевод в USDT на наш кошелёк. Комиссия 1–1,5%.</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <a class="pay-opt" href="mailto:aslankaa@yandex.ru?subject=Оплата%20GrandHubAi">
+        <span class="flag">💼</span>
+        <span class="body">
+          <b>Юр.лицо (счёт + акт)</b>
+          <span>Безналичный расчёт в рублях для ИП/ООО. Документы по запросу. Минимум — годовая подписка.</span>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <div class="pay-note" id="payNote" style="display:none">
+      ⚠️ Платёжный шлюз ещё не активирован администратором. Свяжитесь напрямую: <a href="mailto:aslankaa@yandex.ru" style="color:#fdba74">aslankaa@yandex.ru</a> или +7 (969) 795-55-55.
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ====== ПЛАТЁЖНЫЕ ССЫЛКИ ======
+   * После регистрации в NowPayments / CryptoCloud вставьте сюда URL ваших инвойсов.
+   * Подробная инструкция — в файле PAYMENT_SETUP.md (раздел 3 и 4).
+   *
+   * Структура: TIER → { intl: NowPayments URL, ru: CryptoCloud URL }
+   * Если URL пустой — кнопка остаётся неактивной + показывается сообщение «обратитесь напрямую».
+   */
+  const PAY_LINKS = {
+    platinum: {
+      intl: '', // пример: 'https://nowpayments.io/payment/?iid=XXXXXXX'
+      ru:   '', // пример: 'https://pay.cryptocloud.plus/XXXXXXXX'
+      label: 'Платиновый — $49 / €46 / 49 ₮ в месяц',
+    },
+    diamond: {
+      intl: '',
+      ru:   '',
+      label: 'Бриллиантовый — $199 / €185 / 199 ₮ в месяц',
+    },
+  };
+
+  function openPayModal(tier){
+    const cfg = PAY_LINKS[tier];
+    if(!cfg) return;
+    document.getElementById('paySub').textContent = cfg.label;
+    const intl = document.getElementById('payIntl');
+    const ru   = document.getElementById('payRu');
+    const noActive = !cfg.intl && !cfg.ru;
+
+    intl.href = cfg.intl || '#';
+    ru.href   = cfg.ru   || '#';
+    intl.classList.toggle('pay-disabled', !cfg.intl);
+    ru.classList.toggle('pay-disabled',   !cfg.ru);
+    document.getElementById('payNote').style.display = noActive ? '' : 'none';
+    document.getElementById('payOverlay').classList.add('active');
+  }
+  function closePayModal(){
+    document.getElementById('payOverlay').classList.remove('active');
+  }
+
+  document.querySelectorAll('[data-pay]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); openPayModal(btn.dataset.pay); });
+  });
+  document.getElementById('payClose').addEventListener('click', closePayModal);
+  document.getElementById('payOverlay').addEventListener('click', (e) => {
+    if(e.target.id === 'payOverlay') closePayModal();
+  });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closePayModal(); });
+
+  // Переключатель валюты
+  const PRICE = {
+    USD: { novice:'$0', silver:'$0', gold:'$0', platinum:'$49', diamond:'$199', buy1m:'$4', sym:'$' },
+    EUR: { novice:'€0', silver:'€0', gold:'€0', platinum:'€46', diamond:'€185', buy1m:'€3,7', sym:'€' },
+    USDT:{ novice:'0 ₮', silver:'0 ₮', gold:'0 ₮', platinum:'49 ₮', diamond:'199 ₮', buy1m:'4 ₮', sym:'₮' },
+  };
+  function setCurrency(cur){
+    const p = PRICE[cur] || PRICE.USD;
+    document.querySelector('[data-price-novice]').textContent = p.novice;
+    document.querySelector('[data-price-silver]').textContent = p.silver;
+    document.querySelector('[data-price-gold]').textContent = p.gold;
+    document.querySelector('[data-price-platinum]').textContent = p.platinum;
+    document.querySelector('[data-price-diamond]').textContent = p.diamond;
+    const buy = document.querySelector('[data-buy-1m]'); if(buy) buy.textContent = p.buy1m;
+    document.querySelectorAll('.currency-toggle button').forEach(b => b.classList.toggle('active', b.dataset.cur === cur));
+  }
+  document.querySelectorAll('.currency-toggle button').forEach(b => {
+    b.addEventListener('click', () => setCurrency(b.dataset.cur));
+  });
+</script>
+</body>
+</html>

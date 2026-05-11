@@ -18,6 +18,11 @@
 - 🆓 **Community (AGPL-3.0)** — бесплатно для физлиц и не-коммерческого использования. См. [`LICENSE_COMMUNITY.md`](LICENSE_COMMUNITY.md)
 - 💼 **Commercial** — для бизнеса (закрытые продукты, OEM, SaaS). См. [`LICENSE_COMMERCIAL.md`](LICENSE_COMMERCIAL.md)
 
+**Тарифные планы:**
+- 5 уровней: 🥉 Новичок (free) → 🥈 Серебро → 🥇 Золото → 💎 Платина ($49/мес) → 💠 Бриллиант ($199/мес)
+- Полная сетка: [`TIERS.md`](TIERS.md), [`PRICING.md`](PRICING.md), [`BILLING.md`](BILLING.md)
+- Публичная страница тарифов: [`src/pricing.html`](src/pricing.html) → grandhubai.com/pricing.html
+
 ---
 
 ## 🎯 Что это
@@ -87,16 +92,21 @@ GrandHubAi/
 ├── PROMPT_LIBRARY.md               — каталог 244 агента
 ├── LEGAL_BRIEF.md                  — юридический бриф владельца
 ├── INVESTOR_DECK.md                — pitch для инвесторов
+├── TIERS.md                        — спецификация тарифной сетки и правил оркестрации
+├── PRICING.md                      — цены, доп.позиции, юнит-экономика
+├── BILLING.md                      — биллинг и API-ключи (платформенный + BYO)
+├── PAYMENT_SETUP.md                — настройка приёма платежей (NowPayments + CryptoCloud)
 ├── CHANGELOG.md                    — история версий
 ├── LICENSE_COMMUNITY.md            — AGPL-3.0
 ├── LICENSE_COMMERCIAL.md           — коммерческая лицензия
 │
 ├── src/                            — исходники приложения
 │   ├── index.html                  — основное приложение (single-file PWA)
+│   ├── pricing.html                — публичная страница тарифов (отдельная ссылка)
 │   ├── manifest.json               — PWA-манифест
 │   ├── service-worker.js           — оффлайн-кэш
 │   └── prompts/                    — 31 файл с 244 агентами
-│       ├── coordination.js         — Oracle, QA-Critic
+│       ├── coordination.js         — Oracle, QA-Critic, Аида (модератор с тарифным правилом)
 │       ├── engineering.js          — Машиностроение (12)
 │       ├── transport.js            — Транспортное (10)
 │       ├── aerospace.js            — Аэрокосмос (6)

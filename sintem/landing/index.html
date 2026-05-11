@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0F0F0F">
+<meta name="color-scheme" content="dark">
+
+<title data-i18n="meta.title">SINTEM. Пять помощников для селлера WB и Ozon в Telegram</title>
+<meta name="i18n-title" content="meta.title">
+<meta name="description" data-i18n="meta.desc" content="Карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ и юнит-экономика. Один бот, ₽1 500 в месяц, первый результат за 30 секунд.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" data-i18n="og.title" content="SINTEM. Пять помощников для селлера WB и Ozon">
+<meta property="og:description" data-i18n="og.desc" content="Закрывает за вечер то, на что у вас уходит 12 часов в неделю. Один бот в Telegram, ₽1 500/мес.">
+<meta property="og:image" content="og.svg">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://sintem.ru/">
+<meta property="og:locale" content="ru_RU">
+<link rel="canonical" href="https://sintem.ru/">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" data-i18n="og.title" content="SINTEM. Пять помощников для селлера WB и Ozon">
+<meta name="twitter:description" data-i18n="og.desc" content="Закрывает за вечер то, на что у вас уходит 12 часов в неделю. Один бот в Telegram.">
+<meta name="twitter:image" content="og.svg">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F0F0F'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-family='-apple-system,sans-serif' font-size='34' font-weight='700' fill='%23FFCD3C'%3ES%3C/text%3E%3C/svg%3E">
+
+<style>
+/* critical inline: paint hero before styles.css arrives */
+:root{--bg:#0F0F0F;--fg:#F5F5F5;--muted:#A8A8A8;--accent:#FFCD3C;--accent-ink:#1A1305;--line:#262626;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.hero{padding:64px 0 48px}
+.h1{font-size:clamp(28px,5vw,46px);line-height:1.12;margin:0 0 18px;font-weight:700;letter-spacing:-.01em}
+.lead{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:640px;margin:0 0 28px}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:14px 22px;border-radius:12px;border:1px solid var(--accent)}
+header.site{padding:18px 0;border-bottom:1px solid var(--line)}
+</style>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site" id="top">
+  <div class="wrap site-head">
+    <a class="brand" href="#top" aria-label="SINTEM">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>SINTEM</span>
+    </a>
+    <div class="site-head-right">
+      <nav aria-label="Основная навигация" class="nav">
+        <a href="#agents" data-i18n="nav.agents">Помощники</a>
+        <a href="#how" data-i18n="nav.how">Как это работает</a>
+        <a href="#pricing" data-i18n="nav.pricing">Тарифы</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      </nav>
+
+      <!-- Mobile burger: показывается только на <768px, выдвигает .nav-drawer -->
+      <button type="button" class="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav-drawer" data-burger>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
+
+      <div class="lang-menu" data-lang-menu>
+        <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false" data-i18n-attr="aria-label:nav.lang">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18" stroke="currentColor" stroke-width="1.6" fill="none"/>
+          </svg>
+          <span data-lang-current>RU</span>
+        </button>
+        <div class="lang-pop" role="menu" aria-hidden="true">
+          <button type="button" role="menuitem" data-lang-option="ru"><span class="lang-code">RU</span><span class="lang-name">Русский</span></button>
+          <!-- EN/FR/AR временно скрыты до первых платящих в РФ. Файлы и i18n-ключи сохранены, для возврата раскомментировать.
+          <button type="button" role="menuitem" data-lang-option="en"><span class="lang-code">EN</span><span class="lang-name">English</span></button>
+          <button type="button" role="menuitem" data-lang-option="fr"><span class="lang-code">FR</span><span class="lang-name">Français</span></button>
+          <button type="button" role="menuitem" data-lang-option="ar"><span class="lang-code">AR</span><span class="lang-name">العربية</span></button>
+          -->
+        </div>
+      </div>
+
+      <div class="brand-menu" data-brand-menu>
+        <button type="button" class="brand-btn" aria-haspopup="true" aria-expanded="false" data-i18n-attr="aria-label:nav.brand">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="3" width="8" height="8" rx="2" fill="#FFCD3C"/>
+            <rect x="13" y="3" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <rect x="3" y="13" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor" opacity="0.45"/>
+          </svg>
+          <span class="brand-btn-label" data-i18n="nav.brand">Бренд</span>
+        </button>
+        <div class="brand-pop" role="menu" aria-hidden="true">
+          <a href="style-guide.html" role="menuitem">
+            <span class="bp-ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="8" height="8" rx="2" fill="#FFCD3C"/>
+                <rect x="13" y="3" width="8" height="8" rx="2" fill="#0F0F0F" stroke="#FFCD3C" stroke-width="1.4"/>
+                <rect x="3" y="13" width="8" height="8" rx="2" fill="#A8A8A8"/>
+                <rect x="13" y="13" width="8" height="8" rx="2" fill="#FFCD3C" opacity="0.45"/>
+              </svg>
+            </span>
+            <span class="bp-text">
+              <span class="bp-title" data-i18n="nav.bb.title">Брендбук</span>
+              <span class="bp-sub" data-i18n="nav.bb.sub">Логотип, цвета, шаблоны, интерьер</span>
+            </span>
+          </a>
+          <a href="brand-description.html" role="menuitem">
+            <span class="bp-ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="#FFCD3C" stroke-width="1.6"/>
+                <line x1="6" y1="9" x2="14" y2="9" stroke="#FFCD3C" stroke-width="1.6" stroke-linecap="round"/>
+                <line x1="6" y1="13" x2="18" y2="13" stroke="#FFCD3C" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+                <line x1="6" y1="17" x2="12" y2="17" stroke="#FFCD3C" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>
+              </svg>
+            </span>
+            <span class="bp-text">
+              <span class="bp-title" data-i18n="nav.bd.title">Описание и слоганы</span>
+              <span class="bp-sub" data-i18n="nav.bd.sub">Смыслы знака и 8 вариантов слогана</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav drawer. Виден только когда .nav-drawer[data-open]. На десктопе скрыт через CSS. -->
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Меню навигации" aria-hidden="true" data-nav-drawer>
+  <nav class="nav-drawer-list" aria-label="Мобильная навигация">
+    <a href="#agents" data-nav-close data-i18n="nav.agents">Помощники</a>
+    <a href="#how" data-nav-close data-i18n="nav.how">Как это работает</a>
+    <a href="#pricing" data-nav-close data-i18n="nav.pricing">Тарифы</a>
+    <a href="#faq" data-nav-close data-i18n="nav.faq">FAQ</a>
+    <a href="style-guide.html" data-nav-close data-i18n="foot.bb">Брендбук</a>
+    <a href="brand-description.html" data-nav-close data-i18n="foot.bd">Описание и слоганы</a>
+  </nav>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow" data-i18n="hero.eyebrow">Telegram-бот для WB и Ozon</span>
+      <h1 class="h1" data-i18n="hero.h1">Закрывает за вечер то, на что у вас уходит 12 часов в неделю.</h1>
+      <p class="lead" data-i18n="hero.lead">Карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ и юнит-экономика. Один бот, ₽1 500 в месяц, первый результат за 30 секунд.</p>
+      <div class="cta-row">
+        <a class="cta" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot">
+          <span data-i18n="hero.cta">Открыть бота и попробовать бесплатно</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <span class="cta-note" data-i18n="hero.note">5 запросов на каждого помощника, без карты, без срока годности.</span>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="chat">
+          <div class="msg user">/card https://wildberries.ru/catalog/12345678</div>
+          <div class="msg bot">
+            <strong data-i18n="chat.bot.head">Разобрал. Нашёл 7 точек роста.</strong>
+            <span data-i18n="chat.bot.l1">1. В заголовке нет ключа «осенняя» &mdash; теряете 22% поискового трафика.</span>
+            <span data-i18n="chat.bot.l2">2. Главное фото на 4-й позиции, должно быть 1-е.</span>
+            <span data-i18n="chat.bot.l3">3. В описании 3 канцеляризма, снижают CTR. Переписать?</span>
+          </div>
+          <div class="msg user short" data-i18n="chat.user.go">давай</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agents" class="section">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="agents.h2">Что внутри. Пять помощников</h2>
+      <p class="section-lead" data-i18n="agents.lead">Каждый помощник = одна задача, которую вы сейчас делаете руками. Все пять — в одной подписке, без отдельных оплат и интеграций.</p>
+
+      <div class="grid agents">
+        <article class="card">
+          <div class="card-num">01</div>
+          <h3 data-i18n="a1.h">Карточка-доктор</h3>
+          <p class="card-do" data-i18n="a1.do">Разбирает листинг по 18 параметрам и выдаёт правки в порядке приоритета. Пример работы — в превью наверху страницы.</p>
+          <dl class="ba">
+            <dt data-i18n="ba.before">До</dt><dd data-i18n="a1.b">Платите фрилансеру ₽3 000 за разбор одной карточки, ждёте 2–3 дня.</dd>
+            <dt data-i18n="ba.after">После</dt><dd data-i18n="a1.a">30 секунд, цена в составе тарифа.</dd>
+          </dl>
+        </article>
+
+        <article class="card">
+          <div class="card-num">02</div>
+          <h3 data-i18n="a2.h">Ответ на отзывы</h3>
+          <p class="card-do" data-i18n="a2.do">Пишет ответы в тоне вашего бренда. Негативные — с попыткой удержать клиента и снизить риск возврата.</p>
+          <dl class="ba">
+            <dt data-i18n="ba.before">До</dt><dd data-i18n="a2.b">Сидите вечером, пишете 40 ответов руками, час работы.</dd>
+            <dt data-i18n="ba.after">После</dt><dd data-i18n="a2.a">40 ответов за 8 минут, тон выдержан.</dd>
+          </dl>
+        </article>
+
+        <article class="card">
+          <div class="card-num">03</div>
+          <h3 data-i18n="a3.h">Скаут конкурентов</h3>
+          <p class="card-do" data-i18n="a3.do">Собирает по топ-10 конкурентов в нише: цены, скидки, остатки, рейтинг, частоту обновления карточек.</p>
+          <dl class="ba">
+            <dt data-i18n="ba.before">До</dt><dd data-i18n="a3.b">Раз в неделю руками открываете 10 карточек, сводите в Excel, 2 часа.</dd>
+            <dt data-i18n="ba.after">После</dt><dd data-i18n="a3.a">Раз в день, 20 секунд.</dd>
+          </dl>
+        </article>
+
+        <article class="card">
+          <div class="card-num">04</div>
+          <h3 data-i18n="a4.h">ABC-XYZ-анализ</h3>
+          <p class="card-do" data-i18n="a4.do">По выгрузке продаж раскладывает ассортимент на 9 групп: что приносит выручку, что стабильно, от чего избавляться.</p>
+          <dl class="ba">
+            <dt data-i18n="ba.before">До</dt><dd data-i18n="a4.b">Не делаете вообще или платите аналитику ₽15–25k за разбор.</dd>
+            <dt data-i18n="ba.after">После</dt><dd data-i18n="a4.a">В составе тарифа, занимает 1 минуту.</dd>
+          </dl>
+        </article>
+
+        <article class="card">
+          <div class="card-num">05</div>
+          <h3 data-i18n="a5.h">Юнит-экономика</h3>
+          <p class="card-do" data-i18n="a5.do">Считает чистую прибыль по SKU с учётом комиссий маркетплейса, логистики, хранения, возвратов и налогов.</p>
+          <dl class="ba">
+            <dt data-i18n="ba.before">До</dt><dd data-i18n="a5.b">Считаете в Excel по выходным, ошибаетесь в комиссиях, теряете на возвратах.</dd>
+            <dt data-i18n="ba.after">После</dt><dd data-i18n="a5.a">По каждому SKU за 5 секунд, формулы под актуальные тарифы маркетплейсов.</dd>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="section alt">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="how.h2">Как это работает</h2>
+      <ol class="steps">
+        <li>
+          <div class="step-num">1</div>
+          <h3 data-i18n="how.s1.h">Найдите бота</h3>
+          <p data-i18n="how.s1.p">Откройте <code>@sintem_bot</code> в Telegram и нажмите «Старт».</p>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <h3 data-i18n="how.s2.h">Скиньте материал</h3>
+          <p data-i18n="how.s2.p">Карточку, отзыв или выгрузку продаж — текстом, ссылкой или файлом.</p>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <h3 data-i18n="how.s3.h">Получите план</h3>
+          <p data-i18n="how.s3.p">За 30 секунд. Никаких регистраций, личных кабинетов, паролей.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TODO: после consult с Асланом — рассмотреть тарифную сетку 1990/3900/9900 + годовой план -20% (рекомендация аудитора 11.05.2026, отчёт SINTEM/Экспертиза_Универсальный_промт_2026-05-11.md, раздел E5). Сейчас оставлены текущие 1500/3900/7900 как утверждённые. -->
+  <section id="pricing" class="section">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="price.h2">Тарифы</h2>
+      <p class="section-lead" data-i18n="price.lead">В каждом тарифе все 5 помощников без ограничений по типам. Лимит общий по запросам в месяц. Триал: 5 запросов на каждого помощника бесплатно, без карты, без срока годности.</p>
+
+      <div class="grid pricing">
+        <article class="plan">
+          <h3 data-i18n="p1.h">Старт</h3>
+          <div class="price">₽1&nbsp;500<span data-i18n="price.per">/мес</span></div>
+          <p class="plan-for" data-i18n="p1.for">Один селлер, до 30 SKU, тестирует подход.</p>
+          <ul class="plan-feat">
+            <li data-i18n="p1.f1">200 запросов в месяц</li>
+            <li data-i18n="p1.f2">Все 5 помощников</li>
+            <li data-i18n="p1.f3">Поддержка в Telegram</li>
+          </ul>
+          <a class="cta cta-ghost" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot" data-i18n="p1.cta">Начать со «Старт»</a>
+        </article>
+
+        <article class="plan plan-best" aria-label="Рекомендуемый тариф">
+          <span class="badge" data-i18n="p2.badge">Рекомендуем</span>
+          <h3 data-i18n="p2.h">Рост</h3>
+          <div class="price">₽3&nbsp;900<span data-i18n="price.per">/мес</span></div>
+          <p class="plan-for" data-i18n="p2.for">Селлер с 30–150 SKU, 1–2 категории, активный рост.</p>
+          <ul class="plan-feat">
+            <li data-i18n="p2.f1">800 запросов в месяц</li>
+            <li data-i18n="p2.f2">Все 5 помощников без ограничений</li>
+            <li data-i18n="p2.f3">Обучение тона бренда (<code>/style</code>)</li>
+            <li data-i18n="p2.f4">Приоритетная поддержка</li>
+          </ul>
+          <a class="cta" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot" data-i18n="p2.cta">Взять «Рост»</a>
+        </article>
+
+        <article class="plan">
+          <h3 data-i18n="p3.h">Команда</h3>
+          <div class="price">₽7&nbsp;900<span data-i18n="price.per">/мес</span></div>
+          <p class="plan-for" data-i18n="p3.for">3–5 человек в команде, до 500 SKU, две площадки.</p>
+          <ul class="plan-feat">
+            <li data-i18n="p3.f1">2500 запросов в месяц</li>
+            <li data-i18n="p3.f2">До 5 пользователей</li>
+            <li data-i18n="p3.f3">Раздельные истории по каждому</li>
+          </ul>
+          <a class="cta cta-ghost" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot" data-i18n="p3.cta">Взять «Команда»</a>
+        </article>
+      </div>
+
+      <p class="pricing-note" data-i18n="price.note">«Рост» — основной тариф, на нём строится подавляющая часть выручки. «Старт» — для тех, кто пока не уверен. «Команда» — если действительно работаете не один.</p>
+    </div>
+  </section>
+
+  <section id="not-for" class="section alt">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="nf.h2">Кому не подходит</h2>
+      <ul class="not-list">
+        <li data-i18n="nf.l1">Если у вас оборот ниже ₽300k в месяц и 10–15 SKU — вам пока хватит ручного режима. Возвращайтесь, когда товаров станет 30+.</li>
+        <li data-i18n="nf.l2">Если вы продаёте только на внутреннем складе FBS и не используете FBO ни на WB, ни на Ozon — расчёты юнитки и логистики будут не до конца точными.</li>
+        <li data-i18n="nf.l3">Если вам нужен индивидуальный CRM-контур, выгрузки в 1С и API на старте — это не про SINTEM. Мы простой Telegram-бот, не корпоративный софт.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="faq" class="section alt">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="faq.h2">Частые вопросы</h2>
+      <div class="faq">
+        <details>
+          <summary data-i18n="faq.q1">Безопасно ли это? Я скидываю ему свои продажи и артикулы.</summary>
+          <p data-i18n="faq.a1">Бот не публикует ваши данные и не передаёт третьим лицам. Выгрузки и артикулы используются только для ответа на ваш конкретный запрос. Ни конкуренты, ни другие пользователи бота их не увидят.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q2">Что происходит с моими данными после ответа?</summary>
+          <p data-i18n="faq.a2">Тексты ваших запросов и ответы бота хранятся 90 дней — чтобы вы могли вернуться к истории и для технической диагностики. Через 90 дней удаляются автоматически. Удалить раньше можно командой <code>/forget</code>.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q3">Что если бот ошибётся в расчётах или порекомендует ерунду?</summary>
+          <p data-i18n="faq.a3">Бот — помощник, не финальный решающий. Все расчёты юнитки и рекомендации по цене показываем с разбивкой по статьям, чтобы вы могли проверить логику. Если видите ошибку — напишите в поддержку, разберём конкретный случай и поправим. Формулы открытые, по запросу <code>/math</code> покажем расчёт.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q4">Можно ли отменить подписку?</summary>
+          <p data-i18n="faq.a4">Да, в любой момент. Отмена в один клик через команду <code>/cancel</code> в боте. Деньги за оставшийся оплаченный период не сгорают — пользуетесь до конца месяца. Никаких автоматических списаний после отмены.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q5">Есть ли API для встраивания в свои процессы?</summary>
+          <p data-i18n="faq.a5">На старте API нет, бот только в Telegram. Если вам нужен API — напишите в <code>@sintem_support</code>, добавим в очередь. Когда соберём 50 заявок — выпустим. Раньше делать смысла нет.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q6">Работает ли с Ozon?</summary>
+          <p data-i18n="faq.a6">Да. Все 5 помощников работают и с WB, и с Ozon. Юнит-экономика учитывает разные комиссионные сетки обеих площадок. Скаут конкурентов работает по обеим выдачам.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q7">Можно ли обучить бота под мой бренд и тон?</summary>
+          <p data-i18n="faq.a7">Да, для помощника «Ответ на отзывы». Командой <code>/style</code> один раз присылаете 5–10 примеров своих ответов клиентам, бот запоминает голос бренда и дальше пишет в нём. Перенастроить можно когда угодно.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q8">Какая поддержка?</summary>
+          <p data-i18n="faq.a8">Поддержка в Telegram, <code>@sintem_support</code>. Время ответа в рабочие дни — до 4 часов. Сложные кейсы (баг в расчётах, спорный ответ помощника) разбирает лично основатель.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="final-cta" class="section final">
+    <div class="wrap">
+      <h2 class="h2" data-i18n="final.h2">Хватит сидеть с отзывами по вечерам и считать юнитку в Excel по выходным.</h2>
+      <p class="final-lead" data-i18n="final.lead">Откройте бота, попробуйте 5 запросов на каждого помощника бесплатно, и если за вечер сэкономите час — оплатите тариф. Если нет — закроете и забудете, никто не списывает деньги без вашего действия.</p>
+      <div class="cta-row">
+        <a class="cta cta-lg" href="https://t.me/sintem_bot" data-deeplink="tg://resolve?domain=sintem_bot">
+          <span data-i18n="final.cta">Открыть @sintem_bot в Telegram</span>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <span class="cta-note" data-i18n="hero.note">5 запросов на каждого помощника, без карты, без срока годности.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>SINTEM</span>
+      </div>
+      <p class="muted" data-i18n="foot.tagline">Telegram-бот для селлеров WB и Ozon.</p>
+    </div>
+    <nav aria-label="Документы">
+      <a href="terms.html" data-i18n="foot.terms">Оферта</a>
+      <a href="privacy.html" data-i18n="foot.privacy">Политика данных</a>
+      <a href="style-guide.html" data-i18n="foot.bb">Брендбук</a>
+      <a href="brand-description.html" data-i18n="foot.bd">Описание и слоганы</a>
+      <a href="https://t.me/sintem_support" data-i18n="foot.support">Поддержка</a>
+    </nav>
+    <p class="muted small" data-i18n="foot.copy">© 2026 SINTEM. Реквизиты — в оферте.</p>
+  </div>
+</footer>
+
+<!-- FAQPage JSON-LD: rich-results in search -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Безопасно ли это?","acceptedAnswer":{"@type":"Answer","text":"Бот не публикует ваши данные и не передаёт третьим лицам. Выгрузки и артикулы используются только для ответа на ваш конкретный запрос."}},
+    {"@type":"Question","name":"Что происходит с моими данными после ответа?","acceptedAnswer":{"@type":"Answer","text":"Хранятся 90 дней, потом удаляются автоматически. Раньше — командой /forget."}},
+    {"@type":"Question","name":"Можно ли отменить подписку?","acceptedAnswer":{"@type":"Answer","text":"Да, в один клик через /cancel. Деньги за оставшийся период не сгорают."}},
+    {"@type":"Question","name":"Работает ли с Ozon?","acceptedAnswer":{"@type":"Answer","text":"Да. Все 5 помощников работают и с WB, и с Ozon."}}
+  ]
+}
+</script>
+
+<script src="i18n.js"></script>
+<script>
+(function(){
+  // Brand dropdown
+  function bindMenu(menu){
+    if(!menu) return;
+    var btn = menu.querySelector('button[aria-haspopup]');
+    var pop = menu.querySelector('[role="menu"]');
+    function setOpen(open){
+      if(open){
+        menu.setAttribute('data-open','');
+        btn.setAttribute('aria-expanded','true');
+        pop.setAttribute('aria-hidden','false');
+      } else {
+        menu.removeAttribute('data-open');
+        btn.setAttribute('aria-expanded','false');
+        pop.setAttribute('aria-hidden','true');
+      }
+    }
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      setOpen(!menu.hasAttribute('data-open'));
+    });
+    document.addEventListener('click', function(e){
+      if(!menu.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') setOpen(false);
+    });
+    return setOpen;
+  }
+  bindMenu(document.querySelector('[data-brand-menu]'));
+  var langSet = bindMenu(document.querySelector('[data-lang-menu]'));
+
+  // Burger / mobile nav drawer
+  var burger  = document.querySelector('[data-burger]');
+  var drawer  = document.querySelector('[data-nav-drawer]');
+  function setDrawer(open){
+    if(!burger || !drawer) return;
+    if(open){
+      drawer.setAttribute('data-open','');
+      drawer.setAttribute('aria-hidden','false');
+      burger.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    } else {
+      drawer.removeAttribute('data-open');
+      drawer.setAttribute('aria-hidden','true');
+      burger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+  }
+  if(burger){
+    burger.addEventListener('click', function(){
+      setDrawer(!drawer.hasAttribute('data-open'));
+    });
+  }
+  if(drawer){
+    drawer.querySelectorAll('[data-nav-close]').forEach(function(a){
+      a.addEventListener('click', function(){ setDrawer(false); });
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') setDrawer(false);
+  });
+
+  // Language switching
+  document.querySelectorAll('[data-lang-option]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var lang = b.getAttribute('data-lang-option');
+      window.SINTEM_I18N.apply(lang);
+      if(langSet) langSet(false);
+    });
+  });
+
+  // Telegram deeplink: try app first, fallback to web
+  document.querySelectorAll('[data-deeplink]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var deep = a.getAttribute('data-deeplink');
+      var web  = a.getAttribute('href');
+      if(!deep || !web) return;
+      // On desktops without Telegram installed, the tg:// will fail silently
+      // Set a short timer that opens the web fallback if app didn't take focus
+      e.preventDefault();
+      var didLeave = false;
+      var onBlur = function(){ didLeave = true; };
+      window.addEventListener('blur', onBlur, {once:true});
+      window.location.href = deep;
+      window.setTimeout(function(){
+        window.removeEventListener('blur', onBlur);
+        if(!didLeave) window.location.href = web;
+      }, 500);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

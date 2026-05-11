@@ -176,6 +176,11 @@ body.reduced-motion *,body.reduced-motion *::before,body.reduced-motion *::after
 .led{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);
   margin-right:6px;box-shadow:0 0 8px var(--success);animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn.recording{
+  background:var(--danger,#ef4444)!important;color:#fff!important;
+  border-color:var(--danger,#ef4444)!important;
+  animation:pulse 1s infinite;
+}
 
 /* CONTROL BAR */
 .control-bar{
@@ -279,6 +284,16 @@ details.cat summary:hover{background:var(--bg-card-hover)}
   margin:6px 0;overflow-x:auto;font-size:.8rem;font-family:'Cascadia Code','Fira Code',monospace;
 }
 .message code{background:rgba(0,0,0,.2);padding:1px 6px;border-radius:4px;font-family:'Cascadia Code','Fira Code',monospace;font-size:.85em}
+.agent-disclaimer{
+  display:block;margin-top:10px;padding-top:8px;
+  border-top:1px solid rgba(255,255,255,.08);
+  font-size:.68rem;line-height:1.4;color:var(--text-muted);
+  font-style:italic;opacity:.75;letter-spacing:.1px;
+}
+.agent-disclaimer::before{content:'ⓘ ';opacity:.9}
+@media print{
+  .agent-disclaimer{color:#555;border-top-color:#ccc;opacity:1}
+}
 
 .chat-input-area{
   padding:14px 16px;border-top:1px solid var(--border);
@@ -511,6 +526,8 @@ body.reduced-motion .agent-used-badge{animation:none}
     </div>
     <div class="hero-badges">
       <span class="badge live"><span class="led" aria-hidden="true"></span><span id="providerStatus">Не настроено</span></span>
+      <span class="badge gold" id="tierBadge" title="Текущий тариф · клик откроет страницу тарифов" style="cursor:pointer">🥉 Новичок · 1 агент</span>
+      <a class="badge gold" href="pricing.html" target="_blank" rel="noopener" style="text-decoration:none" title="Открыть страницу тарифов в новой вкладке">💰 Тарифы</a>
       <span class="badge gold">🚀 Open Source · AGPL-3.0</span>
     </div>
   </header>
@@ -546,7 +563,7 @@ body.reduced-motion .agent-used-badge{animation:none}
       <div id="agentsTree" role="tree">
         <div id="agentsLoadingState" style="padding:30px 10px;text-align:center;color:var(--text-muted);font-size:.85rem">
           <div style="font-size:2rem;margin-bottom:10px;animation:pulse 1.5s infinite">🤖</div>
-          Загрузка 244 агентов...<br>
+          Загрузка 251 агента...<br>
           <span style="font-size:.75rem">(может занять 3-10 секунд при первом открытии)</span>
         </div>
       </div>
@@ -577,8 +594,9 @@ body.reduced-motion .agent-used-badge{animation:none}
           <div class="message agent">
             <strong>Аида 💼</strong>
             Здравствуйте! Я — Аида, модератор GrandHubAi.<br>
-            Опишите задачу или вопрос — я отвечу сама на простые, или привлеку команду специалистов из библиотеки на 245 экспертов для сложных.<br><br>
+            Опишите задачу или вопрос — я отвечу сама на простые, или привлеку команду специалистов из библиотеки на 251 эксперта для сложных.<br><br>
             ⚠️ Перед началом работы: нажмите ⚙️ и введите API-ключ Groq (бесплатный, 2 минуты регистрации).
+            <div class="agent-disclaimer">Информационный ассистент GrandHubAi. Образовательная информация, не заменяет профильного специалиста.</div>
           </div>
         </div>
         <div id="attachmentsBar" class="attachments-bar" style="display:none"></div>
@@ -595,7 +613,7 @@ body.reduced-motion .agent-used-badge{animation:none}
 
   <footer class="footer">
     <div>© 2026 Кагиров Абдул-Хаким Ахмадович. Все права защищены.</div>
-    <div>GrandHubAi · v1.5.0 · Лицензия AGPL-3.0 (Community) / Commercial</div>
+    <div>GrandHubAi · v1.6.1 · Лицензия AGPL-3.0 (Community) / Commercial</div>
     <div>📧 <a href="mailto:aslankaa@yandex.ru">aslankaa@yandex.ru</a> · 🌐 <a href="https://www.aslankaa.com" target="_blank" rel="noopener">aslankaa.com</a></div>
   </footer>
 </div>
@@ -608,6 +626,33 @@ body.reduced-motion .agent-used-badge{animation:none}
       <button class="close-x" data-close-modal="settingsModal" aria-label="Закрыть">×</button>
     </div>
     <div class="modal-body">
+
+      <div class="section-title">Тарифный план клиента</div>
+      <div class="form-row">
+        <label for="tierSelect">Уровень доступа:</label>
+        <select id="tierSelect" class="input">
+          <option value="novice">🥉 Новичок — Аида + 1 агент · бесплатно навсегда</option>
+          <option value="silver">🥈 Серебряный — Аида + 2 агента · 1M токенов/мес</option>
+          <option value="gold">🥇 Золотой — Аида + 3 агента · 5M токенов/мес</option>
+          <option value="platinum">💎 Платиновый — Аида + 4 агента · $49/мес · 15M токенов</option>
+          <option value="diamond">💠 Бриллиантовый — клиент сам выбирает число агентов · $199/мес · безлимит</option>
+        </select>
+        <div class="form-hint">
+          Подробное сравнение и оплата на странице <a href="pricing.html" target="_blank" rel="noopener">💰 Тарифы</a>.
+          Аида НЕ может самовольно подключать больше агентов чем разрешено тарифом — это закон платформы.
+        </div>
+      </div>
+      <div class="form-row" id="diamondAgentsRow" style="display:none">
+        <label for="diamondAgentsInput">Бриллиант: желаемое число агентов на задачу (1–30):</label>
+        <input type="number" id="diamondAgentsInput" class="input" min="1" max="30" value="5">
+        <div class="form-hint">На уровне Бриллиант вы сами решаете, сколько профильных агентов привлечь. Аида исполняет ваш выбор.</div>
+      </div>
+      <div class="form-row">
+        <div class="form-hint" id="usageHint" style="background:var(--surface-2,#1c232d);border-radius:8px;padding:10px 12px;line-height:1.55">
+          Использовано в этом месяце: <b id="usageMonthVal">0</b> токенов из <b id="usageMonthMax">—</b><br>
+          Использовано сегодня: <b id="usageDayVal">0</b> токенов из <b id="usageDayMax">—</b>
+        </div>
+      </div>
 
       <div class="section-title">Провайдер ИИ</div>
       <div class="form-row">
@@ -818,7 +863,16 @@ python -m http.server 8080</pre>
 </div>
 
 <!-- AGENT REGISTRY: bundled (один HTTP-запрос вместо 31, defer = параллельная загрузка) -->
-<script>window.AGENTS = window.AGENTS || {}; window.AGENTS_BY_DOMAIN = window.AGENTS_BY_DOMAIN || {};</script>
+<script>
+window.AGENTS = window.AGENTS || {};
+/* SINTEM week-1 wedge — список доменов, разрешённых для запуска Telegram-бота продавцов
+ * WB/Ozon. В HTML-приложении (этот файл) НЕ применяется как enforcement: пользователи
+ * с собственным API-ключом видят все домены. Константа предназначена для backend-фильтра
+ * в Cloudflare Workers (см. sprint/week3_backend/), который будет проверять каждый
+ * запрос бота на домен агента и отклонять с медицины/права/инвестиций до прохождения
+ * 30-дневного чекпойнта. Изменения тут — без перезапуска backend'а — не влияют на бот. */
+window.SINTEM_WEEK1_DOMAINS = ['Бизнес и финансы', 'Маркетплейсы (WB / Ozon)', 'Координация'];
+</script>
 <script src="prompts/_all.js" defer></script>
 
 <script>
@@ -829,7 +883,7 @@ python -m http.server 8080</pre>
  * ============================================================ */
 
 const APP = {
-  version: '1.5.0',
+  version: '1.6.1',
   copyright: '© 2026 Кагиров Абдул-Хаким Ахмадович',
   storageKey: 'grandhubai_v1',
 };
@@ -889,6 +943,59 @@ function extractJsonObject(s){
   throw new Error('Незакрытый JSON в ответе');
 }
 
+/* ====== TIERS (тарифная сетка — Вариант B "Рынок") ======
+ * Источник истины — TIERS.md и PRICING.md.
+ * Аида и orchestrate() уважают maxAgents строго по этому правилу.
+ * При работе на BYO-ключе клиента (provider != 'platform') токен-лимиты
+ * не применяются (платит клиент своему провайдеру), но maxAgents действует ВСЕГДА.
+ */
+const TIERS = {
+  novice: {
+    id: 'novice', name: 'Новичок', emoji: '🥉',
+    maxAgents: 1, monthlyTokens: 0, dailyTokens: 100_000,
+    paid: false, paywall: 'free_forever',
+    priceUSD: 0, priceEUR: 0, priceUSDT: 0,
+    description: 'Аида + 1 профильный агент. Бесплатно навсегда. Жёсткий дневной лимит.',
+  },
+  silver: {
+    id: 'silver', name: 'Серебряный', emoji: '🥈',
+    maxAgents: 2, monthlyTokens: 1_000_000, dailyTokens: 0,
+    paid: false, paywall: 'soft_after_quota',
+    priceUSD: 0, priceEUR: 0, priceUSDT: 0,
+    description: 'Аида + 2 агента. Условно-бесплатно: 1M токенов/мес. Кончились → апгрейд.',
+  },
+  gold: {
+    id: 'gold', name: 'Золотой', emoji: '🥇',
+    maxAgents: 3, monthlyTokens: 5_000_000, dailyTokens: 0,
+    paid: false, paywall: 'soft_after_quota',
+    priceUSD: 0, priceEUR: 0, priceUSDT: 0,
+    description: 'Аида + 3 агента. Условно-бесплатно: 5M токенов/мес. Приоритет над Серебром.',
+  },
+  platinum: {
+    id: 'platinum', name: 'Платиновый', emoji: '💎',
+    maxAgents: 4, monthlyTokens: 15_000_000, dailyTokens: 0,
+    paid: true, paywall: 'paid_required',
+    priceUSD: 49, priceEUR: 46, priceUSDT: 49,
+    description: 'Аида + 4 агента. Только платно. 15M токенов/мес + докупка по $4/1M. SLA.',
+  },
+  diamond: {
+    id: 'diamond', name: 'Бриллиантовый', emoji: '💠',
+    maxAgents: Infinity, monthlyTokens: Infinity, dailyTokens: 0,
+    paid: true, paywall: 'paid_required',
+    priceUSD: 199, priceEUR: 185, priceUSDT: 199,
+    description: 'Аида + любое число агентов на выбор клиента. Безлимитные токены (fair-use 75M).',
+  },
+};
+const TIER_ORDER = ['novice','silver','gold','platinum','diamond'];
+
+/** Грубая оценка токенов: ~4 символа на токен (UTF-8 кириллица — ~3) */
+function estimateTokens(text){
+  if(!text) return 0;
+  return Math.ceil(String(text).length / 3.5);
+}
+function nextTier(id){ const i = TIER_ORDER.indexOf(id); return i>=0 && i<TIER_ORDER.length-1 ? TIERS[TIER_ORDER[i+1]] : null; }
+function getTier(id){ return TIERS[id] || TIERS.novice; }
+
 /* ====== STATE ====== */
 const state = {
   settings: {
@@ -905,6 +1012,14 @@ const state = {
     encryptKey: false,       // шифровать ли API-ключ master-паролем
     useConcierge: true,      // первой реагирует модератор Аида (можно отключить)
     domainFilter: '',
+    tier: 'novice',          // текущий тариф клиента (см. TIERS). Без backend — выставляется вручную в настройках
+    diamondRequestedAgents: 5, // на Бриллианте — желаемое число агентов от клиента
+  },
+  usage: {
+    monthKey: '',            // 'YYYY-MM' — для месячного сброса
+    dayKey: '',              // 'YYYY-MM-DD' — для дневного сброса
+    monthTokens: 0,
+    dayTokens: 0,
   },
   usedAgentsInSession: new Set(),  // ID агентов которые отвечали в этой сессии
   encryptedKey: null,        // зашифрованная обёртка { iv, salt, ct } или null
@@ -913,6 +1028,43 @@ const state = {
   inflight: null,
   attachments: [],          // [{name, size, type, content, isImage}]
 };
+
+/* ====== TIER GUARDS ====== */
+function todayKey(){ const d = new Date(); return d.toISOString().slice(0,10); }
+function monthKey(){ return todayKey().slice(0,7); }
+function rolloverUsage(){
+  const mk = monthKey(), dk = todayKey();
+  if(state.usage.monthKey !== mk){ state.usage.monthKey = mk; state.usage.monthTokens = 0; }
+  if(state.usage.dayKey !== dk){ state.usage.dayKey = dk; state.usage.dayTokens = 0; }
+}
+function chargeTokens(n){
+  rolloverUsage();
+  state.usage.monthTokens += n;
+  state.usage.dayTokens += n;
+  persistState();
+  updateTierBadge();
+}
+/** Проверка квоты ПЕРЕД новым запросом. Возвращает {ok, reason, suggestUpgrade?}. */
+function checkQuota(){
+  rolloverUsage();
+  const t = getTier(state.settings.tier);
+  if(t.dailyTokens > 0 && state.usage.dayTokens >= t.dailyTokens){
+    return { ok: false, reason: `Дневной лимит ${t.dailyTokens.toLocaleString()} токенов исчерпан. Сброс — в 00:00 UTC.`, suggestUpgrade: nextTier(t.id) };
+  }
+  if(isFinite(t.monthlyTokens) && t.monthlyTokens > 0 && state.usage.monthTokens >= t.monthlyTokens){
+    return { ok: false, reason: `Месячный лимит ${t.monthlyTokens.toLocaleString()} токенов исчерпан. Сброс — 1-го числа.`, suggestUpgrade: nextTier(t.id) };
+  }
+  return { ok: true };
+}
+/** Возвращает разрешённое число профильных агентов на задачу для текущего тарифа. */
+function allowedAgentCount(){
+  const t = getTier(state.settings.tier);
+  if(t.id === 'diamond'){
+    const n = parseInt(state.settings.diamondRequestedAgents, 10);
+    return (isNaN(n) || n < 1) ? 5 : Math.min(n, 30); // защита от аномальных значений
+  }
+  return t.maxAgents;
+}
 
 const MAX_ATTACHMENT_SIZE = 5 * 1024 * 1024;       // 5 МБ на один файл
 const MAX_ATTACHMENTS_TOTAL = 20 * 1024 * 1024;     // 20 МБ суммарно
@@ -926,7 +1078,6 @@ const THEME_LABELS = {
   contrast:'⚡ Высокий контраст', solarized:'🌊 Solarized', nord:'❄️ Nord',
   dracula:'🦇 Dracula', auto:'🌗 Авто'
 };
-const BEIGE_LABELS = THEME_LABELS; // alias for theme button
 
 /* ====== INDEXED DB STORAGE ====== */
 const DB = (() => {
@@ -995,6 +1146,7 @@ async function persistState(){
       ? Array.from(state.usedAgentsInSession)
       : (Array.isArray(state.usedAgentsInSession) ? state.usedAgentsInSession : []);
     await DB.set('usedAgentsInSession', usedArr);
+    await DB.set('usage', state.usage);
   } catch(e){ console.warn('persistState failed:', e); }
 }
 
@@ -1007,6 +1159,9 @@ async function loadState(){
     state.activityLogs = (await DB.get('activityLogs')) || [];
     const usedArr = (await DB.get('usedAgentsInSession')) || [];
     state.usedAgentsInSession = new Set(Array.isArray(usedArr) ? usedArr : []);
+    const us = await DB.get('usage');
+    if(us) Object.assign(state.usage, us);
+    rolloverUsage();
   } catch(e){ console.warn('loadState failed:', e); }
 }
 
@@ -1108,7 +1263,7 @@ const PROVIDERS = {
     keyFormat: 'gsk_...',
     keyPrefix: 'gsk_',
     keyHelp: 'Регистрация: console.groq.com → Settings → Create API key',
-    defaultModels: ['llama-3.3-70b-versatile','llama-3.1-8b-instant','deepseek-r1-distill-llama-70b','mixtral-8x7b-32768','gemma2-9b-it'],
+    defaultModels: ['llama-3.3-70b-versatile','llama-3.1-8b-instant','deepseek-r1-distill-llama-70b','qwen-3-72b','gemma2-9b-it'],
     requestStyle: 'openai',
   },
   openrouter: {
@@ -1140,11 +1295,14 @@ const PROVIDERS = {
   },
 };
 
-/** Универсальный вызов LLM через выбранный провайдер. Поддерживает streaming. */
+/** Универсальный вызов LLM через выбранный провайдер. Поддерживает streaming.
+ * Учитывает токены в state.usage по тарифу клиента (приближённо: длина prompt+ответ / 3.5). */
 async function callLLM({ messages, model, temperature = 0.5, signal, onToken }){
   const s = state.settings;
   const prov = PROVIDERS[s.provider];
   if(!prov) throw new Error('Провайдер не сконфигурирован');
+  // Подсчёт входных токенов
+  const inTokens = messages.reduce((acc, m) => acc + estimateTokens(m.content), 0);
   // Endpoint: пользовательский только если он подходит к выбранному провайдеру.
   // Иначе используем endpointDefault — это защищает от ситуации «остался endpoint от предыдущего провайдера».
   let endpoint = prov.endpointDefault;
@@ -1160,10 +1318,15 @@ async function callLLM({ messages, model, temperature = 0.5, signal, onToken }){
   const useModel = model || s.defaultModel || prov.defaultModels[0];
   const stream = !!(s.streaming && onToken);
 
+  let result;
   if(prov.requestStyle === 'anthropic'){
-    return callAnthropic({ endpoint, apiKey: s.apiKey, messages, model: useModel, temperature, stream, signal, onToken });
+    result = await callAnthropic({ endpoint, apiKey: s.apiKey, messages, model: useModel, temperature, stream, signal, onToken });
+  } else {
+    result = await callOpenAICompat({ endpoint, apiKey: s.apiKey, messages, model: useModel, temperature, stream, signal, onToken });
   }
-  return callOpenAICompat({ endpoint, apiKey: s.apiKey, messages, model: useModel, temperature, stream, signal, onToken });
+  // Учёт токенов в квоту тарифа (приближённо)
+  chargeTokens(inTokens + estimateTokens(result));
+  return result;
 }
 
 async function callOpenAICompat({ endpoint, apiKey, messages, model, temperature, stream, signal, onToken }){
@@ -1354,7 +1517,22 @@ async function callConcierge(task, signal){
 
 async function orchestrate(task, signal){
   const s = state.settings;
-  const N = parseInt(s.orchestratorScale, 10) || 3;
+
+  // === ТАРИФНЫЕ ОГРАНИЧЕНИЯ ===
+  // 1. Проверка квоты токенов
+  const q = checkQuota();
+  if(!q.ok){
+    const upMsg = q.suggestUpgrade ? ` Перейдите на тариф ${q.suggestUpgrade.emoji} ${q.suggestUpgrade.name} для продолжения.` : '';
+    throw new Error(`⛔ ${q.reason}${upMsg}`);
+  }
+  // 2. Жёсткое ограничение количества агентов по тарифу (НЕ Аида решает — биллинг-слой)
+  const tier = getTier(s.tier);
+  const tierMax = allowedAgentCount();
+  const userN = parseInt(s.orchestratorScale, 10) || 3;
+  const N = Math.min(userN, tierMax);
+  if(N < userN){
+    addActivity('Биллинг', `⚠️ Тариф ${tier.emoji} ${tier.name}: команда обрезана до ${N} агента(ов). Запрошено: ${userN}. Апгрейд для большего числа специалистов.`, 'system');
+  }
 
   if(!s.apiKey && s.provider !== 'ollama'){
     throw new Error('API-ключ не задан. Откройте ⚙️ настройки.');
@@ -1499,6 +1677,8 @@ async function callLLMStreaming({ messages, temperature, signal, senderName, mod
 }
 
 /* ====== UI: MESSAGES ====== */
+const AGENT_DISCLAIMER_HTML = '<div class="agent-disclaimer">Информационный ассистент GrandHubAi. Образовательная информация, не заменяет профильного специалиста.</div>';
+
 function createMessageElement(role, sender){
   const container = $('chatMessages');
   const div = document.createElement('div');
@@ -1508,7 +1688,7 @@ function createMessageElement(role, sender){
   } else if(role === 'system'){
     div.innerHTML = `<span class="message-content"></span>`;
   } else {
-    div.innerHTML = `<strong>${escapeHtml(sender || 'Oracle')}</strong><span class="message-content"></span>`;
+    div.innerHTML = `<strong>${escapeHtml(sender || 'Oracle')}</strong><span class="message-content"></span>${AGENT_DISCLAIMER_HTML}`;
   }
   const contentEl = div.querySelector('.message-content');
   container.appendChild(div);
@@ -1538,7 +1718,7 @@ function restoreChat(){
   c.innerHTML = '';
   if(!state.conversation.length){
     const greeter = state.settings.useConcierge ? 'Аида 💼' : 'Oracle 🧠';
-    c.innerHTML = `<div class="message agent"><strong>${greeter}</strong>Сессия восстановлена. Готова к работе.</div>`;
+    c.innerHTML = `<div class="message agent"><strong>${greeter}</strong>Сессия восстановлена. Готова к работе.${AGENT_DISCLAIMER_HTML}</div>`;
     return;
   }
   for(const m of state.conversation){
@@ -1550,7 +1730,7 @@ function restoreChat(){
     } else {
       const d = document.createElement('div');
       d.className = 'message agent';
-      d.innerHTML = `<strong>${escapeHtml(m.sender || 'Agent')}</strong>${renderMd(m.text)}`;
+      d.innerHTML = `<strong>${escapeHtml(m.sender || 'Agent')}</strong>${renderMd(m.text)}${AGENT_DISCLAIMER_HTML}`;
       c.appendChild(d);
     }
   }
@@ -1704,16 +1884,38 @@ function hideModal(id){ $(id).classList.remove('active'); }
 function updateCurrentAgentBadge(){
   const badge = $('currentAgentBadge');
   if(!badge) return;
+  const tierMax = allowedAgentCount();
   if(activeDirectAgent && $('useAgentBtn').dataset.armed === '1'){
     const a = window.AGENTS[activeDirectAgent];
     badge.textContent = a ? `🎯 ${a.name}` : 'Прямой вызов';
   } else if(state.settings.useConcierge){
-    const N = parseInt(state.settings.orchestratorScale, 10) || 3;
+    const userN = parseInt(state.settings.orchestratorScale, 10) || 3;
+    const N = Math.min(userN, tierMax);
     badge.textContent = N === 1 ? 'Аида 💼 + Oracle' : `Аида 💼 + команда (${N})`;
   } else {
-    const N = parseInt(state.settings.orchestratorScale, 10) || 3;
+    const userN = parseInt(state.settings.orchestratorScale, 10) || 3;
+    const N = Math.min(userN, tierMax);
     badge.textContent = N === 1 ? 'Oracle (прямой)' : `Oracle + команда из ${N}`;
   }
+}
+
+/** Обновляет бейдж тарифа в шапке + цифры использования в настройках. */
+function updateTierBadge(){
+  const t = getTier(state.settings.tier);
+  const max = allowedAgentCount();
+  const badge = document.getElementById('tierBadge');
+  if(badge){
+    const agentsLabel = (t.id === 'diamond') ? `выбор клиента: ${max}` : `${max} агент(ов)`;
+    badge.textContent = `${t.emoji} ${t.name} · ${agentsLabel}`;
+    badge.title = t.description;
+  }
+  // Поля в настройках (если модал открыт)
+  rolloverUsage();
+  const fmt = n => isFinite(n) ? n.toLocaleString('ru-RU') : '∞';
+  const mv = document.getElementById('usageMonthVal'); if(mv) mv.textContent = fmt(state.usage.monthTokens);
+  const mm = document.getElementById('usageMonthMax'); if(mm) mm.textContent = t.monthlyTokens > 0 ? fmt(t.monthlyTokens) : '— (по дневному лимиту)';
+  const dv = document.getElementById('usageDayVal');   if(dv) dv.textContent = fmt(state.usage.dayTokens);
+  const dm = document.getElementById('usageDayMax');   if(dm) dm.textContent = t.dailyTokens > 0 ? fmt(t.dailyTokens) : '— (без дневного лимита)';
 }
 
 /* ====== EXPORT ====== */
@@ -1887,7 +2089,7 @@ function buildTaskWithAttachments(task){
     }
   }
   if(imageFiles.length){
-    text += `\n\n— Изображения (vision-API будет в v1.3) —\nПрикреплены: ${imageFiles.map(f => f.name).join(', ')}.\n`
+    text += `\n\n— Изображения (vision-API в roadmap) —\nПрикреплены: ${imageFiles.map(f => f.name).join(', ')}.\n`
          +  `В текущей версии модель не видит содержимое изображений. Опишите в тексте, что на них.`;
   }
   return text;
@@ -2036,6 +2238,15 @@ function loadSettingsToUI(){
   $('chatFontSizeSelect').value = state.settings.chatFontSize || 'm';
   $('reducedMotionToggle').checked = !!state.settings.reducedMotion;
   $('encryptKeyToggle').checked = !!state.settings.encryptKey;
+  // Тариф
+  const tierSel = document.getElementById('tierSelect');
+  if(tierSel){
+    tierSel.value = state.settings.tier || 'novice';
+    document.getElementById('diamondAgentsRow').style.display = (tierSel.value === 'diamond') ? '' : 'none';
+    const di = document.getElementById('diamondAgentsInput');
+    if(di) di.value = state.settings.diamondRequestedAgents || 5;
+  }
+  updateTierBadge();
   applyProviderHints();
   updateProviderStatus();
 }
@@ -2060,6 +2271,15 @@ async function saveSettingsFromUI(){
   state.settings.orchestratorScale = parseInt($('orchestratorScale').value, 10) || 3;
   state.settings.streaming = $('streamingToggle').checked;
   state.settings.useConcierge = $('useConciergeToggle').checked;
+  // Тариф
+  const tierSel = document.getElementById('tierSelect');
+  if(tierSel){
+    state.settings.tier = TIERS[tierSel.value] ? tierSel.value : 'novice';
+    const di = document.getElementById('diamondAgentsInput');
+    if(di) state.settings.diamondRequestedAgents = Math.max(1, Math.min(30, parseInt(di.value, 10) || 5));
+  }
+  updateTierBadge();
+  updateCurrentAgentBadge();
   // Тема + размер + accessibility
   const theme = $('themeSelect').value;
   state.settings.theme = VALID_THEMES.has(theme) ? theme : 'dark';
@@ -2119,6 +2339,41 @@ function autoGrow(textarea){
 }
 
 /* ====== MAIN ACTIONS ====== */
+/* Compliance pre-LLM hook: суицид/самоповреждение и острые мед-флаги.
+ * Срабатывает ДО любого вызова LLM. Если триггер — добавляет в чат блок с горячими
+ * линиями (8-800-2000-122 / 112 / 103) и НЕ блокирует дальнейший flow. Текст блока
+ * соответствует §8 safe_phrasing_library.md (SINTEM week 1 compliance). */
+const CRISIS_PATTERNS = [
+  {
+    re: /(суицид|убить\s+себя|не\s+хочу\s+жить|самоповрежден|резать\s+себя|таблетки\s+чтобы\s+(уснуть|умереть)|покончить\s+с\s+собой|свести\s+счёты)/i,
+    name: 'Кризисная помощь 🚨',
+    text: 'Я слышу, что вам сейчас очень тяжело. Пожалуйста, прямо сейчас позвоните: **8-800-2000-122** (бесплатно, круглосуточно — для подростков и взрослых) или **112 / 103**. Это не «слабость» — это правильный шаг. Я не врач и не могу заменить живого специалиста. Если рядом есть близкий человек — попросите его побыть рядом, пока вы звоните.'
+  },
+  {
+    re: /(боль\s+в\s+груди|острая\s+одышка|потерял\s+сознание|онемение\s+половины\s+тела|перекосило\s+лицо|искривление\s+лица|инсульт)/i,
+    name: 'Экстренная помощь 🚨',
+    text: 'Это могут быть симптомы экстренного состояния. Пожалуйста, позвоните **103 или 112 НЕМЕДЛЕННО** — не продолжайте разговор с ботом. Каждая минута может иметь значение.'
+  }
+];
+
+function checkCrisisTriggers(text){
+  if(!text) return false;
+  for(const trig of CRISIS_PATTERNS){
+    if(trig.re.test(text)){
+      const { contentEl } = createMessageElement('agent', trig.name);
+      contentEl.innerHTML = renderMd(trig.text);
+      state.conversation.push({
+        role: 'agent', sender: trig.name,
+        text: trig.text, time: new Date().toISOString()
+      });
+      addActivity(trig.name, '⚠ Сработал кризисный фильтр', 'error');
+      persistState();
+      return true;
+    }
+  }
+  return false;
+}
+
 async function handleSend(){
   const ti = $('taskInput');
   const rawTask = ti.value.trim();
@@ -2133,6 +2388,8 @@ async function handleSend(){
     displayMsg += (displayMsg ? '\n\n' : '') + '📎 ' + state.attachments.map(a => a.name).join(', ');
   }
   appendUserMessage(displayMsg);
+  // Compliance pre-LLM hook — выдаём контакты экстренной помощи ДО запроса к модели
+  checkCrisisTriggers(rawTask);
   // После отправки очищаем прикрепления
   clearAttachments();
 
@@ -2189,8 +2446,14 @@ async function handleSend(){
         // Аида передаёт оркестратору
         const brief = decision.orchestration_brief || task;
         if(decision.text){
-          // Промежуточное сообщение клиенту перед оркестрацией
-          appendSystemMessage('💼 Аида: ' + decision.text);
+          // Промежуточное сообщение клиенту перед оркестрацией — через agent-канал, чтобы получить .agent-disclaimer
+          const orchMsg = createMessageElement('agent', 'Аида 💼');
+          orchMsg.contentEl.innerHTML = renderMd(decision.text);
+          state.conversation.push({
+            role: 'agent', sender: 'Аида 💼',
+            text: decision.text, time: new Date().toISOString()
+          });
+          persistState();
         }
         addActivity('Аида 💼', '🤝 Передала задачу команде специалистов', 'system');
         const result = await orchestrate(brief, state.inflight.signal);
@@ -2198,8 +2461,15 @@ async function handleSend(){
         // Здесь оркестратор уже отдал свой синтез — Аида не оборачивает повторно чтобы не дублировать
         addActivity('Аида 💼', '✓ Передала результат клиенту', 'success');
       } else {
-        // неизвестное действие — fallback
-        appendSystemMessage('💼 Аида: ' + (decision.text || 'Не удалось разобрать запрос. Передаю команде.'));
+        // неизвестное действие — fallback (тоже через agent-канал, с disclaimer)
+        const fallbackText = decision.text || 'Не удалось разобрать запрос. Передаю команде.';
+        const fbMsg = createMessageElement('agent', 'Аида 💼');
+        fbMsg.contentEl.innerHTML = renderMd(fallbackText);
+        state.conversation.push({
+          role: 'agent', sender: 'Аида 💼',
+          text: fallbackText, time: new Date().toISOString()
+        });
+        persistState();
         await orchestrate(task, state.inflight.signal);
       }
     } else {
@@ -2222,11 +2492,19 @@ function handleStop(){
   addActivity('Система', '⏹ Остановлено пользователем', 'system');
 }
 
+function clearLogsOnly(){
+  if(!confirm('Очистить лог активности? Чат и история диалога останутся.')) return;
+  state.activityLogs = [];
+  $('activityLog').innerHTML = '<div class="activity-item system"><span class="msg">Лог очищен.</span></div>';
+  persistState();
+}
+
 function clearHistory(){
   if(!confirm('Очистить весь диалог и логи?')) return;
   state.conversation = [];
   state.activityLogs = [];
-  $('chatMessages').innerHTML = '<div class="message agent"><strong>Oracle 🧠</strong>История очищена. Начните новую сессию.</div>';
+  const greeter = state.settings.useConcierge ? 'Аида 💼' : 'Oracle 🧠';
+  $('chatMessages').innerHTML = `<div class="message agent"><strong>${greeter}</strong>История очищена. Начните новую сессию.${AGENT_DISCLAIMER_HTML}</div>`;
   $('activityLog').innerHTML = '<div class="activity-item system"><span class="msg">История очищена.</span></div>';
   persistState();
 }
@@ -2236,8 +2514,20 @@ async function clearAll(){
   await DB.clear();
   state.conversation = [];
   state.activityLogs = [];
-  state.settings = { provider: 'groq', apiKey: '', endpoint: '', defaultModel: '', orchestratorScale: 3, streaming: true, theme: 'dark', domainFilter: '' };
+  state.settings = {
+    provider: 'groq', apiKey: '', endpoint: '', defaultModel: '',
+    orchestratorScale: 3, streaming: true,
+    theme: 'dark', fontSize: 'm', chatFontSize: 'm', reducedMotion: false,
+    encryptKey: false, useConcierge: true,
+    domainFilter: '', tier: 'novice', diamondRequestedAgents: 5,
+  };
+  state.usage = { monthKey: '', dayKey: '', monthTokens: 0, dayTokens: 0 };
+  state.encryptedKey = null;
+  state.attachments = [];
+  state.usedAgentsInSession = new Set();
   loadSettingsToUI();
+  applyTheme();
+  renderAttachments();
   $('chatMessages').innerHTML = '';
   $('activityLog').innerHTML = '';
   appendSystemMessage('Все данные удалены.');
@@ -2263,6 +2553,7 @@ async function init(){
   // ⚠️ ВАЖНО: после renderAgentsTree dropdown доменов заполнен — теперь восстанавливаем выбор
   $('domainFilter').value = state.settings.domainFilter || '';
   updateCurrentAgentBadge();
+  updateTierBadge();
   restoreChat();
   restoreActivity();
 
@@ -2283,7 +2574,10 @@ async function init(){
   $('voiceBtn').addEventListener('click', () => {
     if(!voice){ addActivity('Голос', 'Не поддерживается', 'error'); return; }
     try{ voice.start(); $('voiceBtn').classList.add('recording'); }
-    catch(e){ addActivity('Голос', e.message, 'error'); }
+    catch(e){
+      $('voiceBtn').classList.remove('recording');
+      addActivity('Голос', e.message, 'error');
+    }
   });
 
   $('exportTxtBtn').addEventListener('click', exportTXT);
@@ -2335,7 +2629,7 @@ async function init(){
     state.settings.theme = next;
     applyTheme();
     persistState();
-    addActivity('Система', `Тема: ${BEIGE_LABELS[next] || next}`, 'system');
+    addActivity('Система', `Тема: ${THEME_LABELS[next] || next}`, 'system');
   });
 
   // file:// баннер handlers
@@ -2349,7 +2643,7 @@ async function init(){
   $('settingsBtn').addEventListener('click', () => showModal('settingsModal'));
   $('saveSettingsBtn').addEventListener('click', saveSettingsFromUI);
   $('clearAllBtn').addEventListener('click', clearAll);
-  $('clearLogsBtn').addEventListener('click', clearHistory);
+  $('clearLogsBtn').addEventListener('click', clearLogsOnly);
 
   $('providerSelect').addEventListener('change', applyProviderHints);
 
@@ -2392,6 +2686,27 @@ async function init(){
     persistState();
     updateCurrentAgentBadge();
   });
+
+  // Переключение тарифа: показ/скрытие поля «число агентов» для Бриллианта
+  const tierSel = document.getElementById('tierSelect');
+  if(tierSel){
+    tierSel.addEventListener('change', (e) => {
+      const isDiamond = e.target.value === 'diamond';
+      document.getElementById('diamondAgentsRow').style.display = isDiamond ? '' : 'none';
+      // Не сохраняем сразу в state — это произойдёт при «Сохранить» в модале;
+      // но обновим визуальный бейдж предварительно
+      const prev = state.settings.tier;
+      state.settings.tier = e.target.value;
+      updateTierBadge();
+      updateCurrentAgentBadge();
+      state.settings.tier = prev; // вернём, чтобы Save сделал реальное применение
+    });
+  }
+  // Бейдж тарифа в шапке кликается → открыть страницу тарифов
+  const tBadge = document.getElementById('tierBadge');
+  if(tBadge){
+    tBadge.addEventListener('click', () => window.open('pricing.html', '_blank', 'noopener'));
+  }
 
   // Быстрые кнопки A− / A+ для размера шрифта в чате
   function shiftChatFontSize(delta){

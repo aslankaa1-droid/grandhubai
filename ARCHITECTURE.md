@@ -9,27 +9,66 @@
 ## 1. Высокоуровневая архитектура
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  ВАША СОБСТВЕННОСТЬ (100% IP Кагирова А-Х. А.)          │
-├─────────────────────────────────────────────────────────┤
-│  Frontend (Single-file PWA, Vanilla JS, no frameworks)   │
-│  ├── UI Layer (HTML/CSS, темы dark/light, responsive)    │
-│  ├── Orchestrator (Oracle: декомпозиция → распределение  │
-│  │   → агрегация)                                        │
-│  ├── Prompt Registry (201 агент в 27 файлах)             │
-│  ├── Provider Abstraction (Groq/OR/Anthropic/Ollama)     │
-│  ├── Storage (IndexedDB для сессий и ключа)              │
-│  └── Security (escapeHtml, XSS-защита, no eval)          │
-└──────────────────┬──────────────────────────────────────┘
-                   │ выбор провайдера в настройках
+┌──────────────────────────────────────────────────────────┐
+│  ВАША СОБСТВЕННОСТЬ (100% IP Кагирова А-Х. А.)           │
+├──────────────────────────────────────────────────────────┤
+│  Frontend (Single-file PWA, Vanilla JS, no frameworks)    │
+│  ├── UI Layer (HTML/CSS, темы dark/light, responsive)     │
+│  ├── Tier/Billing Layer (TIERS, checkQuota, allowedAgentCount) │
+│  ├── Concierge Аида (модератор первой линии — БЕЗ права   │
+│  │   подключать агентов сама; см. TIERS.md)               │
+│  ├── Orchestrator (Oracle: декомпозиция → распределение → │
+│  │   агрегация; команда обрезается до tier.maxAgents)     │
+│  ├── Prompt Registry (244 агента в 31 файле)              │
+│  ├── Provider Abstraction (Groq/OR/Anthropic/Ollama)      │
+│  ├── Storage (IndexedDB: сессии, ключ, settings, usage)   │
+│  └── Security (escapeHtml, XSS-защита, AES-256-GCM)       │
+└──────────────────┬───────────────────────────────────────┘
+                   │ выбор провайдера + тариф
        ┌───────────┼───────────┬──────────────┐
        ▼           ▼           ▼              ▼
    ┌────────┐ ┌────────┐ ┌──────────┐ ┌────────────┐
-   │ Groq   │ │ OpenRouter │ Anthropic│ │   Ollama   │
-   │ (free) │ │ (proxy)   │ │ (Claude) │ │ (local)    │
+   │ Groq   │ │OpenRouter│ │Anthropic│ │  Ollama    │
+   │ (free) │ │ (proxy)  │ │ (Claude)│ │  (local)   │
    └────────┘ └────────┘ └──────────┘ └────────────┘
    ⚠️ Не ваше IP — модели принадлежат провайдерам
+
+┌──────────────────────────────────────────────────────────┐
+│  Public-Facing                                            │
+│  ├── src/index.html  — приложение                         │
+│  └── src/pricing.html — публичная страница тарифов        │
+│                        (grandhubai.com/pricing.html)      │
+└──────────────────────────────────────────────────────────┘
 ```
+
+### 1.1. Tier/Billing Layer (с v1.6.0)
+
+Между UI и Orchestrator стоит обязательный слой проверок:
+
+```
+User input ──► Аида (модератор) ──► orchestration_brief
+                                          │
+                                          ▼
+                            ┌────────────────────────┐
+                            │ TIER GUARD             │
+                            │ ├── checkQuota()       │
+                            │ │   (соответствует     │
+                            │ │   tier.monthlyTokens?)│
+                            │ └── allowedAgentCount()│
+                            │     (Math.min(N, max)) │
+                            └──────────┬─────────────┘
+                                       │ tier OK
+                                       ▼
+                                  orchestrate()
+                                       │
+                                       ▼
+                                  callLLM() ──► chargeTokens()
+                                                    │
+                                                    ▼
+                                            state.usage += tokens
+```
+
+**Правило:** Аида **не имеет** права обходить TIER GUARD. Полная спецификация — [TIERS.md](TIERS.md).
 
 ---
 
