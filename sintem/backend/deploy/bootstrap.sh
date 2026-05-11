@@ -291,7 +291,7 @@ node scripts/seed-prompts.mjs                  # uploads 6 prompts to PROMPTS KV
 WORKER_URL="https://sintem-bot.<your-cf-subdomain>.workers.dev"
 BOT_TOKEN="<paste your Telegram bot token>"
 curl -X POST "https://api.telegram.org/bot\$BOT_TOKEN/setWebhook" \\
-  -d "url=\$WORKER_URL/telegram/webhook" \\
+  -d "url=\$WORKER_URL/webhook/telegram" \\
   -d "secret_token=$WEBHOOK_SECRET"
 
 # Verify webhook:

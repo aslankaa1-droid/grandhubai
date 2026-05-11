@@ -51,7 +51,7 @@ BOT_TOKEN="<your Telegram bot token>"
 WEBHOOK_SECRET="<value printed by bootstrap>"
 
 curl -X POST "https://api.telegram.org/bot$BOT_TOKEN/setWebhook" \
-  -d "url=$WORKER_URL/telegram/webhook" \
+  -d "url=$WORKER_URL/webhook/telegram" \
   -d "secret_token=$WEBHOOK_SECRET"
 
 # Verify:
