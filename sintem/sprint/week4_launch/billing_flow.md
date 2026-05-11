@@ -35,8 +35,8 @@ quota_usage (user_id, agent, period_start, used) — счётчик запрос
          pay_currency: "USDTTRC20", 
          order_id: "<uuid>", 
          ipn_callback_url: "https://api.sintem.bot/np/webhook",
-         success_url: "https://t.me/sintem_bot?start=paid_<uuid>",
-         cancel_url: "https://t.me/sintem_bot?start=cancelled_<uuid>" }
+         success_url: "https://t.me/sintem_ai_bot?start=paid_<uuid>",
+         cancel_url: "https://t.me/sintem_ai_bot?start=cancelled_<uuid>" }
    - получает {id, invoice_url, pay_address, pay_amount}
    - вставляет строку в invoices со status=created
    - отправляет юзеру в TG: «Оплатить ₽3900 ($42.4) → [Открыть страницу оплаты]» (URL invoice_url)

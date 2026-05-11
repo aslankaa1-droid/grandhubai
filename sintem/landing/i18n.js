@@ -55,7 +55,7 @@
 
       'how.h2':  'Как это работает',
       'how.s1.h': 'Найдите бота',
-      'how.s1.p': 'Откройте @sintem_bot в Telegram и нажмите «Старт».',
+      'how.s1.p': 'Откройте @sintem_ai_bot в Telegram и нажмите «Старт».',
       'how.s2.h': 'Скиньте материал',
       'how.s2.p': 'Карточку, отзыв или выгрузку продаж — текстом, ссылкой или файлом.',
       'how.s3.h': 'Получите план',
@@ -111,7 +111,7 @@
 
       'final.h2':   'Хватит сидеть с отзывами по вечерам и считать юнитку в Excel по выходным.',
       'final.lead': 'Откройте бота, попробуйте 5 запросов на каждого помощника бесплатно, и если за вечер сэкономите час — оплатите тариф. Если нет — закроете и забудете, никто не списывает деньги без вашего действия.',
-      'final.cta':  'Открыть @sintem_bot в Telegram',
+      'final.cta':  'Открыть @sintem_ai_bot в Telegram',
 
       'foot.tagline':'Telegram-бот для селлеров WB и Ozon.',
       'foot.terms':  'Оферта',
@@ -221,7 +221,7 @@
       'sg.s5.demo.tag':  'Пять помощников. Один чат.',
       'sg.s5.demo.lead': 'Карточка-доктор, ответ на отзывы, скаут конкурентов, ABC-XYZ и юнит-экономика — в Telegram, без штата.',
       'sg.s5.txt1':      '<strong>Основная: -apple-system / Segoe UI / Inter / Roboto.</strong><br>Мы используем системные шрифты — на любом устройстве знак SINTEM выглядит «как родной». Шрифт всегда тот, который пользователь уже видит в Telegram.',
-      'sg.s5.txt2':      '<strong>Моноширинная: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Применяется для команд бота (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>), артикулов, расчётов и таблиц.',
+      'sg.s5.txt2':      '<strong>Моноширинная: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Применяется для команд бота (<code>@sintem_ai_bot</code>, <code>/start</code>, <code>/style</code>), артикулов, расчётов и таблиц.',
       'sg.s5.txt3':      'Для печатных носителей и презентаций, где требуется единообразие, рекомендованная замена — <strong>Inter</strong> (бесплатная, OFL).',
 
       // Corporate stationery
@@ -327,18 +327,18 @@
       'terms.title':   'SINTEM — Оферта',
       'terms.meta':    'Документ · черновик',
       'terms.h1':      'Публичная оферта',
-      'terms.draft':   'Текст публичной оферты подготавливается юристом и появится здесь до публичного запуска сервиса. До этого момента подписка не может быть оформлена через сайт; используйте триал-доступ через бот <a href="https://t.me/sintem_bot">@sintem_bot</a>. По вопросам — <a href="https://t.me/sintem_support">@sintem_support</a>.',
+      'terms.draft':   'Текст публичной оферты подготавливается юристом и появится здесь до публичного запуска сервиса. До этого момента подписка не может быть оформлена через сайт; используйте триал-доступ через бот <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>. По вопросам — <a href="https://t.me/sintem_support">@sintem_support</a>.',
       'terms.h2_a':    'Что будет в финальной редакции',
       'terms.body_a':  'Стороны и предмет договора. Порядок акцепта оферты (нажатием кнопки оплаты в боте). Описание услуги (доступ к 5 AI-помощникам в Telegram-боте). Тарифы и порядок оплаты. Лимиты запросов и поведение при их превышении. Условия отмены подписки и возвратов. Ограничение ответственности. Реквизиты исполнителя.',
       'terms.h2_b':    'Контакты до публикации',
-      'terms.body_b':  'Поддержка: <a href="https://t.me/sintem_support">@sintem_support</a><br>Бот: <a href="https://t.me/sintem_bot">@sintem_bot</a>',
+      'terms.body_b':  'Поддержка: <a href="https://t.me/sintem_support">@sintem_support</a><br>Бот: <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>',
       'terms.foot':    '© 2026 SINTEM. <a href="index.html">На главную</a>',
 
       // privacy.html
       'priv.title':   'SINTEM — Политика обработки данных',
       'priv.meta':    'Действует с 10 мая 2026 года',
       'priv.h1':      'Политика обработки данных',
-      'priv.intro':   'Эта страница описывает, какие данные SINTEM получает от пользователей Telegram-бота <a href="https://t.me/sintem_bot">@sintem_bot</a>, как мы их храним и кому передаём. Документ написан простым языком, без юридического жаргона; в случае конфликта с публичной офертой приоритет за офертой.',
+      'priv.intro':   'Эта страница описывает, какие данные SINTEM получает от пользователей Telegram-бота <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>, как мы их храним и кому передаём. Документ написан простым языком, без юридического жаргона; в случае конфликта с публичной офертой приоритет за офертой.',
       'priv.h2_in':   'Какие данные мы получаем',
       'priv.in_l1':   'Идентификатор пользователя Telegram (ID и username) — для авторизации и привязки тарифа.',
       'priv.in_l2':   'Тексты ваших запросов к боту: ссылки на карточки маркетплейсов, тексты отзывов, выгрузки продаж в виде таблиц/файлов.',
@@ -412,7 +412,7 @@
 
       'how.h2':  'How it works',
       'how.s1.h': 'Open the bot',
-      'how.s1.p': 'Find @sintem_bot in Telegram and tap Start.',
+      'how.s1.p': 'Find @sintem_ai_bot in Telegram and tap Start.',
       'how.s2.h': 'Send your material',
       'how.s2.p': 'A card link, a review or a sales export — as text, link or file.',
       'how.s3.h': 'Get the plan',
@@ -468,7 +468,7 @@
 
       'final.h2':   'Stop sitting with reviews at night and counting unit math in Excel on weekends.',
       'final.lead': 'Open the bot, try 5 free requests per agent, and if you save an hour in one evening — pay for a plan. If not — close it and forget; nothing is charged without your action.',
-      'final.cta':  'Open @sintem_bot in Telegram',
+      'final.cta':  'Open @sintem_ai_bot in Telegram',
 
       'foot.tagline':'Telegram bot for WB and Ozon sellers.',
       'foot.terms':  'Terms',
@@ -570,7 +570,7 @@
       'sg.s5.demo.tag':  'Five assistants. One chat.',
       'sg.s5.demo.lead': 'Listing doctor, review responder, competitor scout, ABC-XYZ and unit economics — in Telegram, no extra hires.',
       'sg.s5.txt1':      '<strong>Primary: -apple-system / Segoe UI / Inter / Roboto.</strong><br>We rely on system fonts so the SINTEM mark feels native on every device. The font is always the one the user already sees in Telegram.',
-      'sg.s5.txt2':      '<strong>Monospace: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Used for bot commands (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>), SKUs, calculations and tables.',
+      'sg.s5.txt2':      '<strong>Monospace: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Used for bot commands (<code>@sintem_ai_bot</code>, <code>/start</code>, <code>/style</code>), SKUs, calculations and tables.',
       'sg.s5.txt3':      'For print and presentations where consistency matters, the recommended substitute is <strong>Inter</strong> (free, OFL).',
 
       'sg.s6.front':     'Five assistants.<br>One chat.',
@@ -661,17 +661,17 @@
       'terms.title':   'SINTEM — Terms',
       'terms.meta':    'Document · draft',
       'terms.h1':      'Public offer',
-      'terms.draft':   'The public-offer text is being prepared by counsel and will appear here before the public launch of the service. Until then, subscriptions cannot be placed through the website; please use the trial inside <a href="https://t.me/sintem_bot">@sintem_bot</a>. For questions — <a href="https://t.me/sintem_support">@sintem_support</a>.',
+      'terms.draft':   'The public-offer text is being prepared by counsel and will appear here before the public launch of the service. Until then, subscriptions cannot be placed through the website; please use the trial inside <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>. For questions — <a href="https://t.me/sintem_support">@sintem_support</a>.',
       'terms.h2_a':    'What the final version will cover',
       'terms.body_a':  'Parties and subject. Acceptance procedure (by clicking the payment button in the bot). Service description (access to 5 AI agents inside the Telegram bot). Plans and payment flow. Request limits and behavior on overage. Cancellation and refund terms. Liability cap. Provider details.',
       'terms.h2_b':    'Contacts before publication',
-      'terms.body_b':  'Support: <a href="https://t.me/sintem_support">@sintem_support</a><br>Bot: <a href="https://t.me/sintem_bot">@sintem_bot</a>',
+      'terms.body_b':  'Support: <a href="https://t.me/sintem_support">@sintem_support</a><br>Bot: <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>',
       'terms.foot':    '© 2026 SINTEM. <a href="index.html">Home</a>',
 
       'priv.title':   'SINTEM — Privacy policy',
       'priv.meta':    'Effective from May 10, 2026',
       'priv.h1':      'Privacy policy',
-      'priv.intro':   'This page explains what data SINTEM receives from users of the <a href="https://t.me/sintem_bot">@sintem_bot</a> Telegram bot, how we store it, and to whom we pass it. The document is written in plain language, with no legalese; in case of conflict with the public offer, the offer prevails.',
+      'priv.intro':   'This page explains what data SINTEM receives from users of the <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a> Telegram bot, how we store it, and to whom we pass it. The document is written in plain language, with no legalese; in case of conflict with the public offer, the offer prevails.',
       'priv.h2_in':   'What we receive',
       'priv.in_l1':   'Telegram user identifier (ID and username) — for authentication and plan binding.',
       'priv.in_l2':   'Your prompts to the bot: marketplace card links, review texts, sales exports as tables or files.',
@@ -745,7 +745,7 @@
 
       'how.h2':  'Comment ça marche',
       'how.s1.h': 'Ouvrez le bot',
-      'how.s1.p': 'Trouvez @sintem_bot dans Telegram et appuyez sur « Démarrer ».',
+      'how.s1.p': 'Trouvez @sintem_ai_bot dans Telegram et appuyez sur « Démarrer ».',
       'how.s2.h': 'Envoyez votre matériel',
       'how.s2.p': 'Lien d’une fiche, un avis ou un export de ventes — texte, lien ou fichier.',
       'how.s3.h': 'Recevez le plan',
@@ -801,7 +801,7 @@
 
       'final.h2':   'Arrêtez de répondre aux avis le soir et de calculer vos unités dans Excel le week-end.',
       'final.lead': 'Ouvrez le bot, essayez 5 requêtes gratuites par agent, et si vous gagnez une heure dans la soirée — payez un tarif. Sinon — fermez et oubliez ; rien n’est prélevé sans votre action.',
-      'final.cta':  'Ouvrir @sintem_bot dans Telegram',
+      'final.cta':  'Ouvrir @sintem_ai_bot dans Telegram',
 
       'foot.tagline':'Bot Telegram pour vendeurs WB et Ozon.',
       'foot.terms':  'CGV',
@@ -903,7 +903,7 @@
       'sg.s5.demo.tag':  'Cinq assistants. Un chat.',
       'sg.s5.demo.lead': 'Audit de fiche, réponse aux avis, veille concurrentielle, ABC-XYZ et économie unitaire — dans Telegram, sans embaucher.',
       'sg.s5.txt1':      '<strong>Principale : -apple-system / Segoe UI / Inter / Roboto.</strong><br>Nous utilisons les polices système — sur tout appareil, le signe SINTEM se sent natif. La police est toujours celle que l’utilisateur voit déjà dans Telegram.',
-      'sg.s5.txt2':      '<strong>Monospace : ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Pour les commandes du bot (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>), les SKU, les calculs et les tableaux.',
+      'sg.s5.txt2':      '<strong>Monospace : ui-monospace / SF Mono / Menlo / Consolas.</strong><br>Pour les commandes du bot (<code>@sintem_ai_bot</code>, <code>/start</code>, <code>/style</code>), les SKU, les calculs et les tableaux.',
       'sg.s5.txt3':      'Pour l’impression et les présentations qui exigent une cohérence, le remplacement recommandé est <strong>Inter</strong> (gratuit, OFL).',
 
       'sg.s6.front':     'Cinq assistants.<br>Un chat.',
@@ -994,17 +994,17 @@
       'terms.title':   'SINTEM — CGU',
       'terms.meta':    'Document · brouillon',
       'terms.h1':      'Offre publique',
-      'terms.draft':   'Le texte de l’offre publique est en cours de préparation par notre conseil juridique et apparaîtra ici avant le lancement public du service. D’ici là, les abonnements ne peuvent être souscrits via le site ; utilisez l’essai dans <a href="https://t.me/sintem_bot">@sintem_bot</a>. Pour toute question — <a href="https://t.me/sintem_support">@sintem_support</a>.',
+      'terms.draft':   'Le texte de l’offre publique est en cours de préparation par notre conseil juridique et apparaîtra ici avant le lancement public du service. D’ici là, les abonnements ne peuvent être souscrits via le site ; utilisez l’essai dans <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>. Pour toute question — <a href="https://t.me/sintem_support">@sintem_support</a>.',
       'terms.h2_a':    'Ce que la version finale couvrira',
       'terms.body_a':  'Parties et objet du contrat. Modalités d’acceptation (par clic sur le bouton de paiement dans le bot). Description du service (accès à 5 assistants IA dans le bot Telegram). Tarifs et modalités de paiement. Limites de requêtes et comportement en cas de dépassement. Conditions d’annulation et de remboursement. Limitation de responsabilité. Coordonnées du prestataire.',
       'terms.h2_b':    'Contacts avant publication',
-      'terms.body_b':  'Support : <a href="https://t.me/sintem_support">@sintem_support</a><br>Bot : <a href="https://t.me/sintem_bot">@sintem_bot</a>',
+      'terms.body_b':  'Support : <a href="https://t.me/sintem_support">@sintem_support</a><br>Bot : <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>',
       'terms.foot':    '© 2026 SINTEM. <a href="index.html">Accueil</a>',
 
       'priv.title':   'SINTEM — Politique de confidentialité',
       'priv.meta':    'Entrée en vigueur le 10 mai 2026',
       'priv.h1':      'Politique de confidentialité',
-      'priv.intro':   'Cette page explique quelles données SINTEM reçoit des utilisateurs du bot Telegram <a href="https://t.me/sintem_bot">@sintem_bot</a>, comment nous les conservons et à qui nous les transmettons. Le document est rédigé simplement, sans jargon ; en cas de conflit avec l’offre publique, c’est l’offre qui prévaut.',
+      'priv.intro':   'Cette page explique quelles données SINTEM reçoit des utilisateurs du bot Telegram <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>, comment nous les conservons et à qui nous les transmettons. Le document est rédigé simplement, sans jargon ; en cas de conflit avec l’offre publique, c’est l’offre qui prévaut.',
       'priv.h2_in':   'Quelles données nous recevons',
       'priv.in_l1':   'Identifiant utilisateur Telegram (ID et username) — pour l’authentification et la liaison du tarif.',
       'priv.in_l2':   'Vos messages au bot : liens de fiches marketplace, textes d’avis, exports de ventes en tableaux/fichiers.',
@@ -1078,7 +1078,7 @@
 
       'how.h2':   'كيف يعمل',
       'how.s1.h': 'افتح البوت',
-      'how.s1.p': 'ابحث عن @sintem_bot في تيليجرام واضغط «بدء».',
+      'how.s1.p': 'ابحث عن @sintem_ai_bot في تيليجرام واضغط «بدء».',
       'how.s2.h': 'أرسل المادة',
       'how.s2.p': 'رابط بطاقة، مراجعة أو تصدير مبيعات — نصاً، رابطاً أو ملفاً.',
       'how.s3.h': 'استقبل الخطة',
@@ -1134,7 +1134,7 @@
 
       'final.h2':   'كفى الجلوس مع المراجعات في المساء وحساب اقتصاديات الوحدة في Excel أيام العطلة.',
       'final.lead': 'افتح البوت، جرّب 5 طلبات مجانية لكل مساعد، فإن وفّرت ساعة في المساء — ادفع باقة. وإلا أغلِق وانسَ؛ لن يُخصم شيء بدون فعلك.',
-      'final.cta':  'افتح @sintem_bot في تيليجرام',
+      'final.cta':  'افتح @sintem_ai_bot في تيليجرام',
 
       'foot.tagline':'بوت تيليجرام لبائعي WB وOzon.',
       'foot.terms':  'الشروط',
@@ -1236,7 +1236,7 @@
       'sg.s5.demo.tag':  'خمسة مساعدين. محادثة واحدة.',
       'sg.s5.demo.lead': 'مدقّق القائمة، الرد على المراجعات، رصد المنافسين، ABC-XYZ واقتصاديات الوحدة — في تيليجرام، بدون توظيف.',
       'sg.s5.txt1':      '<strong>الأساسي: -apple-system / Segoe UI / Inter / Roboto.</strong><br>نعتمد على خطوط النظام — على أي جهاز تبدو علامة SINTEM «أصلية». الخط هو نفسه الذي يراه المستخدم في تيليجرام.',
-      'sg.s5.txt2':      '<strong>أحادي العرض: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>لأوامر البوت (<code>@sintem_bot</code>, <code>/start</code>, <code>/style</code>)، رموز SKU، الحسابات والجداول.',
+      'sg.s5.txt2':      '<strong>أحادي العرض: ui-monospace / SF Mono / Menlo / Consolas.</strong><br>لأوامر البوت (<code>@sintem_ai_bot</code>, <code>/start</code>, <code>/style</code>)، رموز SKU، الحسابات والجداول.',
       'sg.s5.txt3':      'للطباعة والعروض التي تتطلّب اتساقاً، البديل الموصى به هو <strong>Inter</strong> (مجاني، رخصة OFL).',
 
       'sg.s6.front':     'خمسة مساعدين.<br>محادثة واحدة.',
@@ -1327,17 +1327,17 @@
       'terms.title':   'SINTEM — الشروط',
       'terms.meta':    'وثيقة · مسوّدة',
       'terms.h1':      'العرض العام',
-      'terms.draft':   'يُعدّ المستشار القانوني نص العرض العام، وسيظهر هنا قبل الإطلاق العام للخدمة. حتى ذلك الحين لا يمكن الاشتراك عبر الموقع؛ استخدم النسخة التجريبية داخل <a href="https://t.me/sintem_bot">@sintem_bot</a>. للأسئلة — <a href="https://t.me/sintem_support">@sintem_support</a>.',
+      'terms.draft':   'يُعدّ المستشار القانوني نص العرض العام، وسيظهر هنا قبل الإطلاق العام للخدمة. حتى ذلك الحين لا يمكن الاشتراك عبر الموقع؛ استخدم النسخة التجريبية داخل <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>. للأسئلة — <a href="https://t.me/sintem_support">@sintem_support</a>.',
       'terms.h2_a':    'ما ستغطّيه النسخة النهائية',
       'terms.body_a':  'الأطراف وموضوع العقد. آلية القبول (بالنقر على زر الدفع داخل البوت). وصف الخدمة (الوصول إلى 5 مساعدين بالذكاء الاصطناعي داخل بوت تيليجرام). الباقات وآلية الدفع. حدود الطلبات والسلوك عند تجاوزها. شروط الإلغاء والاسترداد. حدّ المسؤولية. بيانات المُقدِّم.',
       'terms.h2_b':    'جهات الاتصال قبل النشر',
-      'terms.body_b':  'الدعم: <a href="https://t.me/sintem_support">@sintem_support</a><br>البوت: <a href="https://t.me/sintem_bot">@sintem_bot</a>',
+      'terms.body_b':  'الدعم: <a href="https://t.me/sintem_support">@sintem_support</a><br>البوت: <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>',
       'terms.foot':    '© 2026 SINTEM. <a href="index.html">الرئيسية</a>',
 
       'priv.title':   'SINTEM — سياسة الخصوصية',
       'priv.meta':    'سارية من 10 مايو 2026',
       'priv.h1':      'سياسة الخصوصية',
-      'priv.intro':   'تشرح هذه الصفحة البيانات التي يتلقّاها SINTEM من مستخدمي بوت تيليجرام <a href="https://t.me/sintem_bot">@sintem_bot</a>، وكيف نحفظها ولمن نُمرّرها. الوثيقة مكتوبة بلغة بسيطة بلا مصطلحات قانونية؛ في حال التعارض مع العرض العام تُغلَّب أحكام العرض.',
+      'priv.intro':   'تشرح هذه الصفحة البيانات التي يتلقّاها SINTEM من مستخدمي بوت تيليجرام <a href="https://t.me/sintem_ai_bot">@sintem_ai_bot</a>، وكيف نحفظها ولمن نُمرّرها. الوثيقة مكتوبة بلغة بسيطة بلا مصطلحات قانونية؛ في حال التعارض مع العرض العام تُغلَّب أحكام العرض.',
       'priv.h2_in':   'البيانات التي نتلقّاها',
       'priv.in_l1':   'مُعرّف مستخدم تيليجرام (ID واسم المستخدم) — لتسجيل الدخول وربط الباقة.',
       'priv.in_l2':   'نصوص طلباتك للبوت: روابط بطاقات الأسواق، نصوص المراجعات، تصديرات المبيعات بصيغة جداول/ملفات.',

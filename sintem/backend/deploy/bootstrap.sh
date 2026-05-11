@@ -251,7 +251,7 @@ TELEGRAM_WEBHOOK_SECRET (random, set this in step 1 below; save it):
 # 1 — webhook secret (random, generated above)
 printf '%s' "$WEBHOOK_SECRET" | npx wrangler secret put TELEGRAM_WEBHOOK_SECRET
 
-# 2 — Telegram Bot Token (BotFather; '@sintem_bot' is taken — register new username)
+# 2 — Telegram Bot Token (BotFather; '@sintem_ai_bot' is taken — register new username)
 npx wrangler secret put TELEGRAM_BOT_TOKEN
 
 # 3 — Groq (groq.com — free tier suffices for MVP)

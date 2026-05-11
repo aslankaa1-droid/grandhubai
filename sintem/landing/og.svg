@@ -46,6 +46,6 @@
   <rect x="80" y="540" width="1040" height="2" fill="#262626"/>
   <g font-family="-apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif" font-size="24">
     <text x="80"   y="586" fill="#A8A8A8">sintem.ru</text>
-    <text x="1120" y="586" text-anchor="end" fill="#FFCD3C" font-weight="700">@sintem_bot</text>
+    <text x="1120" y="586" text-anchor="end" fill="#FFCD3C" font-weight="700">@sintem_ai_bot</text>
   </g>
 </svg>

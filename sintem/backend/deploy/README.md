@@ -34,7 +34,7 @@ node scripts/seed-prompts.mjs                # uploads 6 prompts to PROMPTS KV
 
 | Secret | Source |
 |---|---|
-| `TELEGRAM_BOT_TOKEN` | BotFather (`@sintem_bot` is taken — register new username first) |
+| `TELEGRAM_BOT_TOKEN` | BotFather (`@sintem_ai_bot` is taken — register new username first) |
 | `TELEGRAM_WEBHOOK_SECRET` | Random 64-char hex — bootstrap generates this |
 | `GROQ_API_KEY` | groq.com (free tier — primary LLM) |
 | `OPENROUTER_API_KEY` | openrouter.ai (fallback LLM, qwen3.6-plus) |
